@@ -1,7 +1,7 @@
 <div class="row padding_mobile_none">
     <ng-container *ngFor="let itemID of _allProducts | keyvalue">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
-        *ngFor="let item of _allProducts[itemID.key] | keyvalue"
+        *ngFor="let item of _allProducts[itemID.key] | keyvalue; let i = index"
         [attr.dat-id-prod]="itemID.key"
         >
             <div class="products-fram">
@@ -16,15 +16,17 @@
                 <hr>
                 <div class="price-and-rating d-flex justify-content-between">
                     <div class="product-price d-flex flex-column align-items-start">
-                        <del class="text-muted">{{item.value.prodPrice + "$"}}</del>
-                        <span>1000$</span>
+                        <del class="text-muted" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{item.value.prodPrice + "$"}}</del>
+                        <span *ngIf="item.value.prodSale == null && item.value.prodSale == 0">{{item.value.prodSale + "$"}}</span>
+                        <span else>{{item.value.prodPrice - (item.value.prodPrice * item.value.prodSale)/100 | productPrice}}</span>
                     </div>
-                    <div class="product-ratings">
-                        <span class="lnr lnr-star appreciated"></span>
-                        <span class="lnr lnr-star appreciated"></span>
-                        <span class="lnr lnr-star appreciated"></span>
-                        <span class="lnr lnr-star"></span>
-                        <span class="lnr lnr-star"></span>
+                    <div class="product-ratings" #starsRaiting>
+                        {{'stars' | productStars:item.value.raiting:starsRaiting}}
+                        <span class="lnr lnr-star" (click)="__appreciated(1, itemID.key, i)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(2, itemID.key, i)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(3, itemID.key, i)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(4, itemID.key, i)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(5, itemID.key, i)"></span>
                     </div>
                 </div>
                 <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
