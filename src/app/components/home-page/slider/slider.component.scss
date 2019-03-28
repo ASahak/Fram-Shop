@@ -1,0 +1,61 @@
+@import '../../../../globalSCSS/globalSCSS';
+#fram-slider{
+    .home_slide{
+        >div{
+            img{
+                max-width: 100%;
+            }
+            .slideTxt {
+                position: absolute;
+                z-index: 22222;
+                left: 0;
+                /* top: 0; */
+                background-color: #689f3885;
+                min-width: min-content;
+                padding: 10px 55px;
+                bottom: 60px;
+                margin: auto;
+                height: fit-content;
+                color: #fbfcf6;
+            }
+        }
+    }
+}
+@media #{$md-device}{
+    .home_slide{
+        >div{
+            .slideTxt {
+                h1{
+                    font-size: 20px;
+                }
+                h3{
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}
+@media #{$sm-device}{
+    .home_slide{
+        >div{
+            .slideTxt {
+                h1{
+                    font-size: 17px;
+                }
+                h3{
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+@media #{$col}{
+    .home_slide{
+        >div{
+            .slideTxt {
+                display: none;
+            }
+        }
+    }
+}
+

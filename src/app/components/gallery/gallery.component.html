@@ -1,0 +1,60 @@
+<section id="gallery" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <span>{{'header.navBar.button6' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3">
+                <ul type="none" class="categories-gallery" #mainCatgories>
+                    <li *ngFor="let item of [
+                    'header.navBar.button2.childrens.all' | translate,
+                    'header.navBar.button2.childrens.button2_1' | translate,
+                    'header.navBar.button2.childrens.button2_2' | translate,
+                    'header.navBar.button2.childrens.button2_3' | translate,
+                    'header.navBar.button2.childrens.button2_4' | translate,
+                    'header.navBar.button2.childrens.button2_5' | translate,
+                    'header.navBar.button2.childrens.button2_6' | translate
+                    ]; let i = index"  [attr.data-categories]="categoriesProducts[i]" (click)="activeTransfer($event, i, categoriesProducts[i])">
+                        <span  [class.active_categ]="i=='0'">{{item}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-sm-8 col-md-9 pl-0"> 
+                <div class="izotopeCol" #imagesParent>
+                    <div *ngFor="let img of dataGallery; let i = index">
+                        <a class="gallBadge d-block" [attr.data-type]="img.dataType" (click)="startFancy(img)">
+                            <span class="lnr lnr-magnifier"></span>
+                            <img src="./assets/img/gallery/imgPreloader.gif" *ngIf="preloader" class="img-fluid p-5" alt="">
+                            <img [hidden]="preloader" (load)="onLoad()" src="./assets/img/gallery/{{img.imgUrl}}" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="plugin_image_fancy" *ngIf="fancyShow" (click)="hideFancy($event)">
+    <div class="topPanel">
+        <div class="arrowsBlock">
+            <span class="lnr lnr-arrow-left" (click)="fancySlideLeft()"></span>
+            <span>{{fancySliderNumbers.start}}/{{fancySliderNumbers.end}}</span>
+            <span class="lnr lnr-arrow-right" (click)="fancySlideRight()"></span>
+        </div>
+        <span class="lnr lnr-cross" (click)="closeFancy()"></span>
+    </div>
+    <img src="./assets/img/gallery/preloaderWhite.gif" *ngIf="!fancyPreloader" class="preloaderFancy" alt="">
+    <div class="fancyWrapper" >
+        <div class="slideFancyImages" *ngIf="fancyPreloader" [ngStyle]="{'transform':'translate('+fancySliderTransform+'px)'}">
+            <div class="image_part" *ngFor="let imgFancy of fancyArray">
+                <img src="{{imgFancy}}" alt="" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+

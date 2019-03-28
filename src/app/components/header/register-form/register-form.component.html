@@ -1,0 +1,30 @@
+<div class="registerForm" [class.showForm]="isShowBoolean">
+    <h3 class="headerForm text-left">{{'header.regForm.title' | translate}}</h3>
+    <form name="" action="" method="" #registerForm="ngForm" (ngSubmit)="createUser(registerForm)" id="registerForma"
+        class="d-flex align-items-start flex-column">
+        <input type="text" required name="firstName" [(ngModel)]="regForm.firstName"
+            placeholder="{{'header.regForm.fName' | translate}}">
+        <input type="text" required name="lastName" [(ngModel)]="regForm.lastName"
+            placeholder="{{'header.regForm.lName' | translate}}">
+        <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="emailTrue" [(ngModel)]="regForm.emailTrue" ngModel
+            #emailref="ngModel" required name="emailTrue" placeholder="{{'header.regForm.email' | translate}}">
+        <div [hidden]="!emailref.errors?.pattern" *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)"
+            class="alert alert-danger w-100">
+            <div style="font-size:12px">
+                {{'header.regForm.wrongEmailMsg' | translate}}
+            </div>
+        </div>
+        <input type="password" required name="password" (input)="regPasswordInput()"
+            placeholder="{{'header.regForm.password' | translate}}" [(ngModel)]="regForm.password">
+        <span style="color:red"
+            [hidden]="showRegFormPassLargeThenSix">{{'header.regForm.passMoreThenSix' | translate}}</span>
+        <input type="password" required name="confirmPass" (input)="confirmRegPasswordInput()"
+            placeholder="{{'header.regForm.confPassword' | translate}}" [(ngModel)]="regForm.confirmPass">
+        <span style="color:red" [hidden]="!showRegFormPassNotSame">{{'header.regForm.confirmMsg' | translate}}</span>
+        <p class="mb-0 d-flex align-items-center position-relative w-100">
+            <button type="submit" [disabled]="!registerForm.valid || !showRegFormPassLargeThenSix || showRegFormPassNotSame"
+                class="loginButton">{{'header.regForm.regButton' | translate}}</button>
+            <span *ngIf="loadingGIF" class="loadingGIF"></span>
+        </p>
+    </form>
+</div>

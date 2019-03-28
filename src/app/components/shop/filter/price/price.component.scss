@@ -1,0 +1,36 @@
+@import '../../../../../globalSCSS/extends';
+@import '../../../../../globalSCSS/globalSCSS';
+.price_component{
+    padding: 7px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    h5{
+        color: $grey;
+    }
+    ::ng-deep {
+        .custom-slider {
+            .ng5-slider {
+                .ng5-slider-selection {
+                    background: $green !important;
+                }
+                .ng5-slider-pointer{
+                    background-color: $green !important;
+                    width: 25px !important;
+                    height: 25px !important;
+                    top: -11px !important;
+                    outline: none !important;
+                    &:after{
+                        top: 9px !important;
+                        left: 9px !important;
+                    }
+                }
+                .ng5-slider-bubble{
+                    font-size: 13px!important;
+                }
+                .ng5-slider-limit{
+                    font-size:15px !important; 
+                }
+            }
+        }
+    }
+}

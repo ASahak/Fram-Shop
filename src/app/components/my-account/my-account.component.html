@@ -1,0 +1,41 @@
+<section id="my-account" class="mt-4">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-12">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <span>{{'header.navBar.button1' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="leftAsideAccount">
+                    <div class="avatatSection">
+                        <div class="image-wrap-my text-center">
+                            <img [src]="(userData.imgAvatar)?userData.imgAvatar:'./assets/img/user.jpg'" class="img-fluid" alt="">
+                            <h4 class="mt-3 mb-3">{{userData.firstName + ' ' + userData.lastName}}</h4>
+                            <a [href]="__sanitize(userData.emailTrue)" class="d-block">{{userData.emailTrue}}</a>
+                            <button (click)="__signOut()">{{'header.signOUT' | translate}}</button>
+                        </div>
+                    </div>
+                    <span class="profileHR">{{'myAccount.profileLegend' | translate}} <span></span></span>
+                    <ul class="account-settings" type="none" #settings>
+                        <li>
+                            <a href="javascript:void(0)" data-tab="profileTab" class="active-setting"><span class="lnr lnr-user"></span> {{'myAccount.my_profile' | translate}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-tab="accountTab"><span class="lnr lnr-cog"></span> {{'myAccount.accSetting' | translate}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-9">
+                <div [ngSwitch]="tabChange">
+                    <app-profile-settings  *ngSwitchCase="'profileTab'"></app-profile-settings>
+                    <app-account-settings [_transfer_password]="_userPassword" *ngSwitchCase="'accountTab'"></app-account-settings>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

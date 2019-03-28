@@ -1,0 +1,125 @@
+<section id="shop" class="mt-4 main_shop_content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12"> 
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <a routerLink="/shop"> {{'header.navBar.button2.main' | translate}}</a>
+                        <span>{{_pathWay}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3" >
+                <div #fixedLeftBar class="left_bar_fixed" [ngStyle]='_fixedLeftBar'>
+                    <div class="left_bar_shop_21">
+                        <app-categories (changePath)="changePathParent($event)"></app-categories>
+                    </div>
+                    <div class="left_bar_shop_22">
+                        <h4 class="filter_header m-0">{{'shop.filter' | translate}}</h4>
+                        <app-price></app-price>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-9">
+                <div class="row">
+                    <div class="col-12 pl-0 mobile_padding_none">
+                        <div class="top_sorting_panel">
+                            <app-top-sort [loginedUser]="_isUser"></app-top-sort>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="main_content_badges">
+                            <div class="right_bar_shop_content_23">
+                                <app-shop-content (transferPositionPageination)="getPositonPageination($event)"></app-shop-content>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div *ngIf="_isUser" class="addLayerForm">
+    <div class="plusProduct" (click)="__openAddForm()"><span class="lnr lnr-plus-circle"></span></div>
+    <div class="add_prod_form scroll_thumb" [ngStyle]="_isClickedPlus">
+        <h4>Add Product</h4>
+        <h6>Select category</h6>
+        <select required name="product_categorie" id="categories" [(ngModel)]="_selectedCateg" (change)="_goSelectForm(_selectedCateg)">
+            <option *ngFor="let _item of _categoryArr" value="{{_item}}">{{_item}}</option>
+        </select>
+        
+        <form [formGroup]="_addProdForm" (ngSubmit)="__addProduct()" id="add_from_prod" *ngIf="_goSelectForm(_selectedCateg)">
+            <input placeholder="Enter name *" formControlName="prodName" type="text" *ngIf="_goSelectForm(_selectedCateg).name">
+            <p class="mb-0 text-danger" *ngIf="_submited &&  __formAddControls['prodName'].errors">The name is required</p>
+            <input type="number" placeholder="Enter weight"  formControlName="prodWeight" *ngIf="_goSelectForm(_selectedCateg).weight">
+            <input type="number" placeholder="Enter size"  formControlName="prodSize" *ngIf="_goSelectForm(_selectedCateg).size">
+            <div (click)="__appearColors()" *ngIf="_goSelectForm(_selectedCateg).color" class="colorEach"  >
+                <input type="hidden" formControlName="prodColors" [value]="_selectedColors" >
+                <i *ngIf="_selectedColors.length == 0">Select min one color</i>
+                <span class="selectedColorWrap" *ngFor="let color of _selectedColors" [ngStyle]="{'background-color':color}">
+                </span>
+                <span class="selectNotNatural"></span>
+                <div class="colorExtenstion scroll_thumb" [hidden]="!_appearColors">
+                    <span *ngFor="let col of _colorsArr" #activeColor (click)="_selectedColorArr(col, activeColor)" [ngStyle]="{'background-color':col}"></span>
+                </div>
+            </div>
+            
+            <input type="number" placeholder="Enter price (USD) *" formControlName="prodPrice" *ngIf="_goSelectForm(_selectedCateg).price">
+            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodPrice'].errors">The price is required</p>
+            <input type="number" placeholder="Enter sale" formControlName="prodSale" *ngIf="_goSelectForm(_selectedCateg).sale">
+            <div class="d-flex align-items-center" *ngIf="_goSelectForm(_selectedCateg).isUsed">
+                <p class="mb-0 mr-4">
+                    <input type="radio" id="used" value="used"  formControlName="prodUsed">
+                    <label for="used">Used</label>
+                </p>
+                <p class="mb-0">
+                    <input type="radio" id="notused" value="notused" formControlName="prodUsed">
+                    <label for="notused">Not Used</label>
+                </p>
+            </div>
+            <p class="mb-0 text-danger mt-2" *ngIf="_submited && __formAddControls['prodUsed'].errors">The used type is required</p>
+            <div >
+                <label for="imageState">Images</label>
+                <div class="cropper" [hidden]="!_dataCropper.image">
+                    <img-cropper [attr.data-count-change]="__countChangeFile" #cropper [image]="_dataCropper" [settings]="_cropperSettings"></img-cropper>
+                    <img
+                    [src]="_dataCropper.image"
+                    [width]="_cropperSettings.croppedWidth"
+                    [height]="_cropperSettings.croppedHeight"
+                    />
+                    <div class="d-block">
+                        <button type="button" class="saveImage" (click)="__saveCropper()">Save</button>
+                    </div>
+                </div>
+                <div class="imagesWrap">
+                    <input type="hidden" formControlName="prodImgs" [value]="_uploadedImgURL">
+                    <img [src]="_uploadImage" *ngIf="(_uploadedImages.length == 0 && !_dataCropper.image)" alt="">
+                    <span class="imgArr" *ngFor="let _img of _uploadedImages; index as i">
+                        <img [src]="_img" alt="" #uploadedImg [attr.data-diff-index]="i+1">
+                        <span class="lnr lnr-cross" (click)="__spliceImgArr(i)"></span>
+                        <span *ngIf="_loadingCount == i" class="loadingUpload"></span>
+                        <span *ngIf="_doneCount >= i" class="doneUpload"></span>
+
+                    </span>
+                </div>
+                <div [hidden]="!(_uploadedImages.length < 3)" class="mt-3 file ">
+                    <label class="file-label">
+                        <input class="file-input" accept="image/jpg, image/jpeg, image/png" type="file" name="url" #uploadFile (change)="__fileUpload($event)">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <span class="lnr lnr-upload"></span>
+                            </span>
+                            <span class="file-label">
+                                choses Images...
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="d_root_save">
+                <button type="submit"   class="float-right">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

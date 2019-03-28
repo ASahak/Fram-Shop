@@ -1,0 +1,43 @@
+<div class="tabChangeSettings">
+    <form action="" id="my-profile" (ngSubmit)="updateUser(formModificarProfile)" #formModificarProfile="ngForm">
+        <h3>{{'myAccount.my_profile' | translate}}</h3>
+        <div class="form-group">
+            <label>{{'header.regForm.fName' | translate}}</label>
+            <input type="text" class="form-control" name="firstName" [(ngModel)]="userData.firstName" required>
+            <span style="color:red;" [hidden]="userData.firstName!=''">{{'myAccount.myProfile.requireFName' | translate}}</span>
+        </div>
+        <div class="form-group">
+            <label>{{'header.regForm.lName' | translate}}</label>
+            <input type="text" class="form-control" name="lastName" [(ngModel)]="userData.lastName" required>
+            <span style="color:red;" [hidden]="userData.lastName!=''">{{'myAccount.myProfile.requireLName' | translate}}</span>
+        </div>
+        <div class="form-group">
+            <label >{{'myAccount.myProfile.avatar' | translate}}</label>
+            <div class="uploadImage">
+                <div class="uploadedImage">
+                    <img [src]="(userData.imgAvatar)?userData.imgAvatar:'./assets/img/user.jpg'" height="200" class="img-fluid">
+                </div>
+                <div class="progress mt-3">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'"
+                        [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+            <div class="file d-flex flex-column flex-sm-row justify-content-between mt-4">
+                <label class="file-label">
+                    <input class="file-input" accept='image/*' #avatarImage type="file" name="avatar" (change)="upload($event)">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <span class="lnr lnr-upload"></span>
+                        </span>
+                        <span class="file-label">
+                            {{'myAccount.myProfile.choseIMG' | translate}}
+                        </span>
+                    </span>
+                </label>
+                <span style="color:red;" *ngIf="message">{{message}}</span>
+            </div>
+        </div>
+        <button type="submit" [disabled]="!formModificarProfile.valid" class="saveChanges"> {{'myAccount.myProfile.save' | translate}}</button>
+    </form>
+</div>

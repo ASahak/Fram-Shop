@@ -1,0 +1,27 @@
+<section id="partners" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <span>{{'header.navBar.button5' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row border_together">
+                <div class="col-12 col-sm-4 col-md-3 partnersBlock"  *ngFor="let item of partnersData">
+                    <div class="partner">
+                        <img src="./assets/img/partners/{{item.img}}.png" class="img-fluid" alt="">
+                        <div>
+                            <p>{{item.companyName}}</p>
+                            <p>{{item.description}}</p>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

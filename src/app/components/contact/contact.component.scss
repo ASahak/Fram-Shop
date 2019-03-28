@@ -1,0 +1,186 @@
+@import '../../../globalSCSS/extends';
+@import '../../../globalSCSS/globalSCSS';
+
+#contact{
+    margin-top: 20px;
+    .top-direction{
+        margin-bottom: 20px;
+        .dicrection-path{
+            padding: 10px;
+            background-color: $highWayBG;
+            a{
+                text-decoration: none;
+                color: $dark;
+                position: relative;
+                &:after{
+                    margin:0 5px;
+                    position: relative;
+                    content: "»";
+                }
+                span{
+                    margin-right: 3px;
+                }
+            }
+            span{
+                color: $grey;
+            }
+
+        }
+    }
+    .common-section-form{
+        padding: 20px 10px;
+        box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+        background-color: #fff;
+        .parts-form-top{
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            .parts-contact-info{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                a{
+                    color: $grey;
+                    text-decoration: none;
+                }
+                b{
+                    padding: 10px 0;
+                }
+                p{
+                    text-align: center;
+                    margin-bottom: 0;
+                }
+                color: $grey;
+            }
+        }
+        .parts-form-bottom{
+            padding-top: 20px;
+            #sendMessageForm{
+                padding: 25px 0;
+                width: 60%;
+                margin: auto;
+                > div{
+                    margin-bottom: 45px;
+                    display: flex;
+                    justify-content: space-between;
+                    .focus-element{
+                        label{
+                            font-size: 12px;
+                            top: -15px !important;
+                        }
+                        &:before{
+                            width: calc(100% - 10px) !important;
+                        }
+                    }
+                    .inputs-wrap{
+                        width: 100%;
+                        padding:0 10px;
+                        position: relative;
+                        &:before{
+                            transition: .4s;
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            content: "";
+                            margin: auto;
+                            width: 0;
+                            height: 2px;
+                            background-color: #689F38;
+                            bottom: -10px;
+                        }
+                        &:after{
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            content: "";
+                            margin: auto;
+                            width: calc(100% - 10px);
+                            height: 0.8px;
+                            background-color: $green;
+                            bottom: -9px;
+                        }
+                        input{
+                            width: 100%;
+                            border: none;
+                            outline: none;
+                        }
+                        label{
+                            position: absolute;
+                            bottom: 0;
+                            left:15px;
+                            margin-bottom: 0;
+                            top: 0;
+                            margin: auto;
+                            color: #a29e9e;
+                            cursor: auto;
+                            transition: .4s;
+                        }
+                    }
+                }
+                .send-msg-button{
+                    box-shadow:0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+                    cursor: pointer;
+                    background-color:$green;
+                    color: #fff;
+                    border: none;
+                    padding: 5px 10px;
+                    border-radius: 3px;
+                    transition: .4s;
+                    margin: auto;
+                    display: block;
+                    &:hover{
+                        background-color: $greenRGBA;
+                    }
+                }
+            }
+        }
+    }
+}
+@media #{$md-device}{
+    #contact{
+        .common-section-form{
+            .parts-form-bottom{
+                #sendMessageForm{
+                    width: 90%;
+                }   
+            }
+        }
+    }
+}
+@media #{$sm-deviceMax}{
+    #contact{
+        .common-section-form{
+            .parts-form-top{
+                .parts-contact-info{
+                    margin-bottom: 10px;
+                }   
+            }
+            .parts-form-bottom{
+                #sendMessageForm{
+                    width: 100%;
+                    .inputs-wrap{
+                        &:after{
+                            bottom: -10px !important;
+                        }
+                    }
+                }   
+            }
+        }
+    }
+}
+@media #{$col}{
+    #contact{
+        .common-section-form{
+            .parts-form-bottom{
+                #sendMessageForm{
+                    .first-row{
+                        flex-direction: column;
+                        margin-bottom: 0;
+                        .inputs-wrap{
+                            margin-bottom: 45px;
+                         }   
+                    }
+                }   
+            }
+        }
+    }
+}

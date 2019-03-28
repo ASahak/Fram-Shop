@@ -1,0 +1,45 @@
+@import '../../../../globalSCSS/extends';
+@import '../../../../globalSCSS/globalSCSS';
+
+
+.partnersTitle{
+    position: relative;
+    margin-bottom: 25px;
+    &::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        width: 75px;
+        background-color: $green;
+        margin: auto;
+        bottom: -6px;
+    }
+}
+.swiper_partners_home{
+    .pr_butt_slider{
+        background-image: none;
+        span{
+            font-size: 20px;
+            height: 35px;
+            width: 35px;
+            background-color: $green;
+            display: inline-flex;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+            top: 5px;
+        }
+    }
+    .swiper-slide{
+        img{
+            border:1px solid $green;
+            height: 70px;
+            padding: 10px;
+            width: 100%;
+        }
+    }
+}

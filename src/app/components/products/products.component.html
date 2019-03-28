@@ -1,0 +1,386 @@
+<section id="products_page" class="mt-4 product_slide_cont">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <a routerLink="/shop"> {{'header.navBar.button2.main' | translate}}</a>
+                        <span>Products 1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="prodLeft">
+                    <div class="swiper-container prod-slider-large">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide imgBox " #imgBoxZoom>
+                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod1.png" src="./assets/img/products/prod1.png">
+                            </div>
+                            <div class="swiper-slide imgBox" #imgBoxZoom>
+                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod2.png" src="./assets/img/products/prod2.png">
+                            </div>
+                            <div class="swiper-slide imgBox" #imgBoxZoom>
+                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod3.png" src="./assets/img/products/prod3.png">
+                            </div>
+                            <div class="swiper-slide imgBox" #imgBoxZoom>
+                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod4.png" src="./assets/img/products/prod4.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-container prod-slider-thumb">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide med_prod_slider_borard">
+                                <img alt="framShop" data-slide-to="0" class="swipe-slide-to img-fluid" src="./assets/img/products/prod1.png">
+                            </div>
+                            <div class="swiper-slide med_prod_slider_borard">
+                                <img alt="framShop" data-slide-to="1" class="swipe-slide-to img-fluid" src="./assets/img/products/prod2.png">
+                            </div>
+                            <div class="swiper-slide med_prod_slider_borard">
+                                <img alt="framShop" data-slide-to="2" class="swipe-slide-to img-fluid" src="./assets/img/products/prod3.png">
+                            </div>
+                            <div class="swiper-slide med_prod_slider_borard">
+                                <img alt="framShop" data-slide-to="3" class="swipe-slide-to img-fluid" src="./assets/img/products/prod4.png">
+                            </div>
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next thumb-arrow-right"><i class="lnr lnr-chevron-right "></i></div>
+                        <div class="swiper-button-prev thumb-arrow-left"><i class="lnr lnr-chevron-left"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3 col-md-6">
+                <div class="right_prod">
+                    <h3 class="mb-3 product_name">Product 1</h3>
+                    <p class="text-muted">{{'productSingle.categ' | translate}} <span class="text-dark">Electronics</span></p>   
+                    <h5  class="mt-2 mb-1">{{'productSingle.rating' | translate}}</h5>
+                    <div class="ratingStars">
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                    </div>
+                    <div class="discountWrap">
+                        <h5 class="mt-2 mb-1">{{'productSingle.price' | translate}}</h5>
+                        <p class="mb-0"><font class="text-muted">{{'productSingle.discount' | translate}}</font> -15%</p>
+                        <p class="common_ammount_prod">
+                            <del>1300$</del> 
+                            <font>1000$</font>
+                        </p>   
+                    </div>
+                    <hr>
+                    <div class="colors_wrap">
+                        <p class="mb-0"><font class="text-muted">{{'productSingle.color' | translate}}</font></p>
+                        <div class="each_colors" #each_colors>
+                            <span (click)="selectColorProds(0)" style="background-color:blueviolet"></span>
+                            <span (click)="selectColorProds(1)" style="background-color:brown"></span>
+                            <span (click)="selectColorProds(2)" style="background-color:green"></span>
+                        </div>
+                    </div>
+                    <div class="add_cart_wrap mt-2">
+                        <p class="mb-0"><font class="text-muted">{{'productSingle.quantity' | translate}}</font></p>
+                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                            <div class="count-product-input">
+                                <input class="productCount" type="number" value="1">
+                                <p class="up-down-arrows d-flex flex-column">
+                                    <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                </p>
+                            </div>
+                            <button class="add-to-cart">
+                                <span class="lnr lnr-cart"></span>
+                                {{'relatedSec.addButton' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 col-sm-6 col-md-12">
+                <div class="services_prod">
+                    <div class="d-flex align-items-center">
+                        <img src="./assets/img/services1.png" alt="">
+                        <div class="descServices">
+                            <b class="d-block">{{ 'servicePart.part1Tit' | translate }}</b>
+                            <p class="text-muted mb-0">{{ 'servicePart.part1SubTit' | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="./assets/img/services2.png" alt="">
+                        <div class="descServices">
+                            <b class="d-block">{{ 'servicePart.part2Tit' | translate }}</b>
+                            <p class="text-muted mb-0">{{ 'servicePart.part2SubTit' | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="./assets/img/services3.png" alt="">
+                        <div class="descServices">
+                            <b class="d-block">{{ 'servicePart.part3Tit' | translate }}</b>
+                            <p class="text-muted mb-0">{{ 'servicePart.part3SubTit' | translate }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img src="./assets/img/services4.png" alt="">
+                        <div class="descServices">
+                            <b class="d-block">{{ 'servicePart.part4Tit' | translate }}</b>
+                            <p class="text-muted mb-0">{{ 'servicePart.part4SubTit' | translate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="description_product">
+                    <div class="header_desc">
+                        <h3>{{ 'productSingle.description' | translate }}</h3>
+                    </div>
+                    <div class="desc_txt">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id nulla metus. Maecenas commodo turpis dui, porttitor tincidunt enim mollis a. Curabitur eu velit mi. Nullam congue turpis id metus sollicitudin, id cursus nulla laoreet. Proin commodo eu felis at malesuada. Nulla ac facilisis justo, eget vulputate ex. Nulla nec laoreet nulla. Cras auctor leo at diam congue, quis convallis urna pulvinar. Nunc ut mi nulla. Nunc ligula massa, vulputate sed scelerisque sit amet, dapibus semper est. Sed sed blandit turpis. Vestibulum id porttitor ligula, at iaculis ligula. Pellentesque vel tellus sit amet mauris aliquet bibendum id et lorem.</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="swiper-container swiper_related_prod">
+                    <div class="swiperArrows">
+                        <h4>{{'relatedSec.title' | translate}}</h4>
+                        <div class="scn-icons-cont">
+                            <span class="custom-slide-button customR-prev"><i class="lnr lnr-chevron-left"></i></span>
+                            <span class="custom-slide-button customR-next"><i class="lnr lnr-chevron-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="swiper-wrapper ">
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <span class="sale-badge">-20%</span>
+                                <a (click)="refresh();" routerLink="/products/1" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod1.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p>Jewellery</p>
+                                        <p>Products 1</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star"></span>
+                                        <span class="lnr lnr-star"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <a (click)="refresh();" routerLink="/products/2" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod2.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p> Clothes</p>
+                                        <p>Products 2</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star"></span>
+                                        <span class="lnr lnr-star"></span>
+                                        <span class="lnr lnr-star"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <a (click)="refresh();" routerLink="/products/3" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod3.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p>For Home</p>
+                                        <p>Products 3</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <a (click)="refresh();" routerLink="/products/4" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod4.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p>Dresses</p>
+                                        <p>Products 4</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star"></span>
+                                        <span class="lnr lnr-star"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <a (click)="refresh();" routerLink="/products/5" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod5.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p>Motors</p>
+                                        <p>Products 5</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide p-1">
+                            <div class="products-fram">
+                                <a (click)="refresh();" routerLink="/products/6" class="d-block text-center" href="javascript:void(0)">
+                                    <img src="./assets/img/products/prod6.png" class="img-fluid" alt="">
+                                    <div class="name-and-section">
+                                        <p>Electronics</p>
+                                        <p>Products 6</p>
+                                    </div>
+                                </a>
+                                <hr>
+                                <div class="price-and-rating d-flex justify-content-between">
+                                    <div class="product-price d-flex flex-column align-items-start">
+                                        <del class="text-muted">1300$</del>
+                                        <span>1000$</span>
+                                    </div>
+                                    <div class="product-ratings">
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star appreciated"></span>
+                                        <span class="lnr lnr-star"></span>
+                                        <span class="lnr lnr-star"></span>
+                                    </div>
+                                </div>
+                                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                                    <div class="count-product-input">
+                                        <input class="productCount" type="number" value="1">
+                                        <p class="up-down-arrows d-flex flex-column">
+                                            <span class="lnr lnr-chevron-up"></span>
+                                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                                        </p>
+                                    </div>
+                                    <button class="add-to-cart">
+                                        <span class="lnr lnr-cart"></span>
+                                        {{'relatedSec.addButton' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

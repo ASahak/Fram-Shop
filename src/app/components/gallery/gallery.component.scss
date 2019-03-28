@@ -1,0 +1,231 @@
+@import '../../../globalSCSS/extends';
+@import '../../../globalSCSS/globalSCSS';
+
+
+
+@mixin itemWidth($device) {
+    @if $device == col {
+      @media #{$col} { @content; }
+    }
+    @else if $device == small {
+      @media #{$sm-device} { @content; }
+    }
+    @else if $device == medium {
+      @media #{$md-device}  { @content; }
+    }
+    @else if $device == large {
+        @media #{$lg-device}  { @content; }
+    }
+    @else if $device == extraLarge {
+        @media #{$xl-device}  { @content; }
+    }
+  
+}
+#gallery{
+
+    .top-direction{ 
+        margin-bottom: 20px;
+        .dicrection-path{
+            padding: 10px;
+            background-color: $highWayBG;
+            a{
+                text-decoration: none;
+                color: $dark;
+                position: relative;
+                &:after{
+                    margin:0 5px;
+                    position: relative;
+                    content: "»";
+                }
+                span{
+                    margin-right: 3px;
+                }
+            }
+            span{
+                color: $grey;
+            }
+            
+        }
+    }
+    .categories-gallery{
+        padding: 10px;
+        background-color: $highWayBG;
+        position: relative;
+        &:after{
+            content: "";
+            position: absolute;
+            top: var(--topActive);
+            left: 10px;
+            transition: .4s;
+            width: calc(100% - 20px);
+            height: var(--heightActive);
+            background-color: #fff;
+            z-index: 0;
+        }
+        li{
+            position: relative;
+            z-index: 1;
+            span{
+                padding: 2px;
+                display: block;
+                cursor: pointer;
+                padding-left: 10px;
+                transition: .4s;
+            }
+            .active_categ{
+                // background-color: #fff;
+            }
+        }
+    }
+    .izotopeCol{
+        
+
+        >div{
+            display: inline-block;
+            transition: .7s;
+            @include itemWidth(col) {width: 100%;}
+            @include itemWidth(small) {width: 50%;}
+            @include itemWidth(medium) {width: 33.3%;}
+            @include itemWidth(large) {width: 25%;}
+            @include itemWidth(extraLarge) {width: 25%;}
+            display: inline-block;
+            padding: 0 0 15px 15px;
+        }
+        .activeIzotope{
+            opacity: 1;
+        }
+        .disactiveIzotope{
+            height: 0px;
+            transition-property:height, width, opacity,transform;
+            opacity: 0;
+            transform: scale(0);
+            width: 0 !important;
+            padding: 0;
+        }
+        .gallBadge{
+            position: relative;
+            background-color: #fff;
+            cursor: pointer;
+            box-shadow: 0px 0px 2px 0px #ccc;
+            text-align: center;
+            img{
+                padding: 10px;
+            }
+            &:after{
+                content: "";
+                position: absolute;
+                left:0;
+                right: 0;
+                margin:auto;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.4);
+                opacity: 0;
+                transition: .4s;
+            }
+            &:hover:after{
+                opacity: 1;
+            }
+            &:hover .lnr-magnifier{
+                opacity: 1;
+                transform: scale(1.5)
+            }
+            .lnr-magnifier{
+                opacity: 0;
+                transition: .4s;
+                z-index: 22;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin:auto;
+                height: 20px;
+                width: 20px;
+                bottom: 0;
+                top: 0;
+                color: #fff;
+            }
+        }
+    }
+}
+.plugin_image_fancy {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 22445;
+    .topPanel {
+        background-color: #000;
+        padding: 15px;
+        .arrowsBlock{
+            text-align: center;
+            color: #fff;
+            span.lnr{
+                cursor: pointer;
+            }
+            span{
+                font-size: 20px;
+                margin: 5px;
+            }
+        }
+        .lnr-cross{
+            color: #fff;
+            font-size: 20px;
+            right: 20px;
+            position: absolute;
+            border: 1px solid #fff;
+            padding: 10px;
+            top: 5px;
+            cursor: pointer;
+        }
+    }
+    .preloaderFancy{
+        top: 0;
+        max-width: 90px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+    .fancyWrapper{
+        display: flex;
+        overflow: hidden;
+        height: 100%;
+        .slideFancyImages {
+            display: flex;
+            justify-content:start;
+            align-items: center;
+            transition: .4s;
+            max-width: 60%;
+            margin: auto;
+            z-index: 222;
+            position: relative;
+            .image_part {
+                width: 100%;
+                flex-shrink: 0;
+                text-align: center;
+                margin: auto 10px;
+                opacity: 0.5;
+                transition: .4s;
+                img{
+                    max-height: 100%;
+                }
+            }
+            .activeFancy{
+                opacity: 1 !important;
+            }
+        }
+    }
+}
+@media #{$col}{
+    
+    .izotopeCol{
+        >div{
+            .gallBadge{
+                margin: 15px !important;
+            }
+        }
+    }
+}

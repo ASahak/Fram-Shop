@@ -1,0 +1,54 @@
+<section id="cart_section">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <span>{{'cart.title' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="collapseTableResponsive">
+                    <table id="tableCart">
+                        <thead>
+                            <th>{{'cart.table.prodTh' | translate}}</th>
+                            <th>{{'cart.table.nameTh' | translate}}</th>
+                            <th>{{'cart.table.priceTh' | translate}}</th>
+                            <th>{{'cart.table.quantityTh' | translate}}</th>
+                            <th>{{'cart.table.totalTh' | translate}}</th>
+                            <th><button *ngIf="dataCart.length > 0" (click)="deleteAllItems()">{{'cart.table.clear' | translate}}</button></th>
+                        </thead>
+                        <tbody>
+                            <ng-container  *ngFor="let item of dataCart; let i = index">
+                                <tr *ngIf="i < pageItemsEnd && i >= (pageItemsEnd-pageinationCount)">
+                                    <td><img src="./assets/img/products/{{item.img}}" class="img-fluid" alt=""></td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.price | currency:'CAD':'symbol-narrow'}}</td>
+                                    <td>
+                                        <div class="add-and-remove">
+                                            <span class="minusCart" (click)="minusCartItem($event, i)">-</span>
+                                            <span class="countProducts">{{item.countProduct}}</span>
+                                            <span class="plusCart" (click)="plusCartItem($event, i)">+</span>
+                                        </div>
+                                    </td>
+                                    <td>{{item.countProduct * item.price | currency:'CAD':'symbol-narrow'}}</td>
+                                    <td><span class="lnr lnr-cross" (click)="deleteItem(item, i)"></span></td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>   
+                </div>
+                <div class="totalAmount" *ngIf="dataCart.length > 0" >
+                    {{'cart.table.totPrice' | translate}} <b>{{totalPrices | currency:'CAD':'symbol-narrow'}}</b>
+                </div>
+                <div class="paginationCart" #pageElement>
+                    <a *ngFor="let page of [].constructor(countPageinationLength); let i = index" [class.activePage]="i == 0" href="javascript:void(0)" (click)="pageClick(i)">{{i+1}}</a>
+                </div>
+            </div> 
+        </div>
+    </div>
+</section>

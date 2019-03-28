@@ -1,0 +1,197 @@
+{
+    "header":{
+        "languageENG": "English",
+        "languageARM": "Armenian",
+        "hotline" : "Hotline:",
+        "welcomeStatus":"Welcome to our market!",
+        "signIN":"Sign in",
+        "signOUT":"Sign out",
+        "account":"Account",
+        "shopCart":"Shopping Cart",
+        "serach":"Search item...",
+        "navBar":{
+            "button1":"Home",
+            "button2":{
+                "main":"Product",
+                "childrens":{
+                    "all":"All",
+                    "button2_1":"Jewellery",
+                    "button2_2":"Shoes",
+                    "button2_3":"For Home",
+                    "button2_4":"Dresses",
+                    "button2_5":"Motors",
+                    "button2_6":"Electronics"
+                }
+            },
+            "button3":"About Us",
+            "button4":"Contact Us",
+            "button5":"Partenrs",
+            "button6":"Gallery"
+        },
+        "loginForm":{
+            "title":"LOGIN FORM:",
+            "namePlace":"Username",
+            "passPlace":"Password",
+            "forgetTxt":"Forgot your password?",
+            "loginButton":"LOG IN",
+            "orRegButton":"Or Register"
+        },
+        "regForm":{
+            "title":"Register Form:",
+            "fName":"First Name",
+            "lName":"Last Name",
+            "email":"Email",
+            "wrongEmailMsg":"Wrong Email address",
+            "confirmMsg":"Passwords arn't same",
+            "password":"Passwor",
+            "passMoreThenSix":"Password must be 6 chars minimal",
+            "confPassword":"Confirm Passwor",
+            "regButton":"Register"
+        }
+    },
+    "resetPass":{
+        "title":"Reset Password",
+        "emailTit":"E-mail",
+        "newPassTit":"New Password",
+        "checkEmail":"Check Your E-mail Address",
+        "saveButt":"Save"
+    },
+    "slider":{
+        "slider1Tit":"The biggest sale",
+        "slider1SubTit":"Special for today",
+        "slider2Tit":"The Watches for You",
+        "slider2SubTit":"Buy Now...",
+        "slider3Tit":"Clothes from Brand",
+        "slider3SubTit":"Appreciated quality",
+        "slider4Tit":"Slide and Felxable",
+        "slider4SubTit":"Wear and like it",
+        "slider5Tit":"Come with me!",
+        "slider5SubTit":"Just Now! Hurry."
+    },
+    "servicePart":{
+        "part1Tit":"BONUS PLUS",
+        "part1SubTit":"Make fun of shopping and collect bonuses",
+        "part2Tit":"FREE SHIPPING",
+        "part2SubTit":"Free shipping on all orders over $99",
+        "part3Tit":"MONEY BACK GUARANTEE",
+        "part3SubTit":"30 Days money return guarantee",
+        "part4Tit":"ONLINE SUPPORT 24/7",
+        "part4SubTit":"Call us: (+100) 123 456 7890"
+    },
+    "shopCategories":{
+        "cat1Tit":"New Electronics",
+        "cat1SubTit":"Now starting at $1299",
+        "cat2Tit":"Motors for your car",
+        "cat2SubTit":"Now starting at $54",
+        "cat3Tit":"Made your Home lovely",
+        "cat3SubTit":"Now starting at $354",
+        "cat4Tit":"New Dresses",
+        "cat4SubTit":"Now starting at $149",
+        "cat5Tit":"Shoes for you",
+        "cat5SubTit":"Now starting at $89",
+        "cat6Tit":"Give Your wife",
+        "cat6SubTit":"Now starting at $1354",
+        "catButton":"Shop Now"
+    },
+    "relatedSec":{
+        "title":"Related Products",
+        "addButton":"Add Cart"
+    },
+    "partnersHome":{
+        "title":"Our Partners"
+    },
+    "footer":{
+        "title1":"Useful Links",
+        "title2":"Contact information",
+        "workingDays":"Mon - Sun / 9:00AM - 8:00PM",
+        "address":"2903 Avenue Z, Brooklyn, New York City",
+        "copyRight":"Copyright © {{year}} All Rights Reserved",
+        "development":"Design and Development by",
+        "developer":"Arthur"
+    },
+    "aboutUS":{
+        "p1":"On this website’s main page you will find everything lifestyle related – fashion, food, beauty, home decor and more.",
+        "p2":"But it’s the About section that introduces you to the team that makes this website an endless source of inspiration.",
+        "p3":"The page introduces founder Emily Schuman, as well as her blog, books, and fashion collection.",
+        "p4":"No problem – the page also features useful links to her social media pages, as well as her online shop.",
+        "name":"Fram Shop",
+        "bottomTxt":"Want to stay in touch?"
+    },
+    "contactUs":{
+        "iconTxt1":"Address:",
+        "iconTxt2":"Phone:",
+        "iconTxt3":"E-mail:",
+        "form":{
+            "name":"Name*",
+            "email":"E-mail*",
+            "phone":"Phone*",
+            "message":"Message*"
+        },
+        "submit":"Submit"
+    },
+    "shop":{
+        "filter":"Filters",
+        "price":"Price",
+        "categories":"Categories",
+        "showTxt":"Show",
+        "sorting":{
+            "default":"Sort by Default",
+            "af":"A-F",
+            "fa":"F-A",
+            "lfirst":"Lowest first",
+            "hfirst":"Highest first"
+        }
+    },
+    "productSingle":{
+        "categ":"Category:",
+        "rating":"Ratings:",
+        "price":"Price:",
+        "discount":"Discount:",
+        "color":"Color:",
+        "quantity":"Quantity:",
+        "description":"Description"
+
+    },
+    "cart":{
+        "title":"Cart",
+        "table":{
+            "prodTh":"Product",
+            "nameTh":"Name",
+            "priceTh":"Price",
+            "quantityTh":"Quantity",
+            "totalTh":"Total",
+            "clear":"Clear All",
+            "totPrice":"Total Price:"
+        }
+    },
+    "myAccount":{
+        "title":"My Account",
+        "profileLegend":"Profile",
+        "my_profile":"My Profile",
+        "accSetting":"Account Settings",
+        "myProfile":{
+            "avatar":"Avatar",
+            "choseIMG":"Choses image...",
+            "save":"Save",
+            "requireFName":"First Name is required",
+            "requireLName":"Last Name is required"
+        },
+        "accountSettings":{
+            "title":"Account Settings",
+            "newPass":"New Password",
+            "repPass":"Repeat Password",
+            "oldPass":"Old Password",
+            "passMSG":{
+                "diferentPass":"Passwords arn't same",
+                "emptyPass":"Password cannot be empty",
+                "wrongPass":"Wrong password",
+                "oldPass":"Old Password cannot be empty"
+            },
+            "delAccount":"Delete Account",
+            "delDesc":"This action cannot be undone. This will permanently delete the Account, wiki, issues, and comments, and remove all collaborator associations. Please type in the password of the Account to confirm.",
+            "passReq":"Password is Required",
+            "passWrong":"Wrong Password",
+            "delete":"Delete"
+        }
+    }
+}

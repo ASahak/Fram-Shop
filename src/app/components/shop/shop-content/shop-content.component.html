@@ -1,0 +1,58 @@
+<div class="row padding_mobile_none">
+    <ng-container *ngFor="let itemID of _allProducts | keyvalue">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
+        *ngFor="let item of _allProducts[itemID.key] | keyvalue"
+        [attr.dat-id-prod]="itemID.key"
+        >
+            <div class="products-fram">
+                <span class="sale-badge" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{'-' + item.value.prodSale + '%'}}</span>
+                <a  routerLink="/products/{{item.value.idProduct}}" class="d-block text-center" href="javascript:void(0)">
+                    <img [src]="item.value.prodImgs[0] ? item.value.prodImgs[0] : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt="">
+                    <div class="name-and-section">
+                        <p>{{item.value.prodType}}</p>
+                        <p>{{item.value.prodName}}</p>
+                    </div>
+                </a>
+                <hr>
+                <div class="price-and-rating d-flex justify-content-between">
+                    <div class="product-price d-flex flex-column align-items-start">
+                        <del class="text-muted">{{item.value.prodPrice + "$"}}</del>
+                        <span>1000$</span>
+                    </div>
+                    <div class="product-ratings">
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star appreciated"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                    </div>
+                </div>
+                <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
+                    <div class="count-product-input">
+                        <input class="productCount" type="number" value="1">
+                        <p class="up-down-arrows d-flex flex-column">
+                            <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
+                            <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
+                        </p>
+                    </div>
+                    <button class="add-to-cart">
+                        <span class="lnr lnr-cart"></span>
+                        {{'relatedSec.addButton' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<div class="row padding_mobile_none" #pageinationWrap>
+    <div class="col-12 pl-0">
+        <div class="pageination_shop">
+            <a href="javascript:void(0)" class="disabled_page"><i class="lnr lnr-arrow-left"></i></a>
+            <a href="javascript:void(0)" class="active_page">1</a>
+            <a href="javascript:void(0)">2</a>
+            <a href="javascript:void(0)">3</a>
+            <a href="javascript:void(0)">4</a>
+            <a href="javascript:void(0)"><i class="lnr lnr-arrow-right"></i></a>
+        </div>
+    </div>   
+</div>

@@ -1,0 +1,35 @@
+<div class="tabChangeSettings">
+    
+    <form id="account-setting" (ngSubmit)="updatePassword(formModificarAccount)" #formModificarAccount="ngForm">
+        <h3>{{'myAccount.accountSettings.title' | translate}}</h3>
+        <p>{{'myAccount.accountSettings.chngPass' | translate}}</p>
+        <!-- <div class="form-group">
+            <label for="">{{'myAccount.accountSettings.newPass' | translate}}</label>
+            <input class="form-control" (input)="newPassAndIsSameConfirm()" required minlength="6" name="newPassword" [(ngModel)]="newPassword" type="password">
+            <span [hidden]="showRegFormPassLargeThenSix" style="color:red">{{'header.regForm.passMoreThenSix' | translate}}</span>
+        </div>
+        <div class="form-group">
+            <label for="">{{'myAccount.accountSettings.repPass' | translate}}</label>
+            <input class="form-control" required (input)="repeatPassInput()" name="repeatPassword" [(ngModel)]="repeatPassword" type="password">
+            <span [hidden]="isSamePassMSG" style="color:red">{{'myAccount.accountSettings.passMSG.diferentPass' | translate}}</span>
+            <span [hidden]="!isEmptyPassMSG" style="color:red">{{'myAccount.accountSettings.passMSG.emptyPass' | translate}}</span>
+        </div>
+        <div class="form-group">
+            <label for="">{{'myAccount.accountSettings.oldPass' | translate}}</label>
+            <input class="form-control" required (input)="oldPassInput()" name="oldPassword" [(ngModel)]="oldPassword" type="password">
+            <span [hidden]="currecntPassMSG" style="color:red">{{'myAccount.accountSettings.passMSG.wrongPass' | translate}}</span>
+            <span [hidden]="!isEmptyOldPassMSG" style="color:red">{{'myAccount.accountSettings.passMSG.oldPass' | translate}}</span>
+        </div> -->
+        <button type="submit"  [disabled]="!formModificarAccount.valid || !isSamePassMSG || isEmptyPassMSG || 
+        !currecntPassMSG || isEmptyOldPassMSG" class="saveChanges">{{'myAccount.accountSettings.sndToEMail' | translate}}</button>
+    </form>
+
+</div>
+<div class="tabChangeSettings">
+    <h3>{{'myAccount.accountSettings.delAccount' | translate}}</h3>
+    <p>{{'myAccount.accountSettings.delDesc' | translate}}</p>
+    <input class="form-control" (input)="deleteInputPass()" [(ngModel)]="deletePassword" placeholder="password" type="password">
+    <span [hidden]="passRequiredMSG !=''" style="color:red">{{'myAccount.accountSettings.passReq' | translate}}</span>
+    <span [hidden]="wrongPassDelMSG" style="color:red">{{'myAccount.accountSettings.passWrong' | translate}}</span>
+    <button (click)="deleteAccount()" class="deleteAcountButton">{{'myAccount.accountSettings.delete' | translate}}</button>
+</div>

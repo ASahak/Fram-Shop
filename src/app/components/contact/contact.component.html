@@ -1,0 +1,64 @@
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-direction">
+                    <div class="dicrection-path">
+                        <a routerLink="/home"><span class="lnr lnr-home"></span>{{'header.navBar.button1' | translate}}</a>
+                        <span>{{'header.navBar.button4' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="common-section-form">
+                    <div class="parts-form-top">
+                        <div class="row">
+                            <div class="col-12 col-sm-4 parts-contact-info">
+                                <img src="./assets/img/contact/icon1.png" class="img-fluid">
+                                <b>{{'contactUs.iconTxt1' | translate}}</b>
+                                <p>{{'footer.address' | translate}}</p>
+                            </div>
+                            <div class="col-12 col-sm-4 parts-contact-info">
+                                <img src="./assets/img/contact/icon2.png" class="img-fluid">
+                                <b>{{'contactUs.iconTxt2' | translate}}</b>
+                                <p><a href="tel:(212)4572308">(212) 457-2308</a></p>
+                                <p><a href="tel:(212)4572309">(212) 457-2309</a></p>
+                            </div>
+                            <div class="col-12 col-sm-4 parts-contact-info">
+                                <img src="./assets/img/contact/icon3.png" class="img-fluid">
+                                <b>{{'contactUs.iconTxt3' | translate}}</b>
+                                <p><a href="emailto:contact@framshop.com">contact@fram-shop.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="parts-form-bottom">
+                        <h3 class="mt-2 mb-2 text-center">{{'header.navBar.button4' | translate}}</h3>
+                        <form action="" id="sendMessageForm">
+                            <div class="first-row">
+                                <div class="inputs-wrap">
+                                    <input type="text" name="nameUser" (focusout)="labelScaleOut()" (focus)="labelScale()"id="name-input" required>
+                                    <label (click)="focusInput($event)" for="name-input">{{'contactUs.form.name' | translate}}</label>
+                                </div>
+                                <div class="inputs-wrap">
+                                    <input type="text"  name="emailUser" (focusout)="labelScaleOut()" (focus)="labelScale()" id="email-input" required>
+                                    <label (click)="focusInput($event)" for="email-input">{{'contactUs.form.email' | translate}}</label>
+                                </div>
+                                <div class="inputs-wrap">
+                                    <input type="text"  name="phoneUser" (keypress)="onlyNumber($event)" (focusout)="labelScaleOut()" (focus)="labelScale()"id="phone-input" required>
+                                    <label (click)="focusInput($event)" for="phone-input">{{'contactUs.form.phone' | translate}}</label>
+                                </div>
+                            </div>
+                            <div class="second-row">
+                                <div class="inputs-wrap">
+                                    <input type="text" (focusout)="labelScaleOut()" (focus)="labelScale()"id="message-input" required>
+                                    <label (click)="focusInput($event)" for="message-input">{{'contactUs.form.message' | translate}}</label>
+                                </div>
+                            </div>
+                            <input type="submit" class="send-msg-button" value="{{'contactUs.submit' | translate}}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>  

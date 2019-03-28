@@ -1,0 +1,13 @@
+<div class="loginForm" [class.showForm]="isShowBoolean"> 
+    <h3 class="headerForm text-left">{{'header.loginForm.title' | translate}}</h3>
+    <form name="" action="" method="" #loginForm="ngForm" (ngSubmit)="signIn(loginForm)"  id="loginForma" class="d-flex align-items-start flex-column">
+        <input type="text" name="username" [(ngModel)]="logForm.username"  placeholder="{{ 'header.loginForm.namePlace' | translate}}"  required>
+        <input type="password" name="password" [(ngModel)]="logForm.password"  placeholder="{{ 'header.loginForm.passPlace' | translate}}" required>
+        <a href="javascript:void(0)" (click)="__goResetPass()" routerLink="/reset-password">{{ 'header.loginForm.forgetTxt' | translate}}</a>
+        <p class="mb-0 d-flex align-items-center position-relative w-100">
+            <button type="submit" [disabled]="!loginForm.valid" class="loginButton">{{ 'header.loginForm.loginButton' | translate}}</button>
+            <span *ngIf="loadingGIF" class="loadingGIF"></span>
+        </p>
+        <a href="javascript:void(0)" class="registerFunc goRegister">{{ 'header.loginForm.orRegButton' | translate}}</a> 
+    </form>    
+</div>  

@@ -1,0 +1,9 @@
+<div class="colorEach" >
+  <i *ngIf="_selectedColors.length == 0">Select min one color</i>
+  <span class="selectedColorWrap" *ngFor="let color of _selectedColors" [ngStyle]="{'background-color':color}">
+  </span>
+  <span class="selectNotNatural"></span>
+  <div class="colorExtenstion scroll_thumb" [hidden]="!_appearColors">
+      <span *ngFor="let col of _colorsArr" #activeColor (click)="_selectedColorArr(col, activeColor)" [ngStyle]="{'background-color':col}"></span>
+  </div>
+</div>

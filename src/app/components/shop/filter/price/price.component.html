@@ -1,0 +1,8 @@
+<ng-container>
+    <div class="price_component">
+        <h5>{{'shop.price' | translate}}</h5>
+        <div class="custom-slider">
+            <ng5-slider (valueChange)="getAllValue(minValue, maxValue)" [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,129 @@
+<!-- <div *ngIf="userTodo | async as userT">
+    <p>{{userT.name}}
+    <input type="text" [(ngModel)]="user.name"></p>
+    <p>{{userT.age}}
+        <input type="number" [(ngModel)]="user.age"></p>
+    <p>{{userT.birthday}}
+        <input type="text" [(ngModel)]="user.birthday"></p>
+    <button (click)="chenageUser()">Change</button> 
+</div> -->
+
+<header [ngClass]="{'fixedHeader':topHide}">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="topPanel d-flex justify-content-between align-items-center" [ngStyle]="topHide && {'height':0, 'overflow':'hidden', 'opacity':0}">
+                    <p class="phoneHeader">
+                        <span class="lnr lnr-phone"></span>
+                        {{ 'header.hotline' | translate }} (+374) 94 12-96-04
+                    </p>
+                    <p>
+                        {{ 'header.welcomeStatus' | translate }}
+                    </p>
+                    <div class="rightSectionUser d-flex align-items-center">
+                        <div class="langBar"  (click)="selectLang($event)">
+                            <a href="javascript:void(0)"  class="changeLangualge">
+                                <img [src]="langIMG" alt="english"> {{langTXT}}
+                                <span class="lnr lnr-chevron-down"></span>
+                            </a> 
+                            <span class="langDropdown" [hidden]="selectLanguage">
+                                <a href="javascript:void(0)" (click)="switchLanguage('en', lang1, $event)">
+                                    <img src="./assets/img/flag1.png" alt="english" #lang1> {{ 'header.languageENG' | translate }}
+                                </a>
+                                <a href="javascript:void(0)" (click)="switchLanguage('am', lang2, $event)">
+                                    <img src="./assets/img/flag2.png" alt="armenian" #lang2> {{ 'header.languageARM' | translate }}
+                                </a>
+                            </span>
+                        </div>
+                        <a href="javascript:void(0)" (click)="showLogin()" class="signInClick" *ngIf="!isLogin;else Loginelse"><span class="lnr lnr-enter"></span> {{ 'header.signIN' | translate }}</a>   
+                        <ng-template *ngIf="isClickedLogin; then loginAndRegister"></ng-template>
+                        <ng-template #loginAndRegister>
+                            <div class="loginFormReader"> 
+                                <app-login-form (showLogin)="passShowLogin($event)" [isShowBoolean]='showLoginForm'></app-login-form>
+                                <app-register-form (showReg)="passShowReg($event)" [isShowBoolean]='showRegForm'></app-register-form> 
+                            </div>
+                        </ng-template>
+                        <ng-template #Loginelse>
+                            <div class="userBlock" >
+                                <a href="javascript:void(0)"  (click)="userOpen($event)" class="userOpenButton">
+                                    <span class="lnr lnr-user"></span>
+                                    {{ 'header.account' | translate }}
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </a>
+                                <div class="userWrapper" [hidden]="userWrap">
+                                    <a class="accountWrap" routerLink="/my-account/{{userData.id}}">
+                                        <img [src]="(userData.imgAvatar)?userData.imgAvatar:'./assets/img/user.jpg'" alt="user">
+                                        <span>{{userData.firstName + ' ' + userData.lastName}}</span>
+                                    </a>
+                                    <hr>
+                                    <a href="javascript:void(0)" class="signOut" (click)="signOut()"> <span class="lnr lnr-exit"></span>{{ 'header.signOUT' | translate }}</a>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="middlePanel d-flex align-items-center justify-content-between">
+                    <div class="logoWrap order-0">
+                        <a routerLink="/home">
+                            <span data-green="Shop">Fram</span>
+                        </a>
+                    </div>
+                    <form id="searchProducts" class="order-2 order-md-1">
+                        <input type="text" placeholder="{{'header.serach' | translate}}">
+                        <span class="lnr lnr-magnifier"></span>
+                    </form>
+                    <div class="shoppingCartWrap order-1 order-md-2">
+                        <a href="javascript:void(0)" routerLink="/cart">
+                            <span class="cartCount">2</span>
+                            <span class="lnr lnr-cart"></span>
+                            {{ 'header.shopCart' | translate }}
+                        </a>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <nav>
+        <span class="lnr lnr-menu togleNavBar d-inline-block d-md-none" (click)="toggleNav()"></span>
+        <ul type="none" #toggleNavBar class="toggleList">
+            <li>
+                <a routerLinkActive="activeNavItem" routerLink="/home">{{ 'header.navBar.button1' | translate }}</a>
+            </li>
+            <li>
+                <a  class="openDropDownList" href="javascript:void(0)" (click)="showListProducts()">{{ 'header.navBar.button2.main' | translate }} <span class="lnr lnr-chevron-down"></span></a>
+                <ul type="none" class="subNavBar" [ngClass]='{"showList":showList}' #subList>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop"  fragment="Jewellery">{{ 'header.navBar.button2.childrens.button2_1' | translate }}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop" fragment="Shoes">{{ 'header.navBar.button2.childrens.button2_2' | translate }}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop" fragment="For Home">{{ 'header.navBar.button2.childrens.button2_3' | translate }}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop" fragment="Dresses">{{ 'header.navBar.button2.childrens.button2_4' | translate }}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop" fragment="Motors">{{ 'header.navBar.button2.childrens.button2_5' | translate }}</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" routerLink="/shop" fragment="Electronics">{{ 'header.navBar.button2.childrens.button2_6' | translate }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a routerLinkActive="activeNavItem" routerLink="/about-us">{{ 'header.navBar.button3' | translate }}</a>
+            </li>
+            <li>
+                <a routerLinkActive="activeNavItem" routerLink="/contact">{{ 'header.navBar.button4' | translate }}</a>
+            </li>
+            <li>
+                <a routerLinkActive="activeNavItem" routerLink="/partners">{{ 'header.navBar.button5' | translate }}</a>
+            </li>
+            <li>
+                <a routerLinkActive="activeNavItem" routerLink="/gallery">{{ 'header.navBar.button6' | translate }}</a>
+            </li>
+        </ul>
+    </nav>
+</header>

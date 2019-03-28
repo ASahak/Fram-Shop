@@ -1,0 +1,142 @@
+@import '../../../../globalSCSS/extends';
+@import '../../../../globalSCSS/globalSCSS';
+
+#shop_Categories{
+    .blocksM6{
+        @extend %extend-flex-default;
+        .staticParent{
+            position: relative;
+            &:hover:after{
+                background-color: rgba(0,0,0,0.7)
+            }
+            &::after{
+                transition: .4s;
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.3)
+            }
+            .description-categories-shop {
+                position: absolute;
+                height: fit-content;
+                width: 100%;
+                bottom: 0;
+                top: 0;
+                margin: auto;
+                left: 0px;
+                color: #fff;
+                z-index: 22;
+                text-align: center;
+                @extend %extend-flex-default;
+                flex-direction: column;
+                h3{
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    height: 35px;
+                    width:100%;
+                }
+                a{
+                    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+                    background-color: $green;
+                    color: #fff;
+                    padding: 5px 10px;
+                    text-decoration: none;
+                    font-size: 13px;
+                    margin-top: 8px;
+                }
+            }
+        }
+        .firstCol{
+            width: calc(40% - 7px);
+            .first{
+                margin-bottom: 14px;
+                height: 350px;
+                background-image:url('../../../../assets/img/shopCateg1.png');
+                background-size: cover;
+                background-position: center;
+            }
+            .firstPartBottom{
+                @extend %extend-flex-default;
+                >div{
+                    width: calc(50% - 7px);
+                    height: 175px;
+                }
+                .forth{
+                    background-image:url('../../../../assets/img/shopCateg2.jpg');
+                    background-size: cover;
+                    background-position: center;
+                }
+                .five{
+                    background-image:url('../../../../assets/img/shopCateg3.jpg');
+                    background-size: cover;
+                    background-position: center;
+                }
+            }
+        }
+        .secondCol{
+            width: calc(60% - 7px);
+            .secondPartTop{
+                @extend %extend-flex-default;
+                >div{
+                    width: calc(50% - 7px);
+                    height: 175px;
+                }
+                .second{
+                    background-image:url('../../../../assets/img/shopCateg4.jpg');
+                    background-size: cover;
+                    background-position: center;
+                }
+                .thrid{
+                    background-image:url('../../../../assets/img/shopCateg5.jpg');
+                    background-size: cover;
+                    background-position: center;
+                }
+            }
+            .six{
+                margin-top: 14px;
+                height: 350px;
+                background-image:url('../../../../assets/img/shopCateg6.jpg');
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
+}
+@media #{$sm-deviceMax}{
+    .blocksM6{
+        flex-direction: column;
+        > div{
+            width: 100% !important;
+            margin-bottom: 14px;
+        }
+    }
+}
+@media #{$col}{
+    .description-categories-shop{
+        h3{
+            font-size: 20px;
+            height: 22px !important;
+        }
+    }
+}
+@media screen and (max-width:480px){
+    .blocksM6{
+        > div{
+            margin-bottom:0px;
+            .firstPartBottom, .secondPartTop{
+                flex-direction: column;
+                >div{
+                    width: 100% !important;
+                    margin-bottom: 14px;
+                }
+            }
+            .six{
+                margin-top: 0 !important;
+            }
+        }
+    }
+}

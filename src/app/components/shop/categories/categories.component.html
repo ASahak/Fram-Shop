@@ -1,0 +1,35 @@
+<ng-container>
+    <h4 class="cat_header">{{'shop.categories' | translate}}</h4>
+    <ul type="none" class="categories_wrap">
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'Jewellery'" routerLink="/shop" fragment="Jewellery">
+                {{'header.navBar.button2.childrens.button2_1' | translate}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'Shoes'" routerLink="/shop" fragment="Shoes">
+                {{'header.navBar.button2.childrens.button2_2' | translate}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'For Home'" routerLink="/shop" fragment="For Home">
+                {{'header.navBar.button2.childrens.button2_3' | translate}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'Dresses'" routerLink="/shop" fragment="Dresses">
+                {{'header.navBar.button2.childrens.button2_4' | translate}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'Motors'" routerLink="/shop" fragment="Motors">
+                {{'header.navBar.button2.childrens.button2_5' | translate}}
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" #activeCategories [attr.data-category]="'Electronics'" routerLink="/shop" fragment="Electronics">
+                {{'header.navBar.button2.childrens.button2_6' | translate}}
+            </a>
+        </li>
+    </ul>  
+</ng-container>

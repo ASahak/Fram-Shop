@@ -1,0 +1,68 @@
+@import '../../../globalSCSS/extends';
+@import '../../../globalSCSS/globalSCSS';
+
+#partners{
+
+    .top-direction{ 
+        margin-bottom: 20px;
+        .dicrection-path{
+            padding: 10px;
+            background-color: $highWayBG;
+            a{
+                text-decoration: none;
+                color: $dark;
+                position: relative;
+                &:after{
+                    margin:0 5px;
+                    position: relative;
+                    content: "»";
+                }
+                span{
+                    margin-right: 3px;
+                }
+            }
+            span{
+                color: $grey;
+            }
+            
+        }
+    }
+    .partnersBlock{
+        border-right: 1px solid $green; 
+        border-bottom: 1px solid $green;
+        position: relative;
+        &:hover:after{
+            opacity: 1;
+        }
+        &:after{
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(104, 159, 56, 0.36);
+            transition: 0.4s;
+        }
+        .partner{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 ;
+            img{
+                padding: 10px;
+            }
+            p{
+                margin-bottom: 0;
+                text-align: center;
+            }
+        } 
+    }
+    .border_together{
+        border-top: 1px solid $green; 
+        border-left: 1px solid $green; 
+    }
+}

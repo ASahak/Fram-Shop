@@ -1,0 +1,280 @@
+@import '../../../globalSCSS/extends';
+@import '../../../globalSCSS/globalSCSS';
+@import '../../../globalSCSS/mixins';
+
+
+.main_shop_content{
+    .top-direction{ 
+        margin-bottom: 20px;
+        .dicrection-path{
+            padding: 10px;
+            background-color: $highWayBG;
+            a{
+                text-decoration: none;
+                color: $dark;
+                position: relative;
+                &:after{
+                    margin:0 5px;
+                    position: relative;
+                    content: "»";
+                }
+                span{
+                    margin-right: 3px;
+                }
+            }
+            span{
+                color: $grey;
+            }
+            
+        }
+    }
+    .sticky {
+        position: fixed; 
+        margin: 0;
+      }
+      
+      .abs {
+        position: absolute; 
+        bottom: 0px;
+        top: auto !important;
+        left:15px !important;
+      }
+    .left_bar_fixed{
+        .left_bar_shop_21{
+            background-color: #fff;
+            -webkit-box-shadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+                    box-shadow:0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+        }
+        .left_bar_shop_22{
+            .filter_header{
+                background-color: $green;
+                color: #fff;
+                padding: 10px;
+            }
+        }
+    }
+    
+   
+}
+// Add Product _______________________
+
+.plusProduct {
+    position: fixed;
+    right: 0;
+    top: 250px;
+    background-color: #689f38;
+    width: 50px;
+    height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    color: #fff;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    cursor: pointer;
+}
+.add_prod_form{
+    position: fixed;
+    top: -85px;
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+    transition: top .4s;
+    z-index: 23456;
+    background-color: #fff;
+    left: 0;
+    padding: 10px;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-x: hidden;
+    -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    #categories{
+        @extend %add-form-product-input;
+    }
+    select{
+        margin-bottom:15px;
+        position: relative;
+        
+    }
+    #add_from_prod{
+        .ng-invalid.ng-touched:not(form)  {
+            border: 1px solid red;
+        }
+        p.text-danger{
+            position: relative;
+            top: -15px;
+        }
+        input{
+            @extend %add-form-product-input;
+        }
+        .colorEach{
+            position: relative;
+            @extend %add-form-product-input;
+            > i{
+                color: #6c6c6c;
+            }
+            .selectedColorWrap{
+                width: 50px;
+                height: 100%;
+                position: relative;
+                display: block;
+                margin: 0 2px;
+            }
+            .selectNotNatural{
+                margin-left: auto;
+                display: flow-root;
+                cursor: pointer;
+                width: 10px;
+                height: 10px;
+                border-top: solid 7px rgb(0,0, 0);
+                border-left: solid 7px transparent;
+                border-right: solid 7px transparent;
+                top: 13px;
+                position: absolute;
+                right: 10px;
+            }
+            .colorExtenstion {
+                background-color: #fff;
+                z-index: 2;
+                position: absolute;
+                top: calc(100% + 10px );
+                width: 200px;
+                left: 0;
+                height: 200px;
+                overflow-x: auto;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+                &  > span.activeColor {
+                    border: 2px solid red;
+                }
+                &  > span {
+                    width: 35px;
+                    height: 35px;
+                    display: block;
+                    margin: 2px;
+                    border: 2px buttonface solid;
+                    cursor: pointer;
+                }
+            }
+        }
+        .saveImage{
+            border: 1px solid buttonface;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .imagesWrap{
+            display: flex;
+            flex-wrap: wrap;
+            > img{
+                max-width: 30%;
+                height: 200px;
+                margin:10px 5px 5px 0;
+            }
+            .imgArr{
+                max-width: 30%;
+                margin:10px 10px 5px 0;
+                display: block;
+                position: relative;
+                .loadingUpload{
+                    @include uploadAndDone('../../../assets/img/loading.gif', 130%);
+                }
+                .doneUpload{
+                    @include uploadAndDone('../../../assets/img/donepng.png', 30%);
+                }
+                & > img{
+                    max-width: 100%;
+                }
+                & .lnr{
+                    position: absolute;
+                    top: -8px;
+                    right: -7px;
+                    cursor: pointer;
+                    background: #ddd;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    text-align: center;
+                    line-height: 20px;
+                }
+            }
+        }
+        .cropper{
+            img-cropper{
+                float: left;
+            }
+            > img{
+                max-width: 300px;
+                max-height: 300px;
+                margin-left: 10px;
+            }
+        }
+        .d_root_save{
+            display: flow-root;
+            button{
+
+                box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+                background-color: $green;
+                border: 1px solid $green;
+                margin: 10px 0;
+                padding: 0px 10px;
+                border-radius: 2px;
+                cursor: pointer;
+                color: #fff;
+                margin-left: auto;
+                display: block;
+            }
+        }
+    }
+}
+.addLayerFormClicked{
+
+    &:after{
+        content: "";
+        position: fixed;
+        left: 0%;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+        z-index: 22223;
+
+    }
+}
+// __________________________________
+
+::ng-deep{
+    .ng2-imgcrop{
+        input[type="file"]{
+            display: none;
+        }
+    }
+}
+@media #{$col}{
+    .selectedColorWrap{
+        width: 25px !important;
+    }
+    .mobile_padding_none{
+        padding-left:  15px !important
+    }
+    .imagesWrap{
+        display: flex;
+        flex-wrap: wrap;
+        > img{
+            max-width: 100% !important;
+        }
+    }
+}

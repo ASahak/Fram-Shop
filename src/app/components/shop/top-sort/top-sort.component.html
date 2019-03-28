@@ -1,0 +1,41 @@
+<ng-container>
+    <div  class="right_bar_shop_top_22">
+        <div class="filter_dropdown">
+            <div class="sort_by_button" appSortShopProducts >{{sortTxt }} <i class="lnr lnr-chevron-down"></i></div>
+            <ul class="dropdownUl" type="none"> 
+                <li>
+                    <a href="javascript:void(0)" (click)="sortProducts('default', $event)"  #sortDefault>{{'shop.sorting.default' | translate}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="sortProducts('a-f', $event)" >{{'shop.sorting.af' | translate}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="sortProducts('f-a', $event)" >{{'shop.sorting.fa' | translate}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="sortProducts('lowest', $event)" >{{'shop.sorting.lfirst' | translate}}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="sortProducts('highest', $event)" >{{'shop.sorting.hfirst' | translate}}</a>
+                </li>
+                <li>
+                    <a *ngIf="loginedUser" href="javascript:void(0)" (click)="sortProducts('only-my', $event)" >{{'shop.sorting.onlyMy' | translate}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="show_count">
+            <div class="show_count_button" appCountShopBadges>{{'shop.showTxt' | translate}} {{countBadgesVal}} <i class="lnr lnr-chevron-down"></i></div>
+            <ul class="dropdownUlCount" type="none">
+                <li>
+                    <a href="javascript:void(0)" (click)="countBadges('10', $event)" >10</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="countBadges('20', $event)" >20</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" (click)="countBadges('50', $event)" >50</a>
+                </li>
+            </ul>
+        </div>
+    </div>  
+</ng-container>
