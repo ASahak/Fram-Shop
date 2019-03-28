@@ -15,6 +15,7 @@ export class ShopContentComponent implements OnInit, OnDestroy {
     obj
     @ViewChild('pageinationWrap') pageinationWrap: ElementRef;
     @Output() transferPositionPageination = new EventEmitter()
+    
     ngOnInit() {
         this._shopData.__getAllUsers().subscribe(res=>{
             [].slice.call(res).forEach(response=>{
