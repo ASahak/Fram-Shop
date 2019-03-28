@@ -66,6 +66,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 // NGRX___________________
 import { StoreModule } from '@ngrx/store';
 import { methodReducer } from './store/reducers/methods.reducer';
+import { ProductPricePipe } from './pipes/product-price.pipe';
+import { ProductStarsPipe } from './pipes/product-stars.pipe';
 // ______________________
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -103,6 +105,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         CountShopBadgesDirective,
         PriceComponent,
         ImageCropperComponent,
+        ProductPricePipe,
+        ProductStarsPipe,
     ],
     imports: [
         BrowserModule,

@@ -47,6 +47,15 @@ export class ShopService {
         )
         return this._users
     }
+    __updateRaiting(raiting){
+        this._recetDocUsers = this._afs.doc(`Users/${raiting._userID}`)
+        this._recetDocUsers.ref.get().then((doc)=>{
+            console.log(doc.data().myProduct[raiting._indexMyProduct].raiting)
+        })
+        // this.recetDocPrograms = this.afs.doc(`Programs/${program.id}`)
+        // this.recetDocPrograms.update(program)
+    
+      }
     __addUsersProduct(value, _getCurrentUser){
         if(!_getCurrentUser.myProduct){
             _getCurrentUser.myProduct = []

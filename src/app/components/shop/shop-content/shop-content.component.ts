@@ -12,22 +12,25 @@ export class ShopContentComponent implements OnInit, OnDestroy {
     constructor(private _shopData:ShopService) { }
     protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
     protected galleryComponent:GalleryComponent = new GalleryComponent();
-    obj
     @ViewChild('pageinationWrap') pageinationWrap: ElementRef;
     @Output() transferPositionPageination = new EventEmitter()
-    
+
     ngOnInit() {
         this._shopData.__getAllUsers().subscribe(res=>{
             [].slice.call(res).forEach(response=>{
                 this._allProducts[response.id] = response.myProduct 
             })
-            this.obj = this._allProducts
         })
+    }
+    __appreciated(_indexStar:number, _userID:string, _indexMyProduct:number ){
+        console.log(_indexStar, _userID, _indexMyProduct)
+        this._shopData.__updateRaiting({_indexStar, _userID, _indexMyProduct})
     }
     ngDoCheck(){
         this.transferPositionPageination.emit(this.pageinationWrap.nativeElement.offsetTop)
     }
     ngOnDestroy(){
+
     }
     upCount(event) {
         this.galleryComponent.findElement(this.shopBadgesComponent.getParent(event.target, "count-product-input"), 'input')[0].value++;
