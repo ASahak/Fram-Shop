@@ -21,13 +21,8 @@ export class ShopContentComponent implements OnInit, OnDestroy {
                 this._allProducts[response.id] = response.myProduct 
             })
             this.obj = this._allProducts
-            console.log(this._allProducts)
         })
     }
-    myObject = {
-        key1: 'value1',
-        key2: 'value2'
-    };
     ngDoCheck(){
         this.transferPositionPageination.emit(this.pageinationWrap.nativeElement.offsetTop)
     }
