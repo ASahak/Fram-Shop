@@ -66,9 +66,11 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 // NGRX___________________
 import { StoreModule } from '@ngrx/store';
 import { methodReducer } from './store/reducers/methods.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { MethodsEffects } from './store/effects/methods.effects';
+// ______________________
 import { ProductPricePipe } from './pipes/product-price.pipe';
 import { ProductStarsPipe } from './pipes/product-stars.pipe';
-// ______________________
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -128,12 +130,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         StoreModule.forRoot({
           _methods:methodReducer,
         }),
+        EffectsModule.forRoot([MethodsEffects]),
         ReactiveFormsModule,
         AngularFireStorageModule
     ],
     providers: [
-      AngularFirestore
-      
+      AngularFirestore,
+      MethodsEffects
     ],
     bootstrap: [AppComponent]
 })

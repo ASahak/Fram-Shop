@@ -1,7 +1,7 @@
-<div class="row padding_mobile_none">
-    <ng-container *ngFor="let itemID of _allProducts | keyvalue">
+<div class="row padding_mobile_none" *ngIf="_allProducts | async as _Product; else loading">
+    <ng-container *ngFor="let itemID of _Product | keyvalue">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
-        *ngFor="let item of _allProducts[itemID.key] | keyvalue; let i = index"
+        *ngFor="let item of _Product[itemID.key] | keyvalue; let i = index"
         [attr.dat-id-prod]="itemID.key"
         >
             <div class="products-fram">
@@ -46,6 +46,9 @@
         </div>
     </ng-container>
 </div>
+<ng-template #loading>
+    <img src="./assets/img/loading.gif" class="img-fluid" alt="">
+</ng-template>
 <div class="row padding_mobile_none" #pageinationWrap>
     <div class="col-12 pl-0">
         <div class="pageination_shop">

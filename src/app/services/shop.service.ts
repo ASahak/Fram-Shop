@@ -20,6 +20,7 @@ export class ShopService {
     _users: Observable<CreateUser[]>;
     _user: Observable<CreateUser>;
     public _methods:Observable<any>;
+    public a ='aas'
     constructor(
         private _afs: AngularFirestore,
         public _afAuth: AngularFireAuth,
@@ -48,9 +49,10 @@ export class ShopService {
         return this._users
     }
     __updateRaiting(raiting){
+        // console.log(raiting)
         this._recetDocUsers = this._afs.doc(`Users/${raiting._userID}`)
-        this._recetDocUsers.ref.get().then((doc)=>{
-            console.log(doc.data().myProduct[raiting._indexMyProduct].raiting)
+        return this._recetDocUsers.ref.get().then((doc)=>{
+            // console.log(doc.data())
         })
         // this.recetDocPrograms = this.afs.doc(`Programs/${program.id}`)
         // this.recetDocPrograms.update(program)

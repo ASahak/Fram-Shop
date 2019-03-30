@@ -1,36 +1,50 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output , EventEmitter} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output , EventEmitter, Input} from '@angular/core';
 import { GalleryComponent } from '../../gallery/gallery.component';
 import { ShopBadgesComponent } from '../../home-page/shop-badges/shop-badges.component';
 import { ShopService } from '../../../services/shop.service'
+import * as Actions from '../../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Router, ActivatedRoute} from '@angular/router';
+import { AppState } from '../../../store/app.state'
+// interface AppState {
+//     _methods:Todo
+// }
 @Component({
     selector: 'app-shop-content',
     templateUrl: './shop-content.component.html',
     styleUrls: ['./shop-content.component.scss']
 })
 export class ShopContentComponent implements OnInit, OnDestroy {
-    public _allProducts: Object = {};
-    constructor(private _shopData:ShopService) { }
     protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
     protected galleryComponent:GalleryComponent = new GalleryComponent();
+    public _allProducts;
+    constructor(
+        private _store: Store<AppState>,
+        private _shopData:ShopService,
+        private _router:Router,
+        private _activeRouter:ActivatedRoute
+        ) { 
+        this._allProducts = this._store.pipe(select('_methods'));
+    }
     @ViewChild('pageinationWrap') pageinationWrap: ElementRef;
     @Output() transferPositionPageination = new EventEmitter()
-
+    @Input('ActiveuserInfo') ActiveuserInfo:Object;
     ngOnInit() {
-        this._shopData.__getAllUsers().subscribe(res=>{
-            [].slice.call(res).forEach(response=>{
-                this._allProducts[response.id] = response.myProduct 
-            })
-        })
+        this._store.dispatch(new Actions.AllUsersProduct())
     }
     __appreciated(_indexStar:number, _userID:string, _indexMyProduct:number ){
-        console.log(_indexStar, _userID, _indexMyProduct)
-        this._shopData.__updateRaiting({_indexStar, _userID, _indexMyProduct})
+        if(this.ActiveuserInfo && this.ActiveuserInfo['id']){
+            let _currentUserID = this.ActiveuserInfo['id']
+            this._store.dispatch(new Actions.ProductApreciated({_indexStar, _userID, _indexMyProduct, _currentUserID}))
+        }
+        // console.log(_indexStar, _userID, _indexMyProduct, this.ActiveuserInfo['id'])
+        // this._shopData.__updateRaiting({_indexStar, _userID, _indexMyProduct})
     }
     ngDoCheck(){
         this.transferPositionPageination.emit(this.pageinationWrap.nativeElement.offsetTop)
     }
     ngOnDestroy(){
-
     }
     upCount(event) {
         this.galleryComponent.findElement(this.shopBadgesComponent.getParent(event.target, "count-product-input"), 'input')[0].value++;
