@@ -2,7 +2,12 @@ import { Component, OnInit, ViewChild,ViewChildren, ElementRef, QueryList, HostL
 import { GalleryComponent } from '../gallery/gallery.component';
 import { ShopBadgesComponent } from '../home-page/shop-badges/shop-badges.component';
 import { Location } from '@angular/common';
+import { AuthServiceService } from '../../services/auth-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as Actions from '../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../../store/app.state'
 declare var Swiper:any;
 declare var  $: any;
 @Component({
@@ -13,9 +18,23 @@ declare var  $: any;
 })
 export class ProductsComponent implements OnInit {
 
-    constructor(public location:Location, private router:Router) { }
     protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
-    protected galleryComponent:GalleryComponent = new GalleryComponent();
+    protected galleryComponent:GalleryComponent       = new GalleryComponent();
+    protected _idProduct:string;
+    public _ProductMore:Observable<Array<Object>>
+    constructor(
+        private _store: Store<AppState>,
+        public location:Location,
+        private router:Router,
+        public _activeRouter:ActivatedRoute,
+        private _authServ: AuthServiceService   
+    ) {
+        this._store.pipe(select('_methods')).subscribe(res=>{
+            if(res){
+                this._ProductMore = res.product
+            }
+        });
+     }
 
     @ViewChildren('imgBoxZoom') imgBoxZoom:QueryList<any>;
     @ViewChild('each_colors') each_colors:ElementRef;
@@ -51,6 +70,16 @@ export class ProductsComponent implements OnInit {
     }
     
     ngOnInit() {
+        this._idProduct = this._activeRouter.params['value']['id'];
+        this._store.dispatch(new Actions.OneProduct({_idProduct:this._idProduct.split("&")[0], _ownProductId:this._idProduct.split("&")[1]}))
+        // this._authServ.__getCurrentUser()
+        //     .subscribe(res => {
+        //         // console.log(res)
+        //         Array.prototype.map.call(res['myProduct'], item=>{
+        //             // console.log(item)
+        //         })
+        //         // (this._ProductMore as any) = res;
+        //     })
         setTimeout(()=>this.goSmooth(), 100)
         let related_slider = new Swiper('.swiper_related_prod', {
             paginationClickable: true,

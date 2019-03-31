@@ -120,7 +120,8 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             sale: true,
-            isUsed: true
+            isUsed: true,
+            desc:true
         },
         'Shoes': {
             name: true,
@@ -129,7 +130,8 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             sale: true,
-            isUsed: true
+            isUsed: true,
+            desc:true
         },
         'For Home': {
             name: true,
@@ -138,6 +140,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             isUsed: true,
+            desc:true,
             sale: true
         },
         'Dresses': {
@@ -147,6 +150,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             isUsed: true,
+            desc:true,
             sale: true
         },
         'Motors': {
@@ -156,6 +160,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             isUsed: true,
+            desc:true,
             sale: true
         },
         'Electronics': {
@@ -165,6 +170,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             color: true,
             price: true,
             isUsed: true,
+            desc:true,
             sale: true
         }
     }
@@ -213,7 +219,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
                 }
                 this._addProdForm.value.prodType = this._selectedCateg
                 this._addProdForm.value.idProduct = new Date().getTime();
-                this._addProdForm.value.raiting = [];
+                this._addProdForm.value.raiting = {};
                 (async ()=>{
                     await this._shopServ.__addUsersProduct(this._addProdForm.value, this._userInfo);
                     await (()=>{
@@ -372,7 +378,8 @@ export class ShopComponent implements  OnInit,OnDestroy {
             prodPrice: [, Validators.required],
             prodSale: [],
             prodImgs: [],
-            prodUsed: [, Validators.required]
+            prodUsed: [, Validators.required],
+            prodDesc: [, Validators.required],
         });
     }
     // convenience getter for easy access to form fields

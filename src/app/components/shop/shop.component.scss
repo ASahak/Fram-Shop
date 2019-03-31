@@ -117,6 +117,10 @@
         input{
             @extend %add-form-product-input;
         }
+        textarea{
+            height: 120px;
+            @extend %add-form-product-input;
+        }
         .colorEach{
             position: relative;
             @extend %add-form-product-input;

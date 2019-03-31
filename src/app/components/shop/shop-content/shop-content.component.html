@@ -1,12 +1,12 @@
-<div class="row padding_mobile_none" *ngIf="_allProducts | async as _Product; else loading">
-    <ng-container *ngFor="let itemID of _Product | keyvalue">
+<div class="row padding_mobile_none" *ngIf="_allProducts as _products; else loading">
+    <ng-container *ngFor="let itemID of _products | keyvalue">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
-        *ngFor="let item of _Product[itemID.key] | keyvalue; let i = index"
+        *ngFor="let item of _products[itemID.key] | keyvalue; let i = index"
         [attr.dat-id-prod]="itemID.key"
         >
             <div class="products-fram">
                 <span class="sale-badge" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{'-' + item.value.prodSale + '%'}}</span>
-                <a  routerLink="/products/{{item.value.idProduct}}" class="d-block text-center" href="javascript:void(0)">
+                <a  routerLink="/products/{{item.value.idProduct+'&'+itemID.key}}" class="d-block text-center" href="javascript:void(0)">
                     <img [src]="item.value.prodImgs[0] ? item.value.prodImgs[0] : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt="">
                     <div class="name-and-section">
                         <p>{{item.value.prodType}}</p>
@@ -31,13 +31,18 @@
                 </div>
                 <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
                     <div class="count-product-input">
-                        <input class="productCount" type="number" value="1">
+                        <input class="productCount" type="number" value="1" #addprod>
                         <p class="up-down-arrows d-flex flex-column">
                             <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
                             <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
                         </p>
                     </div>
-                    <button class="add-to-cart">
+                    <button class="add-to-cart" (click)="__addProductToCart(addprod, [
+                    _products[itemID.key][i].idProduct,
+                    _products[itemID.key][i].prodImgs[0],
+                    _products[itemID.key][i].prodName,
+                    (_products[itemID.key][i].prodPrice - (_products[itemID.key][i].prodPrice * _products[itemID.key][i].prodSale)/100)
+                    ])">
                         <span class="lnr lnr-cart"></span>
                         {{'relatedSec.addButton' | translate}}
                     </button>

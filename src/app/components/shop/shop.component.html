@@ -31,7 +31,7 @@
                     <div class="col-12">
                         <div class="main_content_badges">
                             <div class="right_bar_shop_content_23">
-                                <app-shop-content [ActiveuserInfo]="_userInfo" (transferPositionPageination)="getPositonPageination($event)"></app-shop-content>
+                                <app-shop-content (transferPositionPageination)="getPositonPageination($event)"></app-shop-content>
                             </div> 
                         </div>
                     </div>
@@ -68,6 +68,8 @@
             <input type="number" placeholder="Enter price (USD) *" formControlName="prodPrice" *ngIf="_goSelectForm(_selectedCateg).price">
             <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodPrice'].errors">The price is required</p>
             <input type="number" placeholder="Enter sale" formControlName="prodSale" *ngIf="_goSelectForm(_selectedCateg).sale">
+            <textarea placeholder="Enter description *" formControlName="prodDesc" *ngIf="_goSelectForm(_selectedCateg).desc"></textarea>
+            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodDesc'].errors">The descrition is required</p>
             <div class="d-flex align-items-center" *ngIf="_goSelectForm(_selectedCateg).isUsed">
                 <p class="mb-0 mr-4">
                     <input type="radio" id="used" value="used"  formControlName="prodUsed">

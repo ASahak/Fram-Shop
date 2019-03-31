@@ -24,10 +24,10 @@
         -webkit-transition: .4s;
         transition: .4s;
         p{
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
             margin-bottom: 0;
+        }
+        > a{
+            cursor:pointer;
         }
     }
     .falshMessage.dangerFlash{

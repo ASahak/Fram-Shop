@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of, Subscriber } from 'rxjs';
+import { Observable, of, Subscriber, pipe } from 'rxjs';
 import { catchError, map, mergeMap, mapTo, tap, switchMap, filter } from 'rxjs/operators';
 import { All, MethodsActionTypes } from '../actions/methods.actions'
 import { ShopService } from '../../services/shop.service'
@@ -23,9 +23,25 @@ export class MethodsEffects {
     )
   );
   @Effect()
+  __getOneProduct$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__getOneProduct),
+    mergeMap(action =>
+      this._shop.__getOneProduct(action['payload'])
+    ),
+    map(data => ({ type: '[Methods] Get One Product Successfully', payload: data })),
+    // catchError(() => of({ type: '[Methods] Get All Products Field' }))
+  );
+
+  @Effect()
   __productApreciated$: Observable<any> = this.actions$.pipe(
     ofType<All>(MethodsActionTypes.__productAppreciated),
-    mergeMap(action => this._shop.__updateRaiting(action['payload'])),
+    mergeMap(action => this._shop.__updateRaiting(action['payload']) /* succesFull any functions whichs finishet ok */),
+    map(data => ({ type: '[Methods] Action Succesfull'}))
+  )
+  @Effect()
+  __productAddToCart$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__productAddToCart),
+    mergeMap(action => this._shop.__addProductToCart(action['payload'])),
     map(data => ({ type: '[Methods] Action Succesfull'}))
   )
   
