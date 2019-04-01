@@ -16,9 +16,13 @@
                 <hr>
                 <div class="price-and-rating d-flex justify-content-between">
                     <div class="product-price d-flex flex-column align-items-start">
-                        <del class="text-muted" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{item.value.prodPrice + "$"}}</del>
-                        <span *ngIf="item.value.prodSale == null && item.value.prodSale == 0">{{item.value.prodSale + "$"}}</span>
-                        <span else>{{item.value.prodPrice - (item.value.prodPrice * item.value.prodSale)/100 | productPrice}}</span>
+                        <ng-container *ngIf="item.value.prodSale != null && item.value.prodSale != 0; else productwithoutsale">
+                            <del class="text-muted" >{{item.value.prodPrice + "$"}}</del>
+                            <span>{{item.value.prodPrice - (item.value.prodPrice * item.value.prodSale)/100 | productPrice}}</span>
+                        </ng-container>  
+                        <ng-template #productwithoutsale>
+                            <span >{{item.value.prodPrice + "$"}}</span>
+                        </ng-template>
                     </div>
                     <div class="product-ratings" #starsRaiting>
                         {{'stars' | productStars:item.value.raiting:starsRaiting}}
@@ -52,7 +56,7 @@
     </ng-container>
 </div>
 <ng-template #loading>
-    <img src="./assets/img/loading.gif" class="img-fluid" alt="">
+    <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
 </ng-template>
 <div class="row padding_mobile_none" #pageinationWrap>
     <div class="col-12 pl-0">

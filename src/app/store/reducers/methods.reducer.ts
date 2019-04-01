@@ -33,7 +33,7 @@ export function methodReducer(state = initialState, action: ActionT) {
     case Actions.MethodsActionTypes.__FlashMessage:
       return __FlashMessage(action.payload);
     case Actions.MethodsActionTypes.__actionSuccess:
-      return {...state}
+      return {...state, ...action}
     case Actions.MethodsActionTypes.__productSuccesfull:
       return {...state, ...action.payload, products:action.payload}
     case Actions.MethodsActionTypes.__getOneProductSuccess:

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,ViewChildren, ElementRef, QueryList, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild,ViewChildren, ElementRef, QueryList, HostListener } from '@angular/core';
 import { GalleryComponent } from '../gallery/gallery.component';
 import { ShopBadgesComponent } from '../home-page/shop-badges/shop-badges.component';
 import { Location } from '@angular/common';
@@ -16,12 +16,14 @@ declare var  $: any;
     styleUrls: ['./products.component.scss'],
    
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
     protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
     protected galleryComponent:GalleryComponent       = new GalleryComponent();
     protected _idProduct:string;
-    public _ProductMore:Observable<Array<Object>>
+    public _loadingProduct:boolean                    = false;
+    public _ProductMore:Observable<Array<Object>>;
+    public _ActiveuserInfo;
     constructor(
         private _store: Store<AppState>,
         public location:Location,
@@ -30,14 +32,19 @@ export class ProductsComponent implements OnInit {
         private _authServ: AuthServiceService   
     ) {
         this._store.pipe(select('_methods')).subscribe(res=>{
+            this._loadingProduct = false;
             if(res){
                 this._ProductMore = res.product
+                this._loadingProduct = true;
+                setTimeout(()=>{
+                    this.__initSliders()
+                    this.image_zoom();
+                }, 0)
             }
-        });
+        })
      }
 
     @ViewChildren('imgBoxZoom') imgBoxZoom:QueryList<any>;
-    @ViewChild('each_colors') each_colors:ElementRef;
     
     protected goSmooth(){
         // document scroll to 0
@@ -68,19 +75,35 @@ export class ProductsComponent implements OnInit {
         this.image_zoom();
         
     }
-    
-    ngOnInit() {
-        this._idProduct = this._activeRouter.params['value']['id'];
-        this._store.dispatch(new Actions.OneProduct({_idProduct:this._idProduct.split("&")[0], _ownProductId:this._idProduct.split("&")[1]}))
-        // this._authServ.__getCurrentUser()
-        //     .subscribe(res => {
-        //         // console.log(res)
-        //         Array.prototype.map.call(res['myProduct'], item=>{
-        //             // console.log(item)
-        //         })
-        //         // (this._ProductMore as any) = res;
-        //     })
-        setTimeout(()=>this.goSmooth(), 100)
+    __addProductToCart(_inputValue, _badge){
+        this._authServ.__getCurrentUser()
+        .subscribe(res => {
+            (this._ActiveuserInfo as any) = res;
+            if(this._ActiveuserInfo && this._ActiveuserInfo['id']){
+                let _currentUserID = this._ActiveuserInfo['id'],
+                _prodCount     = 0;
+                if(this._ActiveuserInfo['myCart'] && this._ActiveuserInfo['myCart'][_badge[0]]){
+                    _prodCount = Number(this._ActiveuserInfo['myCart'][_badge[0]]['prodCount'])
+                }
+                if(Number(_inputValue.value)>5){
+                    this._store.dispatch(new Actions.FlashMessage({message:"You can't add more then 5 item", timeout:4000, classType:'dangerFlash'}))
+                }
+                else{
+                    if(Number(_inputValue.value)+_prodCount <= 5){
+                        let _inputVal = Number(_inputValue.value)+_prodCount
+                        this._store.dispatch(new Actions.ProductAddToCart({_inputVal, _badge, _currentUserID}))
+                        setTimeout(()=>{
+                            _inputValue.value = 1
+                        }, 0)
+                    }
+                    else{
+                        this._store.dispatch(new Actions.FlashMessage({message:`Your Cart have this item currectly ${_prodCount} (Max items not more than 5)`, timeout:6000, classType:'dangerFlash'}))
+                    }
+                }
+            }
+        })
+    }
+    protected __initSliders (){
         let related_slider = new Swiper('.swiper_related_prod', {
             paginationClickable: true,
             slidesPerView: 5,
@@ -142,14 +165,15 @@ export class ProductsComponent implements OnInit {
                 largeSlider.slideTo(index, 500);
             } 
         });
-        
-
     }
-    selectColorProds(index:number){
-        if(document.querySelector('.activeColor')){
-            document.querySelector('.activeColor').classList.remove('activeColor');
-        }
-        this.each_colors.nativeElement.children[index].classList.add('activeColor');
+    ngOnInit() {
+        this._idProduct = this._activeRouter.params['value']['id'];
+        this._store.dispatch(new Actions.OneProduct({_idProduct:this._idProduct.split("&")[0], _ownProductId:this._idProduct.split("&")[1]}))
+        setTimeout(()=>this.goSmooth(), 100)
+       
+    }
+    ngOnDestroy(){
+        this._loadingProduct = false;
     }
     upCount(event){
         this.galleryComponent.findElement(this.shopBadgesComponent.getParent(event.target, "count-product-input"), 'input')[0].value++;

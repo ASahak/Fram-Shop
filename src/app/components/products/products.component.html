@@ -1,12 +1,12 @@
 <section id="products_page" class="mt-4 product_slide_cont">
-    <div class="container">
-        <div class="row">
+    <div class="container" *ngIf="_loadingProduct; else loading">
+        <div class="row" *ngIf="_ProductMore as product">   
             <div class="col-12">
                 <div class="top-direction">
                     <div class="dicrection-path">
                         <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
                         <a routerLink="/shop"> {{'header.navBar.button2.main' | translate}}</a>
-                        <span>Products 1</span>
+                        <span>{{product.prodName}}</span>
                     </div>
                 </div>
             </div>
@@ -14,33 +14,18 @@
                 <div class="prodLeft">
                     <div class="swiper-container prod-slider-large">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide imgBox " #imgBoxZoom>
-                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod1.png" src="./assets/img/products/prod1.png">
+                            <div class="swiper-slide imgBox " *ngFor="let imgItem of product.prodImgs" #imgBoxZoom>
+                                <img  alt="framShop" class="img-fluid" [attr.data-origin]="imgItem" src="{{imgItem}}">
                             </div>
-                            <div class="swiper-slide imgBox" #imgBoxZoom>
-                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod2.png" src="./assets/img/products/prod2.png">
-                            </div>
-                            <div class="swiper-slide imgBox" #imgBoxZoom>
-                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod3.png" src="./assets/img/products/prod3.png">
-                            </div>
-                            <div class="swiper-slide imgBox" #imgBoxZoom>
-                                <img  alt="framShop" class="img-fluid" data-origin="./assets/img/products/prod4.png" src="./assets/img/products/prod4.png">
+                            <div class="swiper-slide imgBox " *ngIf="product.prodImgs.length == 0">
+                                <img  alt="framShop" class="img-fluid" src="./assets/img/products/product-no-image.jpg">
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-container prod-slider-thumb">
+                    <div class="swiper-container prod-slider-thumb" *ngIf="product.prodImgs.length > 0">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide med_prod_slider_borard">
-                                <img alt="framShop" data-slide-to="0" class="swipe-slide-to img-fluid" src="./assets/img/products/prod1.png">
-                            </div>
-                            <div class="swiper-slide med_prod_slider_borard">
-                                <img alt="framShop" data-slide-to="1" class="swipe-slide-to img-fluid" src="./assets/img/products/prod2.png">
-                            </div>
-                            <div class="swiper-slide med_prod_slider_borard">
-                                <img alt="framShop" data-slide-to="2" class="swipe-slide-to img-fluid" src="./assets/img/products/prod3.png">
-                            </div>
-                            <div class="swiper-slide med_prod_slider_borard">
-                                <img alt="framShop" data-slide-to="3" class="swipe-slide-to img-fluid" src="./assets/img/products/prod4.png">
+                            <div class="swiper-slide med_prod_slider_borard" *ngFor="let imgItem2 of product.prodImgs; let i = index">
+                                <img alt="framShop" [attr.data-slide-to]="i" class="swipe-slide-to img-fluid" src="{{imgItem2}}">
                             </div>
                         </div>
                         <!-- Add Arrows -->
@@ -51,44 +36,53 @@
             </div>
             <div class="col-12 col-sm-6 col-lg-3 col-md-6">
                 <div class="right_prod">
-                    <h3 class="mb-3 product_name">Product 1</h3>
-                    <p class="text-muted">{{'productSingle.categ' | translate}} <span class="text-dark">Electronics</span></p>   
+                    <h3 class="mb-3 product_name">{{product.prodName}}</h3>
+                    <p class="text-muted">{{'productSingle.categ' | translate}} <span class="text-dark">{{product.prodType}}</span></p>   
                     <h5  class="mt-2 mb-1">{{'productSingle.rating' | translate}}</h5>
-                    <div class="ratingStars">
-                        <span class="lnr lnr-star appreciated"></span>
-                        <span class="lnr lnr-star appreciated"></span>
-                        <span class="lnr lnr-star appreciated"></span>
+                    <div class="ratingStars" #starsParent>
+                        {{'stars' | productStars:product.raiting:starsParent}}
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
                         <span class="lnr lnr-star"></span>
                         <span class="lnr lnr-star"></span>
                     </div>
                     <div class="discountWrap">
                         <h5 class="mt-2 mb-1">{{'productSingle.price' | translate}}</h5>
-                        <p class="mb-0"><font class="text-muted">{{'productSingle.discount' | translate}}</font> -15%</p>
+                        <p class="mb-0" *ngIf="product.prodSale != null && product.prodSale != 0"><font class="text-muted">{{'productSingle.discount' | translate}}</font> -{{product.prodSale}}%</p>
                         <p class="common_ammount_prod">
-                            <del>1300$</del> 
-                            <font>1000$</font>
+                            <ng-container *ngIf="product.prodSale != null && product.prodSale != 0; else productPriceOnly">
+                                <del *ngIf="product.prodSale != null && product.prodSale != 0">{{product.prodPrice + '$'}}</del> 
+                                <font >{{product.prodPrice - (product.prodPrice * product.prodSale)/100 | productPrice}}</font>
+                            </ng-container>  
+                            <ng-template #productPriceOnly>
+                                <font >{{product.prodPrice + "$"}}</font>
+                            </ng-template>
                         </p>   
                     </div>
                     <hr>
-                    <div class="colors_wrap">
+                    <div class="colors_wrap" *ngIf="product.prodColors && product.prodColors.length > 0">
                         <p class="mb-0"><font class="text-muted">{{'productSingle.color' | translate}}</font></p>
-                        <div class="each_colors" #each_colors>
-                            <span (click)="selectColorProds(0)" style="background-color:blueviolet"></span>
-                            <span (click)="selectColorProds(1)" style="background-color:brown"></span>
-                            <span (click)="selectColorProds(2)" style="background-color:green"></span>
+                        <div class="each_colors">
+                            <span  *ngFor="let color of product.prodColors" [ngStyle]="{'background-color':color}"></span>
                         </div>
                     </div>
                     <div class="add_cart_wrap mt-2">
                         <p class="mb-0"><font class="text-muted">{{'productSingle.quantity' | translate}}</font></p>
                         <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
                             <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
+                                <input class="productCount" #addprod type="number" value="1">
                                 <p class="up-down-arrows d-flex flex-column">
                                     <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
                                     <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
                                 </p>
                             </div>
-                            <button class="add-to-cart">
+                            <button class="add-to-cart" (click)="__addProductToCart(addprod, [
+                            product.idProduct,
+                            product.prodImgs[0],
+                            product.prodName,
+                            (product.prodPrice - (product.prodPrice * product.prodSale)/100)
+                            ])">
                                 <span class="lnr lnr-cart"></span>
                                 {{'relatedSec.addButton' | translate}}
                             </button>
@@ -129,12 +123,12 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="description_product">
+                <div class="description_product" *ngIf="product.prodDesc">
                     <div class="header_desc">
                         <h3>{{ 'productSingle.description' | translate }}</h3>
                     </div>
                     <div class="desc_txt">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id nulla metus. Maecenas commodo turpis dui, porttitor tincidunt enim mollis a. Curabitur eu velit mi. Nullam congue turpis id metus sollicitudin, id cursus nulla laoreet. Proin commodo eu felis at malesuada. Nulla ac facilisis justo, eget vulputate ex. Nulla nec laoreet nulla. Cras auctor leo at diam congue, quis convallis urna pulvinar. Nunc ut mi nulla. Nunc ligula massa, vulputate sed scelerisque sit amet, dapibus semper est. Sed sed blandit turpis. Vestibulum id porttitor ligula, at iaculis ligula. Pellentesque vel tellus sit amet mauris aliquet bibendum id et lorem.</p>
+                        <p>{{product.prodDesc}}</p>
                         
                     </div>
                 </div>
@@ -383,4 +377,7 @@
             </div> -->
         </div>
     </div>
+    <ng-template #loading>
+        <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
+    </ng-template>
 </section>

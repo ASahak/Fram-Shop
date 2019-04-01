@@ -80,6 +80,9 @@ export class ShopContentComponent implements OnInit, OnDestroy {
                     if(Number(_inputValue.value)+_prodCount <= 5){
                         let _inputVal = Number(_inputValue.value)+_prodCount
                         this._store.dispatch(new Actions.ProductAddToCart({_inputVal, _badge, _currentUserID}))
+                        setTimeout(()=>{
+                            _inputValue.value = 1
+                        }, 0)
                     }
                     else{
                         this._store.dispatch(new Actions.FlashMessage({message:`Your Cart have this item currectly ${_prodCount} (Max items not more than 5)`, timeout:6000, classType:'dangerFlash'}))
