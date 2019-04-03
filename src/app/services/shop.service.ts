@@ -11,7 +11,10 @@ import { AuthServiceService } from './auth-service.service';
 import * as Actions from '../store/actions/methods.actions';
 import { Store, select } from '@ngrx/store';
 import { addProductCart } from '../components/shop/shop-content/shop-content.component'  
-
+interface deleteITEM {
+    _userID:string;
+    _item:string
+}
 @Injectable({
     providedIn: 'root'
 })
@@ -93,7 +96,8 @@ export class ShopService {
                 }
                 t.update(sfDocRef, {myProduct:_newProducts});
             });
-        }).then(() =>{
+        })
+        .then(() =>{
             this._store.dispatch(new Actions.FlashMessage({message:"Apreciated was add successfull", timeout:3000, classType:'successFlash'}))
         }).catch(function(err) {
             this._store.dispatch(new Actions.FlashMessage({message:err, timeout:3000, classType:'dangerFlash'}))
@@ -126,8 +130,68 @@ export class ShopService {
             _getCurrentUser.myProduct = []
         }
         _getCurrentUser.myProduct[_getCurrentUser.myProduct.length] = value;
-        this._recetCollectionUsers.doc(_getCurrentUser.id).update(_getCurrentUser).then(()=>{
+        this._recetCollectionUsers.doc(_getCurrentUser.id).update(_getCurrentUser)
+        .then(()=>{
         this._store.dispatch(new Actions.FlashMessage({message:"Product was add successfull", timeout:3000, classType:'successFlash'}))
         }).catch(err=>this._store.dispatch(new Actions.FlashMessage({message:err, timeout:3000, classType:'dangerFlash'})));
+    }
+    __deleteProductInCart(payload){
+        return new Observable (observer => {
+            var sfDocRef = firebase.firestore().collection("Users").doc(payload._userID);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    var _myCartProducts = doc.get('myCart')
+                    for (let item in _myCartProducts){
+                        if(item == payload._itemKey){
+                            delete _myCartProducts[payload._itemKey]
+                        }
+                    }
+                    t.update(sfDocRef, {myCart:_myCartProducts})
+                    observer.next(_myCartProducts)
+                })
+            }).then(() =>{
+                this._store.dispatch(new Actions.FlashMessage({message:"Product item was delete successfull", timeout:3000, classType:'successFlash'}))
+            }).catch(function(err) {
+                this._store.dispatch(new Actions.FlashMessage({message:err, timeout:3000, classType:'dangerFlash'}))
+            });
+        })
+    };
+    __plusORminusCartItemRecet(_value):Observable<boolean>{
+        console.log(_value._type)
+        return new Observable (observer =>{
+            var sfDocRef = firebase.firestore().collection("Users").doc(_value._userID);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    var _myCartProducts = doc.get('myCart')
+                    for (let item in _myCartProducts){
+                        if(item == _value._itemKey){
+                            if(_value._type == 'plus'){
+                                if(_myCartProducts[item].prodCount < 5){
+                                    _myCartProducts[item].prodCount++;
+                                    observer.next(true)
+                                    this._store.dispatch(new Actions.FlashMessage({message:"Product was add successfull", timeout:1000, classType:'successFlash'}))
+                                }
+                                else{
+                                    observer.next(false)
+                                }
+                            }
+                            if(_value._type == 'minus'){
+                                if(_myCartProducts[item].prodCount > 1){
+                                    _myCartProducts[item].prodCount--;
+                                    observer.next(true)
+                                    this._store.dispatch(new Actions.FlashMessage({message:"Product was delete successfull", timeout:1000, classType:'successFlash'}))
+                                }
+                                else{
+                                    observer.next(false)
+                                }
+                            }
+                        }
+                    }
+                    t.update(sfDocRef, {myCart:_myCartProducts})
+                })
+            })
+        })
     }
 }

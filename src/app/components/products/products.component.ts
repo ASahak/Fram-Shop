@@ -21,7 +21,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
     protected galleryComponent:GalleryComponent       = new GalleryComponent();
     protected _idProduct:string;
-    public _loadingProduct:boolean                    = false;
     public _ProductMore:Observable<Array<Object>>;
     public _ActiveuserInfo;
     constructor(
@@ -32,10 +31,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         private _authServ: AuthServiceService   
     ) {
         this._store.pipe(select('_methods')).subscribe(res=>{
-            this._loadingProduct = false;
             if(res){
                 this._ProductMore = res.product
-                this._loadingProduct = true;
                 setTimeout(()=>{
                     this.__initSliders()
                     this.image_zoom();
@@ -173,7 +170,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
        
     }
     ngOnDestroy(){
-        this._loadingProduct = false;
     }
     upCount(event){
         this.galleryComponent.findElement(this.shopBadgesComponent.getParent(event.target, "count-product-input"), 'input')[0].value++;

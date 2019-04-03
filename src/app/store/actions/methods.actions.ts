@@ -8,7 +8,13 @@ export enum MethodsActionTypes {
   __productSuccesfull = '[Methods] Product get Succesfuly',
   __productAppreciated = '[Methods] Product apreciated',
   __productAddToCart = '[Methods] Product add to cart',
-  __actionSuccess = '[Methods] Action Succesfull'
+  __actionSuccess = '[Methods] Action Succesfull',
+  __deleteItemInCart = '[Methods] Delete Item In Cart',
+  __getAllCartItems = '[Methods] Get All Cart Items',
+  __getAllCartItemsSuccess = '[Methods] Get All Cart Items Success',
+  __plusCartItem = '[Methods] Plus Cart Item',
+  __minusCartItem = '[Methods] Minus Cart Item',
+  __cartItemCountSucess = '[Methods] Cart ItemCount Success'
 }
 
 export class FlashMessage implements Action {
@@ -43,5 +49,44 @@ export class ActionSuccess implements Action {
   readonly type = MethodsActionTypes.__actionSuccess;
   constructor(){}
 }
+// Cart Actions
+export class DeleteItemInCart implements Action {
+  readonly type = MethodsActionTypes.__deleteItemInCart;
+  constructor(public payload:{}){}
+}
+export class GetAllCartItems implements Action {
+  readonly type = MethodsActionTypes.__getAllCartItems;
+  constructor(public payload:{}){}
+}
+export class GetAllCartItemsSuccess implements Action {
+  readonly type = MethodsActionTypes.__getAllCartItemsSuccess;
+  constructor(public payload:{}){}
+}
+export class PlusCartItem implements Action {
+  readonly type = MethodsActionTypes.__plusCartItem;
+  constructor(public payload:{}){}
+}
+export class MinusCartItem implements Action {
+  readonly type = MethodsActionTypes.__minusCartItem;
+  constructor(public payload:{}){}
+}
+export class CartItemCountSuccess implements Action {
+  readonly type = MethodsActionTypes.__cartItemCountSucess;
+  constructor(){}
+}
 
-export type All = FlashMessage | AllUsersProduct | OneProduct | OneProductSuccess | ProductSuccesfull | ProductApreciated | ProductAddToCart | ActionSuccess;
+export type All = 
+  FlashMessage |
+  AllUsersProduct |
+  OneProduct | 
+  OneProductSuccess | 
+  ProductSuccesfull | 
+  ProductApreciated | 
+  ProductAddToCart | 
+  ActionSuccess |
+  DeleteItemInCart |
+  GetAllCartItems |
+  GetAllCartItemsSuccess |
+  PlusCartItem | 
+  MinusCartItem |
+  CartItemCountSuccess;

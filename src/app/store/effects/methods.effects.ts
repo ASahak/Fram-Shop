@@ -39,10 +39,28 @@ export class MethodsEffects {
     map(data => ({ type: '[Methods] Action Succesfull'}))
   )
   @Effect()
+  __deleteItemInCart$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__deleteItemInCart),
+    mergeMap(action => this._shop.__deleteProductInCart(action['payload'])/* succesFull any functions whichs finishet ok */),
+    map(data => ({ type: '[Methods] Get All Cart Items Success', payload:data}))
+  )
+  @Effect()
   __productAddToCart$: Observable<any> = this.actions$.pipe(
     ofType<All>(MethodsActionTypes.__productAddToCart),
     mergeMap(action => this._shop.__addProductToCart(action['payload'])),
     map(data => ({ type: '[Methods] Action Succesfull'}))
+  )
+  @Effect()
+  __plusCartItem$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__plusCartItem),
+    mergeMap(action => this._shop.__plusORminusCartItemRecet(action['payload'])),
+    map(data => ({ type: '[Methods] Cart ItemCount Success'}))
+  )
+  @Effect()
+  __minusCartItem$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__minusCartItem),
+    mergeMap(action => this._shop.__plusORminusCartItemRecet(action['payload'])),
+    map(data => ({ type: '[Methods] Cart ItemCount Success'}))
   )
   
 

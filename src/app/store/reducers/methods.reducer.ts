@@ -4,7 +4,8 @@ export type ActionT = Actions.All;
 
 export const initialState = {
   products:Object,
-  product:Object
+  product:Object,
+  cartItems:Object
 };
 
 const __FlashMessage = (payload) => {
@@ -27,19 +28,26 @@ const __FlashMessage = (payload) => {
       _div.remove()
   }, payload.timeout);
 }
-
 export function methodReducer(state = initialState, action: ActionT) {
   switch (action.type) {
     case Actions.MethodsActionTypes.__FlashMessage:
-      return __FlashMessage(action.payload);
+    __FlashMessage(action.payload)
+      return {...state};
     case Actions.MethodsActionTypes.__actionSuccess:
-      return {...state, ...action}
+      return {...state}
     case Actions.MethodsActionTypes.__productSuccesfull:
-      return {...state, ...action.payload, products:action.payload}
+      return {...state, products:action.payload}
     case Actions.MethodsActionTypes.__getOneProductSuccess:
-      return {...state, ...action.payload, product:action.payload}
+      return {...state, product:action.payload}
+    case Actions.MethodsActionTypes.__getAllCartItems:
+      return {...state, cartItems:action.payload}
+    case Actions.MethodsActionTypes.__getAllCartItemsSuccess:
+      return {...state, cartItems:action.payload}
+    case Actions.MethodsActionTypes.__cartItemCountSucess:
+      return {...state}
     default:
-      return 0;
+      return state;
   }
+  // console.log(state, 'sssss')
 }
 
