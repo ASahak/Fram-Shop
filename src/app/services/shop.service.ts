@@ -53,19 +53,21 @@ export class ShopService {
         )
         return this._users
     }
-    __getOneProduct(_urlParams){
-        var sfDocRef = firebase.firestore().collection("Users").doc(_urlParams._ownProductId);
-        return firebase.firestore()
-        .runTransaction(t => {
-            return t.get(sfDocRef).then(doc => {
-                var _newProducts = doc.get('myProduct')
-                Array.prototype.map.call(_newProducts, item=>{
-                    if(item.idProduct == _urlParams._idProduct){
-                        this._oneProduct = item
-                    }
+    __getOneProduct(_urlParams):Observable<any>{
+        return new Observable (observer => {
+            var sfDocRef = firebase.firestore().collection("Users").doc(_urlParams._ownProductId);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    var _newProducts = doc.get('myProduct')
+                    Array.prototype.map.call(_newProducts, item=>{
+                        if(item.idProduct == _urlParams._idProduct){
+                            this._oneProduct = item
+                            observer.next(this._oneProduct)
+                        }
+                    })
+                    t.update(sfDocRef, {myProduct:_newProducts})
                 })
-                t.update(sfDocRef, {myProduct:_newProducts})
-                return this._oneProduct
             })
         })
     }
@@ -116,6 +118,7 @@ export class ShopService {
                 _cartObj[_product._badge[0]]['name'] = _product._badge[2]   
                 _cartObj[_product._badge[0]]['priceLatest'] = _product._badge[3]
                 _cartObj[_product._badge[0]]['prodCount'] = _product['_inputVal']
+                _cartObj[_product._badge[0]]['ownID'] = _product._badge[4]
                 this._recetDocUsers.ref.update('myCart', _cartObj).then(()=>{
                     this._store.dispatch(new Actions.FlashMessage({message:"This item added Your cart successfully", timeout:4000, classType:'succesFlash'}))
                     _unsub.unsubscribe()
@@ -157,8 +160,19 @@ export class ShopService {
             });
         })
     };
+    __deleteCartItems(_userID):Observable<any>{
+        return new Observable (observer =>{
+            var sfDocRef = firebase.firestore().collection("Users").doc(_userID);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    t.update(sfDocRef, {myCart:{}})
+                    observer.next()
+                })
+            })
+        })
+    }
     __plusORminusCartItemRecet(_value):Observable<boolean>{
-        console.log(_value._type)
         return new Observable (observer =>{
             var sfDocRef = firebase.firestore().collection("Users").doc(_value._userID);
             firebase.firestore()

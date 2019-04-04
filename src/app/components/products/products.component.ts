@@ -4,6 +4,7 @@ import { ShopBadgesComponent } from '../home-page/shop-badges/shop-badges.compon
 import { Location } from '@angular/common';
 import { AuthServiceService } from '../../services/auth-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ShopService } from '../../services/shop.service'
 import * as Actions from '../../store/actions/methods.actions'
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -23,22 +24,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
     protected _idProduct:string;
     public _ProductMore:Observable<Array<Object>>;
     public _ActiveuserInfo;
+    public _productsReady:boolean                      = false;
     constructor(
         private _store: Store<AppState>,
         public location:Location,
         private router:Router,
         public _activeRouter:ActivatedRoute,
-        private _authServ: AuthServiceService   
+        private _authServ: AuthServiceService,
+        public _shopServ:ShopService
     ) {
-        this._store.pipe(select('_methods')).subscribe(res=>{
-            if(res){
-                this._ProductMore = res.product
-                setTimeout(()=>{
-                    this.__initSliders()
-                    this.image_zoom();
-                }, 0)
-            }
-        })
      }
 
     @ViewChildren('imgBoxZoom') imgBoxZoom:QueryList<any>;
@@ -165,7 +159,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         this._idProduct = this._activeRouter.params['value']['id'];
-        this._store.dispatch(new Actions.OneProduct({_idProduct:this._idProduct.split("&")[0], _ownProductId:this._idProduct.split("&")[1]}))
+        this._shopServ.__getOneProduct({_idProduct:this._idProduct.split("&")[0], _ownProductId:this._idProduct.split("&")[1]}).subscribe(res=>{
+            this._ProductMore = res
+            if(this._ProductMore['idProduct']){
+                this._productsReady = true
+            }
+            setTimeout(()=>{
+                this.__initSliders()
+                this.image_zoom();
+            }, 0)
+        })
         setTimeout(()=>this.goSmooth(), 100)
        
     }

@@ -1,5 +1,5 @@
 <section id="products_page" class="mt-4 product_slide_cont">
-    <div class="container" *ngIf="_ProductMore.prodName; else loading">
+    <div class="container" *ngIf="_productsReady; else loading">
         <div class="row">
             <div class="col-12">
                 <div class="top-direction">
@@ -80,7 +80,8 @@
                             _ProductMore.idProduct,
                             _ProductMore.prodImgs[0],
                             _ProductMore.prodName,
-                            (_ProductMore.prodPrice - (_ProductMore.prodPrice * _ProductMore.prodSale)/100)
+                            (_ProductMore.prodPrice - (_ProductMore.prodPrice * _ProductMore.prodSale)/100),
+                            _idProduct.split('&')[1]
                             ])">
                                 <span class="lnr lnr-cart"></span>
                                 {{'relatedSec.addButton' | translate}}

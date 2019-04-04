@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: "contact", component:ContactComponent},
   {path: "partners", component:PartnersComponent},
   {path: "gallery", component:GalleryComponent},
-  {path: "cart", component:CartComponent},
+  {path: "cart", canActivate:[AuthGuardGuard], component:CartComponent},
   {path: "my-account/:id", canActivate:[AuthGuardGuard],  component:MyAccountComponent},
   {path: "reset-password", component:ResetPasswordComponent},
   {path: "products/:id", component:ProductsComponent, pathMatch: 'full'},

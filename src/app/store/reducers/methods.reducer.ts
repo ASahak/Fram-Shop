@@ -4,7 +4,6 @@ export type ActionT = Actions.All;
 
 export const initialState = {
   products:Object,
-  product:Object,
   cartItems:Object
 };
 
@@ -37,14 +36,14 @@ export function methodReducer(state = initialState, action: ActionT) {
       return {...state}
     case Actions.MethodsActionTypes.__productSuccesfull:
       return {...state, products:action.payload}
-    case Actions.MethodsActionTypes.__getOneProductSuccess:
-      return {...state, product:action.payload}
     case Actions.MethodsActionTypes.__getAllCartItems:
       return {...state, cartItems:action.payload}
     case Actions.MethodsActionTypes.__getAllCartItemsSuccess:
       return {...state, cartItems:action.payload}
     case Actions.MethodsActionTypes.__cartItemCountSucess:
       return {...state}
+    case Actions.MethodsActionTypes.__clearCart:
+      return {...state, cartItems:action.payload}
     default:
       return state;
   }

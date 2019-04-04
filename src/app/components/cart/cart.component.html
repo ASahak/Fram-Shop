@@ -20,34 +20,34 @@
                             <th>{{'cart.table.priceTh' | translate}}</th>
                             <th>{{'cart.table.quantityTh' | translate}}</th>
                             <th>{{'cart.table.totalTh' | translate}}</th>
-                            <th><button *ngIf="dataCart" (click)="deleteAllItems()">{{'cart.table.clear' | translate}}</button></th>
+                            <th><button *ngIf="totalPrices" (click)="deleteAllItems()">{{'cart.table.clear' | translate}}</button></th>
                         </thead>
                         <tbody>
                             <ng-container  *ngFor="let item of dataCart | keyvalue; let i = index">
                                 <tr *ngIf="i < pageItemsEnd && i >= (pageItemsEnd-pageinationCount)">
                                     <td><img [src]="dataCart[item.key].image ? dataCart[item.key].image : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt=""></td>
-                                    <td>{{dataCart[item.key].name}}</td>
-                                    <td>{{dataCart[item.key].priceLatest | currency:'CAD':'symbol-narrow'}}</td>
+                                    <td><a routerLink='/products/{{item.key}}&{{dataCart[item.key].ownID}}'>{{dataCart[item.key].name}}</a></td>
+                                    <td>{{dataCart[item.key].priceLatest | productPrice}}</td>
                                     <td>
                                         <div class="add-and-remove">
                                             <span class="minusCart" (click)="__minusCartItem(dataCart[item.key].prodCount, item.key)">-</span>
-                                            <span class="countProducts">{{dataCart[item.key].prodCount}}</span>
+                                            <span class="countProducts">{{dataCart[item.key].prodCount }}</span>
                                             <span class="plusCart" (click)="__plusCartItem(dataCart[item.key].prodCount, item.key)">+</span>
                                         </div>
                                     </td>
-                                    <td>{{dataCart[item.key].prodCount * dataCart[item.key].priceLatest | currency:'CAD':'symbol-narrow'}}</td>
+                                    <td>{{dataCart[item.key].prodCount * dataCart[item.key].priceLatest | productPrice}}</td>
                                     <td><span class="lnr lnr-cross" (click)="__deleteItem(item.key, i)"></span></td>
                                 </tr>
                             </ng-container>
                         </tbody>
                     </table>   
                 </div>
-                <!-- <div class="totalAmount" *ngIf="dataCart.length > 0" >
+                <div class="totalAmount" *ngIf="totalPrices">
                     {{'cart.table.totPrice' | translate}} <b>{{totalPrices | currency:'CAD':'symbol-narrow'}}</b>
                 </div>
-                <div class="paginationCart" #pageElement>
+                <div class="paginationCart" #pageElement *ngIf="totalPrices">
                     <a *ngFor="let page of [].constructor(countPageinationLength); let i = index" [class.activePage]="i == 0" href="javascript:void(0)" (click)="pageClick(i)">{{i+1}}</a>
-                </div> -->
+                </div>
             </div> 
         </div>
     </div>

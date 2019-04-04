@@ -73,7 +73,7 @@
                         <span class="lnr lnr-magnifier"></span>
                     </form>
                     <div class="shoppingCartWrap order-1 order-md-2">
-                        <a href="javascript:void(0)" routerLink="/cart">
+                        <a href="javascript:void(0)" (click)="openCart()" routerLink="/cart">
                             <span class="cartCount">2</span>
                             <span class="lnr lnr-cart"></span>
                             {{ 'header.shopCart' | translate }}

@@ -3,8 +3,6 @@ import { Action } from '@ngrx/store';
 export enum MethodsActionTypes {
   __FlashMessage = '[Methods] FlashMessage Methods',
   __allUsersProduct = '[Methods] Get All Products',
-  __getOneProduct = '[Methods] Get One Product',
-  __getOneProductSuccess = '[Methods] Get One Product Successfully',
   __productSuccesfull = '[Methods] Product get Succesfuly',
   __productAppreciated = '[Methods] Product apreciated',
   __productAddToCart = '[Methods] Product add to cart',
@@ -14,7 +12,8 @@ export enum MethodsActionTypes {
   __getAllCartItemsSuccess = '[Methods] Get All Cart Items Success',
   __plusCartItem = '[Methods] Plus Cart Item',
   __minusCartItem = '[Methods] Minus Cart Item',
-  __cartItemCountSucess = '[Methods] Cart ItemCount Success'
+  __cartItemCountSucess = '[Methods] Cart ItemCount Success',
+  __clearCart = '[Methods] Clear Cart'
 }
 
 export class FlashMessage implements Action {
@@ -24,14 +23,6 @@ export class FlashMessage implements Action {
 export class AllUsersProduct implements Action {
   readonly type = MethodsActionTypes.__allUsersProduct;
   constructor(){}
-}
-export class OneProduct implements Action {
-  readonly type = MethodsActionTypes.__getOneProduct;
-  constructor(public payload:{}){}
-}
-export class OneProductSuccess implements Action {
-  readonly type = MethodsActionTypes.__getOneProductSuccess;
-  constructor(public payload:{}){}
 }
 export class ProductSuccesfull implements Action {
   readonly type = MethodsActionTypes.__productSuccesfull;
@@ -74,12 +65,14 @@ export class CartItemCountSuccess implements Action {
   readonly type = MethodsActionTypes.__cartItemCountSucess;
   constructor(){}
 }
+export class ClearCart implements Action {
+  readonly type = MethodsActionTypes.__clearCart;
+  constructor(public payload:{}){}
+}
 
 export type All = 
   FlashMessage |
   AllUsersProduct |
-  OneProduct | 
-  OneProductSuccess | 
   ProductSuccesfull | 
   ProductApreciated | 
   ProductAddToCart | 
@@ -89,4 +82,5 @@ export type All =
   GetAllCartItemsSuccess |
   PlusCartItem | 
   MinusCartItem |
-  CartItemCountSuccess;
+  CartItemCountSuccess |
+  ClearCart;

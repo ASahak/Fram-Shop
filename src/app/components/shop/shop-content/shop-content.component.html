@@ -45,7 +45,8 @@
                     _products[itemID.key][i].idProduct,
                     _products[itemID.key][i].prodImgs[0],
                     _products[itemID.key][i].prodName,
-                    (_products[itemID.key][i].prodPrice - (_products[itemID.key][i].prodPrice * _products[itemID.key][i].prodSale)/100)
+                    (_products[itemID.key][i].prodPrice - (_products[itemID.key][i].prodPrice * _products[itemID.key][i].prodSale)/100),
+                    itemID.key
                     ])">
                         <span class="lnr lnr-cart"></span>
                         {{'relatedSec.addButton' | translate}}

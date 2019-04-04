@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef, ViewChild, Cont
 import { TranslateService } from '@ngx-translate/core';
 import { AuthServiceService } from '../../services/auth-service.service';
 import { CreateUser } from '../../models/models';
+import * as Actions from '../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/app.state'
 /* import * as Actions from '../../store/actions/todo.actions';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs'; */
@@ -60,7 +63,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // userTodo:Observable<Todo>;
     // constructor(public store:Store<AppState>) {
         // this.userTodo = this.store.select('userTodo');
-    constructor(private translate: TranslateService, public authServ: AuthServiceService) {
+    constructor(
+        private translate: TranslateService,
+        public authServ: AuthServiceService,
+        private _store: Store<AppState>,
+        ) {
         translate.setDefaultLang('en');
         // this.auth.__FlashMessage("eeee")
         
@@ -171,6 +178,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
             
             this.isLogin = (res)?true:false;
         })
+    }
+    openCart(){
+        if(!this.isLogin){
+            this._store.dispatch(new Actions.FlashMessage({message:"You must be Sign In", timeout:2500, classType:'dangerFlash'}))
+        }
     }
     signOut(){
         this.authServ.__logOut();

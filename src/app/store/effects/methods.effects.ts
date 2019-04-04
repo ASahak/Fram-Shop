@@ -22,15 +22,6 @@ export class MethodsEffects {
       )
     )
   );
-  @Effect()
-  __getOneProduct$: Observable<any> = this.actions$.pipe(
-    ofType<All>(MethodsActionTypes.__getOneProduct),
-    mergeMap(action =>
-      this._shop.__getOneProduct(action['payload'])
-    ),
-    map(data => ({ type: '[Methods] Get One Product Successfully', payload: data })),
-    // catchError(() => of({ type: '[Methods] Get All Products Field' }))
-  );
 
   @Effect()
   __productApreciated$: Observable<any> = this.actions$.pipe(

@@ -4,6 +4,7 @@ import * as Actions from '../../store/actions/methods.actions'
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store/app.state'
+import { ShopService } from '../../services/shop.service'
 @Component({
     selector: 'app-cart',
     templateUrl: './cart.component.html',
@@ -24,24 +25,25 @@ export class CartComponent implements OnInit {
     constructor(
         private _authServ: AuthServiceService,
         private _store: Store<AppState>,
+        public _shopServ:ShopService
     ) {
         this._store.pipe(select('_methods')).subscribe(res=>{
-            if(res){
+            if(res.cartItems){
                 this.dataCart = res.cartItems;
+                this.totalPrice()
+                this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
             }
         });
-        // this.countPageinationLength = Math.ceil(this.dataCart.length/this.pageinationCount);
     }
-    // protected totalPrice(){
-    //     this.totalPrices = 0;
-    //     Array.prototype.map.call(this.dataCart, (elem)=>{
-    //         this.totalPrices += Number(elem.price* elem.countProduct)
-    //     })
-    // }
+    protected totalPrice(){
+        this.totalPrices = 0;
+        for (let i in this.dataCart){
+            this.totalPrices += Number(Math.round(this.dataCart[i]['priceLatest'])* this.dataCart[i]['prodCount'])
+        }
+    }
     @ViewChild('pageElement') pageElement:ElementRef;
     
     ngOnInit() {
-        // this.totalPrice()
         this._authServ.__getCurrentUser()
         .subscribe(res => {
             if(res['id']){
@@ -49,8 +51,6 @@ export class CartComponent implements OnInit {
                 if(res['myCart'])
                 this._store.dispatch(new Actions.GetAllCartItems(res['myCart']))
             }
-            // this.dataCart = res['myCart']
-            // console.log(this.dataCart)
         })
     }
     pageClick(index:number){
@@ -84,19 +84,25 @@ export class CartComponent implements OnInit {
      __deleteItem(item, index){
         if(this._currentUserID){
             this._store.dispatch(new Actions.DeleteItemInCart({_userID:this._currentUserID, _itemKey:item}))
+            this._store.pipe(select('_methods')).subscribe(res=>{
+                if(Object.keys(res.cartItems).length){
+                    this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
+                    if(Object.keys(this.dataCart).length == this.pageItemsEnd-this.pageinationCount && Object.keys(this.dataCart).length> 0){
+                        this.pageItemsEnd = this.pageItemsEnd-this.pageinationCount;
+                        this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
+                    }
+                    this.totalPrice()
+                }
+            })
         }
-        // this.dataCart.splice(index, 1);
-        // this.countPageinationLength = Math.ceil(this.dataCart.length/this.pageinationCount);
-        // if(this.dataCart.length == this.pageItemsEnd-this.pageinationCount && this.dataCart.length> 0){
-        //     this.pageItemsEnd = this.pageItemsEnd-this.pageinationCount;
-        //     this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
-        // }
-        // this.totalPrice();
     }
-    /*deleteAllItems(){
-        this.countPageinationLength = 0;
-        this.dataCart = [];
-        this.totalPrices = 0;
-    } */
+    deleteAllItems(){
+        this._shopServ.__deleteCartItems(this._currentUserID).subscribe(res=>{
+            this._store.dispatch(new Actions.FlashMessage({message:"Your cart is empty", timeout:2500, classType:'successFlash'}))
+            this._store.dispatch(new Actions.ClearCart({}))
+            this.countPageinationLength = 0;
+            this.totalPrices = 0;
+        })
+    }
 
 }
