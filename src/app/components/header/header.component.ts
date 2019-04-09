@@ -9,6 +9,7 @@ import { AppState } from '../../store/app.state'
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs'; */
 import { Subscription } from 'rxjs';
+import { initialState } from '../../store/reducers/methods.reducer';
 import { Router, ActivatedRoute} from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 /* interface Todo {
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public userWrap: boolean        = true;
     public toggleNavBar: boolean    = false;
     protected heightNavBar:number   = 0;
+    protected _cartCount:number     = 0;
     protected heghtSub:number       = 0;
     public showList:boolean         = false;
     public topHide:boolean          = false;
@@ -66,8 +68,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
         private translate: TranslateService,
         public authServ: AuthServiceService,
-        private _store: Store<AppState>,
+        private _store: Store<AppState>
         ) {
+        let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
+            if(res.cartItems){
+                // console.log(res.cartItems)
+                this._cartCount = Object.keys(res.cartItems).length || 0
+                _unsub.unsubscribe()
+            }
+        })
         translate.setDefaultLang('en');
         // this.auth.__FlashMessage("eeee")
         
@@ -174,6 +183,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 objImg.onerror = ()=>{
                     this.userData['imgAvatar'] = './assets/img/user.jpg'
                 }
+                if(res['myCart'])
+                this._store.dispatch(new Actions.GetAllCartItems(res['myCart']))
             })
             
             this.isLogin = (res)?true:false;

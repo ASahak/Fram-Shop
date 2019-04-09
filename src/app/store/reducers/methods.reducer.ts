@@ -3,8 +3,10 @@ import * as  Actions from '../actions/methods.actions'
 export type ActionT = Actions.All;
 
 export const initialState = {
-  products:Object,
-  cartItems:Object
+  products:null,
+  cartItems:null,
+  showBadges: null,
+  allProducts: null
 };
 
 const __FlashMessage = (payload) => {
@@ -44,6 +46,8 @@ export function methodReducer(state = initialState, action: ActionT) {
       return {...state}
     case Actions.MethodsActionTypes.__clearCart:
       return {...state, cartItems:action.payload}
+    case Actions.MethodsActionTypes.__countBadgeProducts:
+      return {...state, showBadges:action.payload}
     default:
       return state;
   }

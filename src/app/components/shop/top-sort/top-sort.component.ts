@@ -1,5 +1,8 @@
 import { Component, OnInit, OnChanges, Input, ViewChild, ElementRef, AfterContentInit } from '@angular/core';
-
+import * as Actions from '../../../store/actions/methods.actions'
+import { AppState } from '../../../store/app.state'
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 @Component({
     selector: 'app-top-sort',
     templateUrl: './top-sort.component.html',
@@ -10,8 +13,9 @@ export class TopSortComponent implements OnInit {
     public sortTxt:string; 
     countBadgesVal:number | string = '10';
     constructor(
+        private _store: Store<AppState>
     ) { 
-        
+        this._store.dispatch(new Actions.ProductsBadgeCount(this.countBadgesVal))
     }
     @Input('loginedUser') loginedUser:boolean;
     ngOnInit() {

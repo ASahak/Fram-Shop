@@ -106,25 +106,23 @@ export class ShopService {
         });
     }
     __addProductToCart(_product:addProductCart){
-        var _cartObj = {};
-        this._recetDocUsers = this._afs.doc(`Users/${_product._currentUserID}`)
-        return new Observable (observer=>{
-            var _unsub=  this._recetDocUsers.valueChanges().subscribe(res=>{
-                if(res.hasOwnProperty('myCart')){
-                    _cartObj = res['myCart']
-                }
-                _cartObj[_product._badge[0]] = {}
-                _cartObj[_product._badge[0]]['image'] = (_product._badge[1])?_product._badge[1]:''   
-                _cartObj[_product._badge[0]]['name'] = _product._badge[2]   
-                _cartObj[_product._badge[0]]['priceLatest'] = _product._badge[3]
-                _cartObj[_product._badge[0]]['prodCount'] = _product['_inputVal']
-                _cartObj[_product._badge[0]]['ownID'] = _product._badge[4]
-                this._recetDocUsers.ref.update('myCart', _cartObj).then(()=>{
-                    this._store.dispatch(new Actions.FlashMessage({message:"This item added Your cart successfully", timeout:4000, classType:'succesFlash'}))
-                    _unsub.unsubscribe()
-                    observer.complete()
+        return new Observable (observer => {
+            var sfDocRef = firebase.firestore().collection("Users").doc(_product._currentUserID);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    let _myCartProducts = doc.get('myCart')
+                    _myCartProducts[_product._badge[0]] = {}
+                    _myCartProducts[_product._badge[0]]['image'] = (_product._badge[1])?_product._badge[1]:''   
+                    _myCartProducts[_product._badge[0]]['name'] = _product._badge[2]   
+                    _myCartProducts[_product._badge[0]]['priceLatest'] = _product._badge[3]
+                    _myCartProducts[_product._badge[0]]['prodCount'] = _product['_inputVal']
+                    _myCartProducts[_product._badge[0]]['ownID'] = _product._badge[4]
+                    t.update(sfDocRef, {myCart:_myCartProducts})
+                    observer.next(_myCartProducts)
                 })
-                _unsub.unsubscribe()
+            }).then(()=>{
+                this._store.dispatch(new Actions.FlashMessage({message:"This item added Your cart successfully", timeout:4000, classType:'succesFlash'}))
             })
         })
     }
@@ -144,7 +142,7 @@ export class ShopService {
             firebase.firestore()
             .runTransaction(t => {
                 return t.get(sfDocRef).then(doc => {
-                    var _myCartProducts = doc.get('myCart')
+                    let _myCartProducts = doc.get('myCart')
                     for (let item in _myCartProducts){
                         if(item == payload._itemKey){
                             delete _myCartProducts[payload._itemKey]

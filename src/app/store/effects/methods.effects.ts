@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of, Subscriber, pipe } from 'rxjs';
-import { catchError, map, mergeMap, mapTo, tap, switchMap, filter } from 'rxjs/operators';
+import { catchError, map, mergeMap, share, tap, switchMap, filter } from 'rxjs/operators';
 import { All, MethodsActionTypes } from '../actions/methods.actions'
 import { ShopService } from '../../services/shop.service'
 import { AuthServiceService } from '../../services/auth-service.service'
@@ -39,7 +39,7 @@ export class MethodsEffects {
   __productAddToCart$: Observable<any> = this.actions$.pipe(
     ofType<All>(MethodsActionTypes.__productAddToCart),
     mergeMap(action => this._shop.__addProductToCart(action['payload'])),
-    map(data => ({ type: '[Methods] Action Succesfull'}))
+    map(data => ({ type: '[Methods] Get All Cart Items Success', payload: data}))
   )
   @Effect()
   __plusCartItem$: Observable<any> = this.actions$.pipe(

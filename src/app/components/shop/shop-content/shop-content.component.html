@@ -1,5 +1,5 @@
 <div class="row padding_mobile_none" *ngIf="_allProducts as _products; else loading">
-    <ng-container *ngFor="let itemID of _products | keyvalue">
+    <!-- <ng-container *ngFor="let itemID of _products | keyvalue">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
         *ngFor="let item of _products[itemID.key] | keyvalue; let i = index"
         [attr.dat-id-prod]="itemID.key"
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-    </ng-container>
+    </ng-container> -->
 </div>
 <ng-template #loading>
     <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
@@ -62,12 +62,9 @@
 <div class="row padding_mobile_none" #pageinationWrap>
     <div class="col-12 pl-0">
         <div class="pageination_shop">
-            <a href="javascript:void(0)" class="disabled_page"><i class="lnr lnr-arrow-left"></i></a>
-            <a href="javascript:void(0)" class="active_page">1</a>
-            <a href="javascript:void(0)">2</a>
-            <a href="javascript:void(0)">3</a>
-            <a href="javascript:void(0)">4</a>
-            <a href="javascript:void(0)"><i class="lnr lnr-arrow-right"></i></a>
+            <a href="javascript:void(0)" class="disabled_page"  (click)="__prevPage()"><i class="lnr lnr-arrow-left"></i></a>
+            <a href="javascript:void(0)" class="active_page">{{_paginationStart}}</a>
+            <a href="javascript:void(0)" (click)="__nextPage()"><i class="lnr lnr-arrow-right"></i></a>
         </div>
     </div>   
 </div>

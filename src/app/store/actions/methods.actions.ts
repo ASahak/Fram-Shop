@@ -13,7 +13,8 @@ export enum MethodsActionTypes {
   __plusCartItem = '[Methods] Plus Cart Item',
   __minusCartItem = '[Methods] Minus Cart Item',
   __cartItemCountSucess = '[Methods] Cart ItemCount Success',
-  __clearCart = '[Methods] Clear Cart'
+  __clearCart = '[Methods] Clear Cart',
+  __countBadgeProducts = '[Methods] badges count'
 }
 
 export class FlashMessage implements Action {
@@ -40,6 +41,11 @@ export class ActionSuccess implements Action {
   readonly type = MethodsActionTypes.__actionSuccess;
   constructor(){}
 }
+export class ProductsBadgeCount implements Action {
+  readonly type = MethodsActionTypes.__countBadgeProducts;
+  constructor(public payload:{}){}
+}
+
 // Cart Actions
 export class DeleteItemInCart implements Action {
   readonly type = MethodsActionTypes.__deleteItemInCart;
@@ -75,7 +81,8 @@ export type All =
   AllUsersProduct |
   ProductSuccesfull | 
   ProductApreciated | 
-  ProductAddToCart | 
+  ProductAddToCart |
+  ProductsBadgeCount |
   ActionSuccess |
   DeleteItemInCart |
   GetAllCartItems |

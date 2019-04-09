@@ -27,11 +27,12 @@ export class CartComponent implements OnInit {
         private _store: Store<AppState>,
         public _shopServ:ShopService
     ) {
-        this._store.pipe(select('_methods')).subscribe(res=>{
+        let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
             if(res.cartItems){
                 this.dataCart = res.cartItems;
                 this.totalPrice()
                 this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
+                _unsub.unsubscribe()
             }
         });
     }
@@ -84,7 +85,7 @@ export class CartComponent implements OnInit {
      __deleteItem(item, index){
         if(this._currentUserID){
             this._store.dispatch(new Actions.DeleteItemInCart({_userID:this._currentUserID, _itemKey:item}))
-            this._store.pipe(select('_methods')).subscribe(res=>{
+            let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
                 if(Object.keys(res.cartItems).length){
                     this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
                     if(Object.keys(this.dataCart).length == this.pageItemsEnd-this.pageinationCount && Object.keys(this.dataCart).length> 0){
@@ -92,6 +93,7 @@ export class CartComponent implements OnInit {
                         this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
                     }
                     this.totalPrice()
+                    _unsub.unsubscribe()
                 }
             })
         }
