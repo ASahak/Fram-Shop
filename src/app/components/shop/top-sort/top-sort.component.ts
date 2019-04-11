@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class TopSortComponent implements OnInit {
     @ViewChild('sortDefault') sortText:ElementRef;
     public sortTxt:string; 
-    countBadgesVal:number | string = '10';
+    countBadgesVal:number | string = '12';
     constructor(
         private _store: Store<AppState>
     ) { 

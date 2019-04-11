@@ -1,12 +1,11 @@
-<div class="row padding_mobile_none" *ngIf="_allProducts as _products; else loading">
-    <!-- <ng-container *ngFor="let itemID of _products | keyvalue">
+<div class="row padding_mobile_none" *ngIf="this._commonObjectProducts[_paginationStart] as _products; else loading">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
-        *ngFor="let item of _products[itemID.key] | keyvalue; let i = index"
-        [attr.dat-id-prod]="itemID.key"
+        *ngFor="let item of _products | keyvalue; let i = index"
+        [attr.dat-id-prod]="item.idParentUser"
         >
             <div class="products-fram">
                 <span class="sale-badge" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{'-' + item.value.prodSale + '%'}}</span>
-                <a  routerLink="/products/{{item.value.idProduct+'&'+itemID.key}}" class="d-block text-center" href="javascript:void(0)">
+                <a  routerLink="/products/{{item.value.idProduct+'&'+ item.value.idParentUser}}" class="d-block text-center" href="javascript:void(0)">
                     <img [src]="item.value.prodImgs[0] ? item.value.prodImgs[0] : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt="">
                     <div class="name-and-section">
                         <p>{{item.value.prodType}}</p>
@@ -54,17 +53,16 @@
                 </div>
             </div>
         </div>
-    </ng-container> -->
-</div>
-<ng-template #loading>
-    <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
-</ng-template>
-<div class="row padding_mobile_none" #pageinationWrap>
-    <div class="col-12 pl-0">
-        <div class="pageination_shop">
-            <a href="javascript:void(0)" class="disabled_page"  (click)="__prevPage()"><i class="lnr lnr-arrow-left"></i></a>
-            <a href="javascript:void(0)" class="active_page">{{_paginationStart}}</a>
-            <a href="javascript:void(0)" (click)="__nextPage()"><i class="lnr lnr-arrow-right"></i></a>
-        </div>
-    </div>   
-</div>
+    </div>
+    <ng-template #loading>
+        <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
+    </ng-template>
+    <div class="row padding_mobile_none" #pageinationWrap>
+        <div class="col-12 pl-0">
+            <div class="pageination_shop">
+                <a href="javascript:void(0)" class="disabled_page" (click)="__prevPage()"><i class="lnr lnr-arrow-left"></i></a>
+                <a href="javascript:void(0)" class="active_page">1</a>
+                <a href="javascript:void(0)" (click)="__nextPage()"><i class="lnr lnr-arrow-right"></i></a>
+            </div>
+        </div>   
+    </div>
