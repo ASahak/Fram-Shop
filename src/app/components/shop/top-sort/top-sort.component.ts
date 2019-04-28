@@ -22,7 +22,6 @@ export class TopSortComponent implements OnInit {
         setTimeout(()=>{
             this.sortTxt = this.sortText.nativeElement.innerHTML;
         }, 100)
-        
     }
     // ngOnChanges(){
     //     console.log(this.loginedUser)
@@ -30,9 +29,11 @@ export class TopSortComponent implements OnInit {
     ngDoCheck(){
     }
     sortProducts(sortBy:string, e:KeyboardEvent){ 
+        this._store.dispatch(new Actions.SortBy(sortBy))
         this.sortTxt = (e.target as HTMLElement).innerText;
     }
     countBadges(count:number | string, e:KeyboardEvent){
         this.countBadgesVal = count; 
+        this._store.dispatch(new Actions.ProductsBadgeCount(this.countBadgesVal))
     }
 }

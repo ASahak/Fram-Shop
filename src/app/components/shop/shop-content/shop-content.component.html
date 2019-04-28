@@ -1,6 +1,6 @@
-<div class="row padding_mobile_none" *ngIf="this._commonObjectProducts[_paginationStart] as _products; else loading">
+<div class="row padding_mobile_none" *ngIf="_allProducts.length > 0">
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3 pl-0" 
-        *ngFor="let item of _products | keyvalue; let i = index"
+        *ngFor="let item of _allProducts | keyvalue; let i = index"
         [attr.dat-id-prod]="item.idParentUser"
         >
             <div class="products-fram">
@@ -25,11 +25,11 @@
                     </div>
                     <div class="product-ratings" #starsRaiting>
                         {{'stars' | productStars:item.value.raiting:starsRaiting}}
-                        <span class="lnr lnr-star" (click)="__appreciated(1, itemID.key, i)"></span>
-                        <span class="lnr lnr-star" (click)="__appreciated(2, itemID.key, i)"></span>
-                        <span class="lnr lnr-star" (click)="__appreciated(3, itemID.key, i)"></span>
-                        <span class="lnr lnr-star" (click)="__appreciated(4, itemID.key, i)"></span>
-                        <span class="lnr lnr-star" (click)="__appreciated(5, itemID.key, i)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(1, item.value.idParentUser, item.value.idProduct)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(2, item.value.idParentUser, item.value.idProduct)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(3, item.value.idParentUser, item.value.idProduct)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(4, item.value.idParentUser, item.value.idProduct)"></span>
+                        <span class="lnr lnr-star" (click)="__appreciated(5, item.value.idParentUser, item.value.idProduct)"></span>
                     </div>
                 </div>
                 <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
@@ -41,11 +41,11 @@
                         </p>
                     </div>
                     <button class="add-to-cart" (click)="__addProductToCart(addprod, [
-                    _products[itemID.key][i].idProduct,
-                    _products[itemID.key][i].prodImgs[0],
-                    _products[itemID.key][i].prodName,
-                    (_products[itemID.key][i].prodPrice - (_products[itemID.key][i].prodPrice * _products[itemID.key][i].prodSale)/100),
-                    itemID.key
+                    item.value.idProduct,
+                    item.value.prodImgs[0],
+                    item.value.prodName,
+                    (item.value.prodPrice - (item.value.prodPrice * item.value.prodSale)/100),
+                    item.value.idParentUser
                     ])">
                         <span class="lnr lnr-cart"></span>
                         {{'relatedSec.addButton' | translate}}
@@ -54,15 +54,18 @@
             </div>
         </div>
     </div>
-    <ng-template #loading>
+    <div *ngIf="loading">
         <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
-    </ng-template>
-    <div class="row padding_mobile_none" #pageinationWrap>
+    </div>
+    <div *ngIf="noData" class="noDataAvailable">
+        <p> No Product </p>
+    </div>
+    <div class="row padding_mobile_none" #pageinationWrap [hidden]="noData || loading">
         <div class="col-12 pl-0">
             <div class="pageination_shop">
-                <a href="javascript:void(0)" class="disabled_page" (click)="__prevPage()"><i class="lnr lnr-arrow-left"></i></a>
-                <a href="javascript:void(0)" class="active_page">1</a>
-                <a href="javascript:void(0)" (click)="__nextPage()"><i class="lnr lnr-arrow-right"></i></a>
+                <a href="javascript:void(0)" [class.disabled_page]="_disabledPagePrev" (click)="__prevPage()"><i class="lnr lnr-arrow-left"></i></a>
+                <a href="javascript:void(0)" class="active_page">{{_pagination}}</a>
+                <a href="javascript:void(0)" (click)="__nextPage()" [class.disabled_page]="_disabledPageNext"><i class="lnr lnr-arrow-right"></i></a>
             </div>
         </div>   
     </div>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Options } from 'ng5-slider';
+import * as Actions from '../../../../store/actions/methods.actions'
+import { AppState } from '../../../../store/app.state'
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 @Component({
     selector: 'app-price',
     templateUrl: './price.component.html',
@@ -7,12 +11,14 @@ import { Options } from 'ng5-slider';
 })
 export class PriceComponent implements OnInit {
 
-    constructor() { }
-    minValue: number = 100;
-    maxValue: number = 400;
+    constructor(
+        private _store: Store<AppState>
+    ) { }
+    minValue: number = 0;
+    maxValue: number = 100000;
     options: Options = {
         floor: 0,
-        ceil: 500,
+        ceil: 100000,
         translate: (value: number): string => {
         return '$' + value;
         },
@@ -23,7 +29,7 @@ export class PriceComponent implements OnInit {
     ngOnInit() {
     }
     getAllValue(min, max){
-        console.log(min, max)
+        this._store.dispatch(new Actions.MinAndMaxFilter({min:min, max:max}))
     }
 
 }

@@ -199,10 +199,13 @@ export class ShopComponent implements  OnInit,OnDestroy {
     cropper: ImageCropperComponent;
     @ViewChild('uploadFile') uploadFile:ElementRef;
     __addProduct() {
-        
         (async ()=> {
             this._submited = true;
             if (this._addProdForm.invalid) {
+                document.querySelector('.add_prod_form').scrollTo({
+                    top:0,
+                    behavior: "smooth"
+                });
                 return;
             }
             const __callAfterUploading = () => {
@@ -220,6 +223,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
                 this._addProdForm.value.prodType = this._selectedCateg
                 this._addProdForm.value.idProduct = new Date().getTime();
                 this._addProdForm.value.raiting = {};
+                this._addProdForm.value['idParentUser'] = this._userInfo.id;
                 (async ()=>{
                     await this._shopServ.__addUsersProduct(this._addProdForm.value, this._userInfo);
                     await (()=>{

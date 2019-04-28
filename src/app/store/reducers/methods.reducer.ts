@@ -6,7 +6,12 @@ export const initialState = {
   products:null,
   cartItems:null,
   showBadges: null,
-  allProducts: null
+  allProducts: null,
+  shopContentMinAndMax: {
+    min: null,
+    max: null
+  },
+  sortBy: null
 };
 
 const __FlashMessage = (payload) => {
@@ -48,6 +53,10 @@ export function methodReducer(state = initialState, action: ActionT) {
       return {...state, cartItems:action.payload}
     case Actions.MethodsActionTypes.__countBadgeProducts:
       return {...state, showBadges:action.payload}
+    case Actions.MethodsActionTypes.__minAndMaxFilter:
+      return {...state, shopContentMinAndMax:action.payload}
+    case Actions.MethodsActionTypes.__sortBy:
+      return {...state, sortBy:action.payload}
     default:
       return state;
   }

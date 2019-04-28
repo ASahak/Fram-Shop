@@ -27,6 +27,12 @@
         color: $disabledButton
     }
 }
+.noDataAvailable{
+    padding-top: 30px;
+    p {
+        text-align: center
+    }
+}
 @media #{$col}{
     .padding_mobile_none{
         padding-left:  15px !important;

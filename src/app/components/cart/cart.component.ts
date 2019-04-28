@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
                 this.dataCart = res.cartItems;
                 this.totalPrice()
                 this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
-                _unsub.unsubscribe()
+                // _unsub.unsubscribe()
             }
         });
     }
@@ -93,7 +93,7 @@ export class CartComponent implements OnInit {
                         this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
                     }
                     this.totalPrice()
-                    _unsub.unsubscribe()
+                    // _unsub.unsubscribe()
                 }
             })
         }

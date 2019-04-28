@@ -14,7 +14,9 @@ export enum MethodsActionTypes {
   __minusCartItem = '[Methods] Minus Cart Item',
   __cartItemCountSucess = '[Methods] Cart ItemCount Success',
   __clearCart = '[Methods] Clear Cart',
-  __countBadgeProducts = '[Methods] badges count'
+  __countBadgeProducts = '[Methods] badges count',
+  __minAndMaxFilter = '[Methods] Min And Max',
+  __sortBy = '[Methods] SortBy'
 }
 
 export class FlashMessage implements Action {
@@ -75,6 +77,14 @@ export class ClearCart implements Action {
   readonly type = MethodsActionTypes.__clearCart;
   constructor(public payload:{}){}
 }
+export class MinAndMaxFilter implements Action {
+  readonly type = MethodsActionTypes.__minAndMaxFilter
+  constructor(public payload: {}){}
+}
+export class SortBy implements Action {
+  readonly type = MethodsActionTypes.__sortBy
+  constructor(public payload: {}){}
+}
 
 export type All = 
   FlashMessage |
@@ -90,4 +100,6 @@ export type All =
   PlusCartItem | 
   MinusCartItem |
   CartItemCountSuccess |
+  MinAndMaxFilter |
+  SortBy |
   ClearCart;

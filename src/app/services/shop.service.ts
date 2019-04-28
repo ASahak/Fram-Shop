@@ -77,21 +77,26 @@ export class ShopService {
         .runTransaction(t => {
             return t.get(sfDocRef).then(doc => {
                 var _newProducts = doc.get('myProduct')
-                _newProducts[raiting._indexMyProduct].raiting
+                let prodById = {}
+                for (let key in _newProducts) {
+                    if(_newProducts[key].idProduct === raiting._indexMyProduct) {
+                        prodById = _newProducts[key]
+                    }
+                }
                 let _apreciatedCount = 0;
-                if(Object.keys(_newProducts[raiting._indexMyProduct].raiting).length == 0){
-                    _newProducts[raiting._indexMyProduct].raiting[raiting._currentUserID] = raiting._indexStar
+                if(Object.keys(prodById['raiting']).length == 0){
+                    prodById['raiting'][raiting._currentUserID] = raiting._indexStar
                 }
                 else{
-                    for (let i in _newProducts[raiting._indexMyProduct].raiting) {
+                    for (let i in prodById['raiting']) {
                         if(i == raiting._currentUserID){
-                            _newProducts[raiting._indexMyProduct].raiting[i] = raiting._indexStar
+                            prodById['raiting'][i] = raiting._indexStar
                             break;
                         }
                         else{
                             _apreciatedCount++
-                            if(_apreciatedCount == Object.keys(_newProducts[raiting._indexMyProduct].raiting).length){
-                                _newProducts[raiting._indexMyProduct].raiting[raiting._currentUserID] = raiting._indexStar
+                            if(_apreciatedCount == Object.keys(prodById['raiting']).length){
+                                prodById['raiting'][raiting._currentUserID] = raiting._indexStar
                             }
                         }
                     }
@@ -112,6 +117,9 @@ export class ShopService {
             .runTransaction(t => {
                 return t.get(sfDocRef).then(doc => {
                     let _myCartProducts = doc.get('myCart')
+                    if (!_myCartProducts) {
+                        _myCartProducts = {}
+                    }
                     _myCartProducts[_product._badge[0]] = {}
                     _myCartProducts[_product._badge[0]]['image'] = (_product._badge[1])?_product._badge[1]:''   
                     _myCartProducts[_product._badge[0]]['name'] = _product._badge[2]   
