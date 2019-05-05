@@ -252,7 +252,6 @@ export class ShopContentComponent implements OnInit, OnDestroy {
         ) { 
             let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
                 if(res.products){
-                    console.log(res)
                     this.sortBy = res.sortBy 
                     let priceFilter = res.shopContentMinAndMax
                     let _getProds = []
@@ -353,6 +352,15 @@ export class ShopContentComponent implements OnInit, OnDestroy {
             this._disabledPageNext = (this._pagination === Math.ceil(this._filteredArr.length / this._showBadges))
         }
     }
+    __removeProduct(_product){
+        if(confirm('Are you sure that you want to delete this product?')){
+            this._store.dispatch(new Actions.RemoveProduct(_product))
+        }
+    }
+    __editProduct (_product) {
+        this.editProduct.emit(_product)
+    }
+    @Output('editProduct') editProduct: EventEmitter<Object> = new EventEmitter<Object>();
     @ViewChild('pageinationWrap') pageinationWrap: ElementRef;
     @Output() transferPositionPageination = new EventEmitter()
     ngOnInit() {

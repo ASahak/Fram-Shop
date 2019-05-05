@@ -53,6 +53,14 @@ export class MethodsEffects {
     mergeMap(action => this._shop.__plusORminusCartItemRecet(action['payload'])),
     map(data => ({ type: '[Methods] Cart ItemCount Success'}))
   )
+  @Effect()
+  __removeProduct$: Observable<any> = this.actions$.pipe(
+    ofType<All>(MethodsActionTypes.__deleteProduct),
+    mergeMap(action => this._shop.__removeProduct(action['payload'])),
+    map(data => ({ type: '[Methods] success delete product'})),
+    catchError(error => of(alert(error)))
+  )
+  
   
 
 

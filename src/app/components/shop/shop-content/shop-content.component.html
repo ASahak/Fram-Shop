@@ -4,6 +4,10 @@
         [attr.dat-id-prod]="item.idParentUser"
         >
             <div class="products-fram">
+                <div class="only_my_wrap" *ngIf="_ActiveuserInfo && item.value.idParentUser === _ActiveuserInfo['id']">
+                    <span (click)="__editProduct(item.value)" class="lnr lnr-pencil open_edit_modal"></span>
+                    <span (click)="__removeProduct(item.value)" class="lnr lnr-trash"></span>
+                </div> 
                 <span class="sale-badge" *ngIf="item.value.prodSale != null && item.value.prodSale != 0">{{'-' + item.value.prodSale + '%'}}</span>
                 <a  routerLink="/products/{{item.value.idProduct+'&'+ item.value.idParentUser}}" class="d-block text-center" href="javascript:void(0)">
                     <img [src]="item.value.prodImgs[0] ? item.value.prodImgs[0] : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt="">

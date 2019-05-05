@@ -28,7 +28,7 @@
     .filter_dropdown{
         position: relative;
         .dropdownUl{
-            z-index: 222;
+            z-index: 223;
             @include showList(0px, auto, 170px);
         }
         .showSortList{

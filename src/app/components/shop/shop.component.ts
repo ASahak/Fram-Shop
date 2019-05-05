@@ -43,7 +43,9 @@ export class ShopComponent implements  OnInit,OnDestroy {
     public _isClickedPlus: Object         = {};
     public _uploadImage: string           = './assets/img/products/product-no-image.jpg';
     public _selectedCateg: undefined      = null;
-    
+    public _TitleModal: string            = 'Add Product'
+    public _saveOrAdd: string             = 'Add'
+    public _editProduct: Object           = {}
     public _uploadedImages: Array<string> = [];
     public _uploadedImgURL: Array<string> = [];
     public __countChangeFile: number      = 0;
@@ -59,7 +61,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
     public _colorsArr: Array<string>      = [];
     public _dataCropper: any;
     public _cropperSettings: CropperSettings;
-
+    protected _saveButtonType: string     =  'edit'
     public __generateColors () {
         this._colorsArr = [
             '#000000',
@@ -72,8 +74,8 @@ export class ShopComponent implements  OnInit,OnDestroy {
             '#FF00FF',
             '#C0C0C0',
             '#808080',
-            '#800000',
-            '#808000',
+            '#800001',
+            '#808200',
             '#008000',
             '#800080',
             '#008080',
@@ -86,7 +88,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             '#BDB76B',
             '#F0E68C',
             '#808000',
-            '#FFFF00',
+            '#9e5062',
             '#9ACD32',
             '#556B2F',
             '#6B8E23',
@@ -108,7 +110,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             '#696969',
             '#808080',
             '#A9A9A9',
-            '#C0C0C0',
+            '#C0C0C1',
             '#D3D3D3'
         ]
     }
@@ -174,6 +176,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             sale: true
         }
     }
+    protected helpAttr: string       = ''
     constructor(
         private _render: Renderer,
         private _render2: Renderer2,
@@ -197,87 +200,177 @@ export class ShopComponent implements  OnInit,OnDestroy {
     @ViewChildren('uploadedImg') uploadedImg:QueryList<any>;
     @ViewChild('cropper', undefined)
     cropper: ImageCropperComponent;
+    @ViewChild('commonColorsParent', undefined) commonColorsParent: HTMLElement
     @ViewChild('uploadFile') uploadFile:ElementRef;
-    __addProduct() {
-        (async ()=> {
-            this._submited = true;
-            if (this._addProdForm.invalid) {
-                document.querySelector('.add_prod_form').scrollTo({
-                    top:0,
-                    behavior: "smooth"
-                });
-                return;
-            }
-            const __callAfterUploading = () => {
-                this._addProdForm.controls.prodColors.value = [];
-                this._addProdForm.controls.prodImgs.value = [];
-                this._uploadedImgURL.map((_elem,_index)=>{
-                    this._addProdForm.controls.prodImgs.value[_index] = _elem;
-                });
-                this._selectedColors.map((_elem,_index)=>{
-                    this._addProdForm.controls.prodColors.value[_index] = _elem;
-                });
-                for(let i in this._addProdForm.controls){
-                    this._addProdForm.value[i] = this._addProdForm.controls[i].value
-                }
-                this._addProdForm.value.prodType = this._selectedCateg
-                this._addProdForm.value.idProduct = new Date().getTime();
-                this._addProdForm.value.raiting = {};
-                this._addProdForm.value['idParentUser'] = this._userInfo.id;
-                (async ()=>{
-                    await this._shopServ.__addUsersProduct(this._addProdForm.value, this._userInfo);
-                    await (()=>{
-                        this._addProdForm.reset();
-                        [this._selectedColors,this._uploadedImgURL,this._uploadedImages ] = [[], [], []];
-                        this.__countChangeFile = 0; 
-                        this._dataCropper = {};
-                        this._submited = false;
-                        this._doneCount = -1;
-                        this._loadingCount = -1;
-                        this._colorsArr = [];
-                        this.uploadFile.nativeElement.value = '';
-                        setTimeout(()=>{
-                            this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', false);
-                            this._isClickedPlus = {}
-                        }, 1000)
-                    })()
-                })()
-            };
+    __addProduct(type:string) {
+        async function _imageUploading (_type:string) {
             if(this._uploadedImages[0]){
+                let _countEqualBase64Image = 0
                 for (let i = 0; i < this._uploadedImages.length; i++) {
-                    await new Promise((resolve, reject) => {
+                    if(!new RegExp('data:image/').test(this._uploadedImages[i])){
+                        _countEqualBase64Image++
+                        this._uploadedImgURL[i] = this._uploadedImages[i]
+                        this._doneCount++;
                         this._loadingCount++;
-                        let path = `User/${this._userInfo.id}/${(new Date()).getTime()}.png`;
-                        const ref = this._afStorage.ref(path);
-                        ref
-                        .putString(this._uploadedImages[i], 'data_url', { contentType: 'image/jpeg' })
-                        .then(()=>{
-                            this._refSubscribe = ref.getDownloadURL().
-                                subscribe(urlImage=>{
-                                this._addProdForm.controls.prodImgs[i] = urlImage;
-                                this._uploadedImgURL[i] = urlImage
-                                if(i == this._uploadedImages.length-1){
-                                    __callAfterUploading()
+                        if(this._uploadedImages.length-1 == this._loadingCount){
+                            this._loadingCount = -1;
+                        }
+                        if(_countEqualBase64Image === this._uploadedImages.length && type === 'update'){
+                            __callAfterUploadingUpdate()
+                        }
+                    } else {
+                        await new Promise((resolve, reject) => {
+                            this._loadingCount++;
+                            let path = `User/${this._userInfo.id}/${(new Date()).getTime()}.png`;
+                            const ref = this._afStorage.ref(path);
+                            ref
+                            .putString(this._uploadedImages[i], 'data_url', { contentType: 'image/jpeg' })
+                            .then(()=>{
+                                this._refSubscribe = ref.getDownloadURL().
+                                    subscribe(urlImage=>{
+                                    this._addProdForm.controls.prodImgs[i] = urlImage;
+                                    this._uploadedImgURL[i] = urlImage
+                                    if(i == this._uploadedImages.length-1){
+                                        if(_type === 'add'){
+                                            __callAfterUploading()
+                                        } else if(type === 'update') {
+                                            __callAfterUploadingUpdate()
+                                        }
+                                    }
+                                })
+                                this._doneCount++;
+                                if(this._uploadedImages.length-1 == this._loadingCount){
+                                    this._loadingCount = -1;
+                                    // this._doneCount++;
                                 }
-                            })
-                            this._doneCount++;
-                            if(this._uploadedImages.length-1 == this._loadingCount){
-                                this._loadingCount = -1;
-                                // this._doneCount++;
-                            }
                                 resolve()
                             }).catch(error=>{
                                 reject(error);
                             })
-                    });
+                        });   
+                    }
                 }
+                 return true
+            } else return false
+        };
+        const __callAfterUploadingUpdate = () => {
+            for(let i in this._addProdForm.controls){
+                this._editProduct[i] = this._addProdForm.controls[i].value
             }
-            else{
-               await __callAfterUploading()
+            this._editProduct['prodImgs'] = this._uploadedImgURL
+            this._editProduct['prodColors'] = this._selectedColors
+            this._submited = false;
+            this._doneCount = -1;
+            this._loadingCount = -1;
+            this._shopServ.__updateUsersProduct(this._editProduct, this._userInfo);
+            setTimeout(()=>{
+                this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', false);
+                this._isClickedPlus = {}
+                this._editProduct = {}
+                this._uploadedImgURL = []
+            }, 1000)
+        };
+        const __callAfterUploading = () => {
+            this._addProdForm.controls.prodColors.value = [];
+            this._addProdForm.controls.prodImgs.value = [];
+            this._uploadedImgURL.map((_elem,_index)=>{
+                this._addProdForm.controls.prodImgs.value[_index] = _elem;
+            });
+            this._selectedColors.map((_elem,_index)=>{
+                this._addProdForm.controls.prodColors.value[_index] = _elem;
+            });
+            for(let i in this._addProdForm.controls){
+                this._addProdForm.value[i] = this._addProdForm.controls[i].value
             }
-            
-        })();
-        
+            this._addProdForm.value.prodType = this._selectedCateg
+            this._addProdForm.value.idProduct = new Date().getTime();
+            this._addProdForm.value.raiting = {};
+            this._addProdForm.value['idParentUser'] = this._userInfo.id;
+            (async ()=>{
+                await this._shopServ.__addUsersProduct(this._addProdForm.value, this._userInfo);
+                await (()=>{
+                    this._addProdForm.reset();
+                    [this._selectedColors,this._uploadedImgURL,this._uploadedImages ] = [[], [], []];
+                    this.__countChangeFile = 0; 
+                    this._dataCropper = {};
+                    this._submited = false;
+                    this._doneCount = -1;
+                    this._loadingCount = -1;
+                    this._colorsArr = [];
+                    this.uploadFile.nativeElement.value = '';
+                    setTimeout(()=>{
+                        this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', false);
+                        this._isClickedPlus = {}
+                        this._editProduct = {}
+                    }, 1000)
+                })()
+            })()
+        };
+        if (type === 'add') {
+            (async ()=> {
+                this._submited = true;
+                if (this._addProdForm.invalid) {
+                    document.querySelector('.add_prod_form').scrollTo({
+                        top:0,
+                        behavior: "smooth"
+                    });
+                    return;
+                }
+                _imageUploading.bind(this)(type)
+                if (!this._uploadedImages[0]){
+                    await __callAfterUploading()
+                }
+            })();
+        } else if (type === 'update'){
+            _imageUploading.bind(this)(type)
+            if (!this._uploadedImages[0]){
+                __callAfterUploadingUpdate()
+            }
+        }
+    }
+    __openAddForm() {
+        this._saveButtonType = 'add'
+        this._TitleModal = 'Add Product'
+        this._saveOrAdd = 'Add'
+        this._selectedCateg = null
+        this._addProdForm.reset();
+        this._selectedColors = []
+        this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', true);
+        Object.assign(this._isClickedPlus, {
+            top: '85px',
+            opacity: '1',
+            visibility: 'visible',
+            'z-index': '23456'
+        })
+    }
+    __openEditProductModal(_product) {
+        this.__openAddForm()
+        this._saveButtonType = 'update'
+        this._TitleModal = 'Edit Product'
+        this._saveOrAdd = 'Save'
+        this._dataCropper = {}
+        setTimeout(()=>{
+            this._selectedCateg = _product.prodType
+            this._editProduct = _product
+            this._addProdForm.controls.prodName.value = _product.prodName 
+            this._addProdForm.controls.prodWeight.value = _product.prodWeight 
+            this._addProdForm.controls.prodSize.value = _product.prodSize
+            this._selectedColors = _product.prodColors 
+            this._addProdForm.controls.prodColors.value = []
+            this._selectedColors.map((_elem,_index)=>{
+                this._addProdForm.controls.prodColors.value[_index] = _elem;
+            });
+            this._addProdForm.controls.prodImgs.value = []
+            _product.prodImgs.map((_elem,_index)=>{
+                this._addProdForm.controls.prodImgs.value[_index] = _elem;
+            });
+            this._addProdForm.controls.prodPrice.value = _product.prodPrice 
+            this._addProdForm.controls.prodSale.value = _product.prodSale 
+            this._addProdForm.controls.prodUsed.value = _product.prodUsed 
+            this._addProdForm.controls.prodDesc.value = _product.prodDesc 
+            this._uploadedImages = [..._product.prodImgs]
+            this.__countChangeFile = _product.prodImgs.length
+        }, 0)
     }
     __fileUpload($event) {
         this._allowSave = true;
@@ -291,26 +384,33 @@ export class ShopComponent implements  OnInit,OnDestroy {
             image.src = loadEvent.target.result;
             this.cropper.setImage(image);
         };
+        this.helpAttr = new Date().getTime().toString() 
         myReader.readAsDataURL(file);
     }
     __saveCropper() {
-        if (this._uploadedImages.length < 4 && this._allowSave) {
-            this.__countChangeFile++;
-            this._uploadedImages.push(this._dataCropper.image)
-        }
         setTimeout(()=>{
-            this.uploadedImg.forEach(elem=>{
-                if(Number(elem.nativeElement.getAttribute('data-diff-index')) == this.__countChangeFile){
-                    this._uploadedImages[this.__countChangeFile-1] = this._dataCropper.image;
+            if (this._uploadedImages.length < 4) {
+                this.uploadedImg.forEach(elem=>{
+                    if(elem.nativeElement.getAttribute('samehelpattr') === this.helpAttr){
+                        this._allowSave = false
+                        this._uploadedImages[this.__countChangeFile-1] = this._dataCropper.image;
+                    }
+                })
+                if(this._allowSave){
+                    this.__countChangeFile++;
+                    this._uploadedImages.push(this._dataCropper.image)
                 }
-            })
+                setTimeout(() => {
+                    this._render.setElementAttribute(this.uploadedImg.last.nativeElement, 'sameHelpAttr', this.helpAttr)
+                }, 0)
+            }
         }, 1)
-        this._allowSave = false;
+        this._allowSave = true;
     }
     __spliceImgArr(_index:number){
-        this._allowSave = true;
         this.__countChangeFile--;
         this._uploadedImages.splice(_index, 1)
+        if(this._uploadedImgURL.length) this._uploadedImgURL.splice(_index, 1)
     }
     @ViewChild('fixedLeftBar') fixedLeftBar: ElementRef;
 
@@ -327,9 +427,16 @@ export class ShopComponent implements  OnInit,OnDestroy {
 
         // addForm Open ___________
         if (this._isUser && !(_event.target as HTMLElement).closest('.add_prod_form') 
-            && !(_event.target as HTMLElement).closest('.plusProduct') && !(_event.target as HTMLElement).closest('.lnr-cross')) {
+            && !(_event.target as HTMLElement).closest('.plusProduct') && 
+            !(_event.target as HTMLElement).closest('.open_edit_modal') && !(_event.target as HTMLElement).closest('.lnr-cross')) {
             this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', false);
             this._isClickedPlus = {};
+            this._selectedCateg = null
+            this._addProdForm.reset();
+            this._selectedColors = []
+            this._dataCropper = {}
+            this._uploadedImages = []
+            this._editProduct = {}
         }
         // __________________
     }
@@ -425,17 +532,16 @@ export class ShopComponent implements  OnInit,OnDestroy {
     __appearColors() {
         this.__generateColors();
         this._appearColors = !this._appearColors
+        setTimeout(() => {
+            [].slice.call(this.commonColorsParent['nativeElement'].children).forEach((element: HTMLSpanElement, index: number) => {
+                [].slice.call(this._selectedColors).forEach((sel:string) => {
+                    if(sel === this._colorsArr[index]) {
+                        element.classList.add('activeColor')
+                    }
+                });
+            });
+        }, 0);
     }
-    __openAddForm() {
-        this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', true);
-        Object.assign(this._isClickedPlus, {
-            top: '85px',
-            opacity: '1',
-            visibility: 'visible',
-            'z-index': '23456'
-        })
-    }
-    
     getPositonPageination(event) {
         this._paginationTop = event;
     }

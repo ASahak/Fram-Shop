@@ -57,6 +57,9 @@ export function methodReducer(state = initialState, action: ActionT) {
       return {...state, shopContentMinAndMax:action.payload}
     case Actions.MethodsActionTypes.__sortBy:
       return {...state, sortBy:action.payload}
+    case Actions.MethodsActionTypes.__productSuccessFullRemoved:
+    __FlashMessage({message:"Your product was deleted successfull", timeout:4000, classType:'successFlash'})
+      return {...state}
     default:
       return state;
   }

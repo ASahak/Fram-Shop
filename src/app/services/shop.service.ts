@@ -134,6 +134,17 @@ export class ShopService {
             })
         })
     }
+    __updateUsersProduct (value, _getCurrentUser) {
+        [].slice.call(_getCurrentUser.myProduct).forEach((element, index) => {
+            if(element.idProduct === value['idProduct']){
+                _getCurrentUser.myProduct[index] = value;
+                this._recetCollectionUsers.doc(_getCurrentUser.id).update(_getCurrentUser)
+                .then(()=>{
+                this._store.dispatch(new Actions.FlashMessage({message:"Product was updated successfull", timeout:3000, classType:'successFlash'}))
+                }).catch(err=>this._store.dispatch(new Actions.FlashMessage({message:err, timeout:3000, classType:'dangerFlash'})));
+            }
+        });
+    }
     __addUsersProduct(value, _getCurrentUser){
         if(!_getCurrentUser.myProduct){
             _getCurrentUser.myProduct = []
@@ -143,6 +154,24 @@ export class ShopService {
         .then(()=>{
         this._store.dispatch(new Actions.FlashMessage({message:"Product was add successfull", timeout:3000, classType:'successFlash'}))
         }).catch(err=>this._store.dispatch(new Actions.FlashMessage({message:err, timeout:3000, classType:'dangerFlash'})));
+    }
+    __removeProduct (_ProductItem) {
+        return new Observable (observer =>{
+            var sfDocRef = firebase.firestore().collection("Users").doc(_ProductItem.idParentUser);
+            firebase.firestore()
+            .runTransaction(t => {
+                return t.get(sfDocRef).then(doc => {
+                    let _myProduct = doc.get('myProduct');
+                    [].slice.call(_myProduct).map((_elem, _ind) => {
+                        if (_elem.idProduct === _ProductItem.idProduct){
+                            _myProduct.splice(_ind, 1)
+                        }
+                    })
+                    t.update(sfDocRef, {myProduct:_myProduct})
+                    observer.next()
+                })
+            })
+        })
     }
     __deleteProductInCart(payload){
         return new Observable (observer => {
