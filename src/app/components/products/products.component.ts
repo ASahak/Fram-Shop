@@ -19,7 +19,13 @@ declare var  $: any;
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
-    protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent();
+    protected shopBadgesComponent:ShopBadgesComponent = new ShopBadgesComponent(
+        this._store,
+        this._shopServ,
+        this.router,
+        this._activeRouter,
+        this._authServ
+    );
     protected galleryComponent:GalleryComponent       = new GalleryComponent();
     protected _idProduct:string;
     public _ProductMore:Observable<Array<Object>>;

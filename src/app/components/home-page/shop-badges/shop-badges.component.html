@@ -1,6 +1,6 @@
-<section id="shop_badges" class="pt-4 pb-4">
-    <div class="container">
-        <div class="swiper-container swiper_related_home">
+<section id="shop_badges" class="pt-4 pb-4" #appendToSection>
+    <div class="container" #swiperClonewrapper>
+        <div #continerRelatedProds class="swiper-container swiper_related_home" *ngIf="_shuffleProds.length > 0">
             <div class="swiperArrows">
                 <h4>{{ 'relatedSec.title' | translate }}</h4>
                 <div class="scn-icons-cont">
@@ -9,236 +9,64 @@
                 </div>
             </div>
             <div class="swiper-wrapper ">
-                <div class="swiper-slide p-1">
+                <div class="swiper-slide p-1" *ngFor="let item of _shuffleProds">
                     <div class="products-fram">
-                        <span class="sale-badge">-20%</span>
-                        <a routerLink="/products/1" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod1.png" class="img-fluid" alt="">
+                        <span class="sale-badge" *ngIf="item.prodSale != null && item.prodSale != 0">{{'-' + item.prodSale + '%'}}</span>
+                        <a  routerLink="/products/{{item.idProduct+'&'+ item.idParentUser}}" class="d-block text-center" href="javascript:void(0)">
+                            <img [src]="item.prodImgs[0] ? item.prodImgs[0] : './assets/img/products/product-no-image.jpg'" class="img-fluid" alt="">
                             <div class="name-and-section">
-                                <p>Jewellery</p>
-                                <p>Products 1</p>
+                                <p>{{item.prodType}}</p>
+                                <p>{{item.prodName}}</p>
                             </div>
                         </a>
                         <hr>
                         <div class="price-and-rating d-flex justify-content-between">
                             <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
+                                <ng-container *ngIf="item.prodSale != null && item.prodSale != 0; else productwithoutsale">
+                                    <del class="text-muted" >{{item.prodPrice + "$"}}</del>
+                                    <span>{{item.prodPrice - (item.prodPrice * item.prodSale)/100 | productPrice}}</span>
+                                </ng-container>  
+                                <ng-template #productwithoutsale>
+                                    <span >{{item.prodPrice + "$"}}</span>
+                                </ng-template>
                             </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star"></span>
-                                <span class="lnr lnr-star"></span>
+                            <div class="product-ratings" #starsRaiting>
+                                {{'stars' | productStars:item.raiting:starsRaiting}}
+                                <span class="lnr lnr-star" (click)="__appreciated(1, item.idParentUser, item.idProduct)"></span>
+                                <span class="lnr lnr-star" (click)="__appreciated(2, item.idParentUser, item.idProduct)"></span>
+                                <span class="lnr lnr-star" (click)="__appreciated(3, item.idParentUser, item.idProduct)"></span>
+                                <span class="lnr lnr-star" (click)="__appreciated(4, item.idParentUser, item.idProduct)"></span>
+                                <span class="lnr lnr-star" (click)="__appreciated(5, item.idParentUser, item.idProduct)"></span>
                             </div>
                         </div>
                         <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
                             <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
+                                <input class="productCount" type="number" value="1" #addprod>
                                 <p class="up-down-arrows d-flex flex-column">
                                     <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
                                     <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
                                 </p>
                             </div>
-                            <button class="add-to-cart">
+                            <button class="add-to-cart" (click)="__addProductToCart(addprod, [
+                            item.idProduct,
+                            item.prodImgs[0],
+                            item.prodName,
+                            (item.prodPrice - (item.prodPrice * item.prodSale)/100),
+                            item.idParentUser
+                            ])">
                                 <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-1">
-                    <div class="products-fram">
-                        <a routerLink="/products/2" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod2.png" class="img-fluid" alt="">
-                            <div class="name-and-section">
-                                <p> Clothes</p>
-                                <p>Products 2</p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="price-and-rating d-flex justify-content-between">
-                            <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
-                            </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star"></span>
-                                <span class="lnr lnr-star"></span>
-                                <span class="lnr lnr-star"></span>
-                            </div>
-                        </div>
-                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
-                            <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
-                                <p class="up-down-arrows d-flex flex-column">
-                                    <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
-                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
-                                </p>
-                            </div>
-                            <button class="add-to-cart">
-                                <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-1">
-                    <div class="products-fram">
-                        <a routerLink="/products/3" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod3.png" class="img-fluid" alt="">
-                            <div class="name-and-section">
-                                <p>For Home</p>
-                                <p>Products 3</p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="price-and-rating d-flex justify-content-between">
-                            <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
-                            </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star"></span>
-                            </div>
-                        </div>
-                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
-                            <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
-                                <p class="up-down-arrows d-flex flex-column">
-                                    <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
-                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
-                                </p>
-                            </div>
-                            <button class="add-to-cart">
-                                <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-1">
-                    <div class="products-fram">
-                        <a routerLink="/products/4" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod4.png" class="img-fluid" alt="">
-                            <div class="name-and-section">
-                                <p>Dresses</p>
-                                <p>Products 4</p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="price-and-rating d-flex justify-content-between">
-                            <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
-                            </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star"></span>
-                                <span class="lnr lnr-star"></span>
-                            </div>
-                        </div>
-                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
-                            <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
-                                <p class="up-down-arrows d-flex flex-column">
-                                    <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
-                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
-                                </p>
-                            </div>
-                            <button class="add-to-cart">
-                                <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-1">
-                    <div class="products-fram">
-                        <a routerLink="/products/5" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod5.png" class="img-fluid" alt="">
-                            <div class="name-and-section">
-                                <p>Motors</p>
-                                <p>Products 5</p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="price-and-rating d-flex justify-content-between">
-                            <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
-                            </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                            </div>
-                        </div>
-                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
-                            <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
-                                <p class="up-down-arrows d-flex flex-column">
-                                    <span class="lnr lnr-chevron-up" (click)="upCount($event)"></span>
-                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
-                                </p>
-                            </div>
-                            <button class="add-to-cart">
-                                <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-1">
-                    <div class="products-fram">
-                        <a routerLink="/products/6" class="d-block text-center" href="javascript:void(0)">
-                            <img src="./assets/img/products/prod6.png" class="img-fluid" alt="">
-                            <div class="name-and-section">
-                                <p>Electronics</p>
-                                <p>Products 6</p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="price-and-rating d-flex justify-content-between">
-                            <div class="product-price d-flex flex-column align-items-start">
-                                <del class="text-muted">1300$</del>
-                                <span>1000$</span>
-                            </div>
-                            <div class="product-ratings">
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star appreciated"></span>
-                                <span class="lnr lnr-star"></span>
-                                <span class="lnr lnr-star"></span>
-                            </div>
-                        </div>
-                        <div class="add-to-cart-wrap mt-3 d-flex justify-content-between">
-                            <div class="count-product-input">
-                                <input class="productCount" type="number" value="1">
-                                <p class="up-down-arrows d-flex flex-column">
-                                    <span class="lnr lnr-chevron-up"></span>
-                                    <span class="lnr lnr-chevron-down" (click)="downCount($event)"></span>
-                                </p>
-                            </div>
-                            <button class="add-to-cart">
-                                <span class="lnr lnr-cart"></span>
-                                {{ 'relatedSec.addButton' | translate }}
-                            </button>
+                                {{'relatedSec.addButton' | translate}}
+                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="loading">
+            <img src="./assets/img/loading.gif" style="max-width:300px" class="img-fluid d-block mx-auto" alt="">
+        </div>
+        <div *ngIf="noData" class="noDataAvailable">
+            <p> No Product </p>
         </div>
     </div>
 </section>

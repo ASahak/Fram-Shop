@@ -1,7 +1,19 @@
-// import { Action } from '@ngrx/store';
+import { Action, createSelector, createFeatureSelector } from '@ngrx/store'
 import * as  Actions from '../actions/methods.actions'
+import { AppState } from '../../store/app.state'
 export type ActionT = Actions.All;
 
+export  interface initialStateInterface {
+  products:Object,
+  cartItems:Object,
+  showBadges: Object,
+  allProducts: [],
+  shopContentMinAndMax: {
+    min: Object,
+    max: Object
+  },
+  sortBy: Object
+};
 export const initialState = {
   products:null,
   cartItems:null,
@@ -63,6 +75,12 @@ export function methodReducer(state = initialState, action: ActionT) {
     default:
       return state;
   }
-  // console.log(state, 'sssss')
+  
 }
+const getMethods                           = createFeatureSelector<initialStateInterface>('_methods');
+export const getMethodProducts             = createSelector(getMethods, state => state.products);
+export const getMethodAllProducts          = createSelector(getMethods, state => state.allProducts);
+export const getMethodSortBy               = createSelector(getMethods, state => state.sortBy);
+export const getMethodShopContentMinAndMax = createSelector(getMethods, state => state.shopContentMinAndMax);
+export const getMethodShowBadges           = createSelector(getMethods, state => state.showBadges);
 

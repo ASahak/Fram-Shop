@@ -25,7 +25,15 @@ export class CategoriesComponent implements OnInit {
         }
     }
     constructor(private location: Location, private router:ActivatedRoute, public currentRouter:Router) {
-            /* currentRouter.events.subscribe( (event: Event) => {
+         currentRouter.events.subscribe( (event: Event) => {
+            if (event instanceof NavigationEnd) {
+                if(router.snapshot.queryParams['token'] && (document.querySelector('.active_categories') as HTMLElement)){
+                    (document.querySelector('.active_categories') as HTMLElement).classList.remove('active_categories')
+                }
+                // Show loading indicator
+            }
+        }    )
+        /* currentRouter.events.subscribe( (event: Event) => {
                 if (event instanceof NavigationStart) {
                     // Show loading indicator
                 }

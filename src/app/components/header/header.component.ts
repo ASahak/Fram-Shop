@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs'; */
 import { Subscription } from 'rxjs';
 import { initialState } from '../../store/reducers/methods.reducer';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 /* interface Todo {
     name: ;
@@ -45,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         confirmPass: '',
         publication:null
     };
+    public _searchFieldValue:string = '';
     public selectLanguage: boolean  = true;
     public userWrap: boolean        = true;
     public toggleNavBar: boolean    = false;
@@ -62,48 +63,35 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private showRegForm:boolean     = false;
     public isClickedLogin:boolean   = false;
     private _loginSubscription: Subscription;
-    // userTodo:Observable<Todo>;
-    // constructor(public store:Store<AppState>) {
-        // this.userTodo = this.store.select('userTodo');
+    _unsubCart;
     constructor(
         private translate: TranslateService,
         public authServ: AuthServiceService,
-        private _store: Store<AppState>
+        private _store: Store<AppState>,
+        private _router: Router
         ) {
-        let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
+        this._unsubCart = this._store.pipe(select('_methods')).subscribe(res=>{
             if(res.cartItems){
-                // console.log(res.cartItems)
                 this._cartCount = Object.keys(res.cartItems).length || 0
-                _unsub.unsubscribe()
             }
         })
         translate.setDefaultLang('en');
-        // this.auth.__FlashMessage("eeee")
-        
-    }
-    
-    
-    /* chenageUser(){
-        [
-            new Actions.NAME(this.user.name),
-            new Actions.AGE(this.user.age),
-            new Actions.BIRTHDAY(this.user.birthday)
-        ].forEach((item)=>{
-            this.store.dispatch(item);
+         this._router.events.subscribe((ev) => {
+            if (ev instanceof NavigationEnd) {
+                this._searchFieldValue = ''
+            }
         })
-        this.user ={
-            name:"",
-            age:null,
-            birthday:null
-        }
-    } */
+    }
+    __searchProduct (val:string) {
+        console.log(val)
+        this._router.navigate(['/shop'], { queryParams: { token:val}})
+    }
     protected hideMobileMenu(){
         this.toggleNavBar = false;
         this.heightNavBar = 0;
         this.heghtSub = 0;
         this.navBarRef.nativeElement.style.height = this.heightNavBar+"px";
         this.subList.nativeElement.style.height = this.heghtSub+"px";
-        
     }
     
     @ViewChild('toggleNavBar') navBarRef:ElementRef;
@@ -150,7 +138,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.navBarRef.nativeElement.style.height = this.heightNavBar+"px";
             }
             this.showList = false;
-            
         }
 
         // Hide Login Or Register Form 
@@ -200,6 +187,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     
     ngOnDestroy(){
+        this._unsubCart.unsubscribe();
         this._loginSubscription.unsubscribe();
     }
 

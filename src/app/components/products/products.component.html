@@ -46,6 +46,18 @@
                         <span class="lnr lnr-star"></span>
                         <span class="lnr lnr-star"></span>
                     </div>
+                    <div class="userWrap">
+                        <div class="usedTwoItems">
+                            <p>
+                                <span [class.selectedUsed]="_ProductMore.prodUsed === 'used'"></span>
+                                Used    
+                            </p>   
+                            <p>
+                                <span [class.selectedUsed]="_ProductMore.prodUsed === 'notused'"></span>
+                                Not used
+                            </p>
+                        </div>
+                    </div>
                     <div class="discountWrap">
                         <h5 class="mt-2 mb-1">{{'productSingle.price' | translate}}</h5>
                         <p class="mb-0" *ngIf="_ProductMore.prodSale != null && _ProductMore.prodSale != 0"><font class="text-muted">{{'productSingle.discount' | translate}}</font> -{{_ProductMore.prodSale}}%</p>

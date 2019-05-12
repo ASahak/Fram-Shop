@@ -26,7 +26,7 @@ export class AuthServiceService {
         private _store: Store<any>
     ) {
         this._recetCollectionUsers = this._afs.collection('Users');
-        this._methods = this._store.pipe(select('_methods'));
+        // this._methods = this._store.pipe(select('_methods'));
     }
 
     __getAuth() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AuthServiceService } from '../../services/auth-service.service';
 import * as Actions from '../../store/actions/methods.actions'
 import { Store, select } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { ShopService } from '../../services/shop.service'
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
     public dataCart:{
         image?:string,
         name?:string,
@@ -22,17 +22,17 @@ export class CartComponent implements OnInit {
     public pageItemsEnd:number           = this.pageinationCount;
     public countPageinationLength:number = 0;
     public _currentUserID:string         = '';
+    _unsubCart;
     constructor(
         private _authServ: AuthServiceService,
         private _store: Store<AppState>,
         public _shopServ:ShopService
     ) {
-        let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
+        this._unsubCart = this._store.pipe(select('_methods')).subscribe(res=>{
             if(res.cartItems){
                 this.dataCart = res.cartItems;
                 this.totalPrice()
                 this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
-                // _unsub.unsubscribe()
             }
         });
     }
@@ -53,6 +53,9 @@ export class CartComponent implements OnInit {
                 this._store.dispatch(new Actions.GetAllCartItems(res['myCart']))
             }
         })
+    }
+    ngOnDestroy(){
+        this._unsubCart.unsubscribe()
     }
     pageClick(index:number){
         Array.prototype.map.call(this.pageElement.nativeElement.children, (elem:HTMLElement)=>{
@@ -85,17 +88,17 @@ export class CartComponent implements OnInit {
      __deleteItem(item, index){
         if(this._currentUserID){
             this._store.dispatch(new Actions.DeleteItemInCart({_userID:this._currentUserID, _itemKey:item}))
-            let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
-                if(Object.keys(res.cartItems).length){
-                    this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
-                    if(Object.keys(this.dataCart).length == this.pageItemsEnd-this.pageinationCount && Object.keys(this.dataCart).length> 0){
-                        this.pageItemsEnd = this.pageItemsEnd-this.pageinationCount;
-                        this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
-                    }
-                    this.totalPrice()
-                    // _unsub.unsubscribe()
-                }
-            })
+            // let _unsub = this._store.pipe(select('_methods')).subscribe(res=>{
+            //     if(Object.keys(res.cartItems).length){
+            //         this.countPageinationLength = Math.ceil(Object.keys(this.dataCart).length/this.pageinationCount);
+            //         if(Object.keys(this.dataCart).length == this.pageItemsEnd-this.pageinationCount && Object.keys(this.dataCart).length> 0){
+            //             this.pageItemsEnd = this.pageItemsEnd-this.pageinationCount;
+            //             this.pageElement.nativeElement.children[(this.pageItemsEnd/this.pageinationCount)-1].classList.add('activePage');
+            //         }
+            //         this.totalPrice()
+            //         // _unsub.unsubscribe()
+            //     }
+            // })
         }
     }
     deleteAllItems(){

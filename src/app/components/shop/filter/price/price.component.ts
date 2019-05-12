@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationStart, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Options } from 'ng5-slider';
 import * as Actions from '../../../../store/actions/methods.actions'
 import { AppState } from '../../../../store/app.state'
@@ -12,8 +13,20 @@ import { Observable } from 'rxjs';
 export class PriceComponent implements OnInit {
 
     constructor(
-        private _store: Store<AppState>
-    ) { }
+        private _store: Store<AppState>,
+        public currentRouter:Router,
+        private router:ActivatedRoute,
+    ) { 
+         currentRouter.events.subscribe( (event: Event) => {
+            if (event instanceof NavigationEnd) {
+                if(router.snapshot.queryParams['token']){
+                    this.minValue = 0
+                    this.maxValue = 100000
+                    this._store.dispatch(new Actions.MinAndMaxFilter({min:this.minValue, max:this.maxValue}))
+                }
+            }
+        })
+    }
     minValue: number = 0;
     maxValue: number = 100000;
     options: Options = {
@@ -27,6 +40,7 @@ export class PriceComponent implements OnInit {
         }
     };
     ngOnInit() {
+        this._store.dispatch(new Actions.MinAndMaxFilter({min:this.minValue, max:this.maxValue}))
     }
     getAllValue(min, max){
         this._store.dispatch(new Actions.MinAndMaxFilter({min:min, max:max}))

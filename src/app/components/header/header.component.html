@@ -69,7 +69,7 @@
                         </a>
                     </div>
                     <form id="searchProducts" class="order-2 order-md-1">
-                        <input type="text" placeholder="{{'header.serach' | translate}}">
+                        <input type="text" name="search" [(ngModel)]="_searchFieldValue" (keyup.enter)="__searchProduct(_searchFieldValue)" placeholder="{{'header.serach' | translate}}">
                         <span class="lnr lnr-magnifier"></span>
                     </form>
                     <div class="shoppingCartWrap order-1 order-md-2">
