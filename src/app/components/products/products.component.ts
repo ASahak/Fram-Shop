@@ -9,6 +9,7 @@ import * as Actions from '../../store/actions/methods.actions'
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store/app.state'
+import { identifierModuleUrl } from '@angular/compiler';
 declare var Swiper:any;
 declare var  $: any;
 @Component({
@@ -179,7 +180,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
        
     }
     ngOnDestroy(){
+        if(document.querySelector('.zoomWrap')){
+            document.querySelector('.zoomWrap').remove()
+        }
     }
+
     upCount(event){
         this.galleryComponent.findElement(this.shopBadgesComponent.getParent(event.target, "count-product-input"), 'input')[0].value++;
     }

@@ -221,9 +221,11 @@
                 float: left;
             }
             > img{
-                max-width: 300px;
-                max-height: 300px;
+                max-width: 360px;
+                max-height: 270px;
                 margin-left: 10px;
+                object-fit: scale-down;
+                background-color: #dad5d5;
             }
         }
         .d_root_save{

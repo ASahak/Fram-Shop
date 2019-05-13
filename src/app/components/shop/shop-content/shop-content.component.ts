@@ -84,9 +84,14 @@ export class ShopContentComponent implements OnInit, OnDestroy {
     }
     protected callProds (_getProds, th, sortBy, objMaxAndMinVal:objMaxAndMinVal) {
         th._filteredArr = []
-        th._pagination = 1
-        th._potokProductIndexStart = 0
-        th._disabledPagePrev = true
+         
+        if(th._potokProductIndexStart){
+            th._potokProductIndexStart = th._potokProductIndexStart
+        } else {
+            th._potokProductIndexStart = 0 
+            th._pagination = 1
+            th._disabledPagePrev = true
+        }
         th._ProductFilters['fragment'] = th._activeRouter.root.fragment['value'];
         objMaxAndMinVal.max = (!objMaxAndMinVal.max && objMaxAndMinVal.max !== 0) ? Infinity : objMaxAndMinVal.max;
         objMaxAndMinVal.min = (!objMaxAndMinVal.min) ? 0 : objMaxAndMinVal.min;
@@ -127,7 +132,9 @@ export class ShopContentComponent implements OnInit, OnDestroy {
                 th._filteredArr = sortable
             }
         }
-        th._disabledPageNext = !(th._filteredArr.length > th._showBadges)
+        if(!th._potokProductIndexStart){
+            th._disabledPageNext = !(th._filteredArr.length > th._showBadges)
+        }
         th.__getLimitProducts(th._showBadges, th._potokProductIndexStart, th._filteredArr, 'plus')
     }
     public __getLimitProducts(_badgesCount:number, potokProdStart:number, _allProds:Object, _typeStep:string){

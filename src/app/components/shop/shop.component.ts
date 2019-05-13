@@ -186,10 +186,10 @@ export class ShopComponent implements  OnInit,OnDestroy {
         private _formBuilder: FormBuilder
     ) {
         this._cropperSettings               = new CropperSettings();
-        this._cropperSettings.width         = 100;
-        this._cropperSettings.height        = 100;
-        this._cropperSettings.croppedWidth  = 480;
-        this._cropperSettings.croppedHeight = 360;
+        this._cropperSettings.width         = 250;
+        this._cropperSettings.height        = 200;
+        this._cropperSettings.croppedWidth  = 600;
+        this._cropperSettings.croppedHeight = 450;
         this._cropperSettings.canvasWidth   = 300;
         this._cropperSettings.canvasHeight  = 200;
         this._dataCropper                   = {};
@@ -390,19 +390,20 @@ export class ShopComponent implements  OnInit,OnDestroy {
     __saveCropper() {
         setTimeout(()=>{
             if (this._uploadedImages.length < 4) {
+                setTimeout(() => {
+                    this._render.setElementAttribute(this.uploadedImg.last.nativeElement, 'sameHelpAttr', this.helpAttr)
+                }, 0)
                 this.uploadedImg.forEach(elem=>{
-                    if(elem.nativeElement.getAttribute('samehelpattr') === this.helpAttr){
+                    if(elem.nativeElement.getAttribute('sameHelpAttr') === this.helpAttr){
                         this._allowSave = false
                         this._uploadedImages[this.__countChangeFile-1] = this._dataCropper.image;
+                        return
                     }
                 })
                 if(this._allowSave){
                     this.__countChangeFile++;
                     this._uploadedImages.push(this._dataCropper.image)
                 }
-                setTimeout(() => {
-                    this._render.setElementAttribute(this.uploadedImg.last.nativeElement, 'sameHelpAttr', this.helpAttr)
-                }, 0)
             }
         }, 1)
         this._allowSave = true;
@@ -431,6 +432,7 @@ export class ShopComponent implements  OnInit,OnDestroy {
             !(_event.target as HTMLElement).closest('.open_edit_modal') && !(_event.target as HTMLElement).closest('.lnr-cross')) {
             this._render.setElementClass(document.querySelector('.addLayerForm'), 'addLayerFormClicked', false);
             this._isClickedPlus = {};
+            this.__countChangeFile = 0
             this._selectedCateg = null
             this._addProdForm.reset();
             this._selectedColors = []
