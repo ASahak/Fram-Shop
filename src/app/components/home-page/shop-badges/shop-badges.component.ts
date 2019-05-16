@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Output , EventEmit
 import { GalleryComponent } from '../../gallery/gallery.component';
 import { ShopService } from '../../../services/shop.service'
 import * as Actions from '../../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../store/app.state'
 import { getMethodProducts, getMethodAllProducts } from '../../../store/reducers/methods.reducer'
-import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { Router, ActivatedRoute, NavigationEnd, NavigationStart} from '@angular/router';
 import { AuthServiceService } from '../../../services/auth-service.service';
@@ -97,7 +97,7 @@ export class ShopBadgesComponent implements OnInit, OnDestroy  {
             this._store.dispatch(new Actions.ProductApreciated({_indexStar, _userID, _indexMyProduct, _currentUserID}))
         }
         else{
-            this._store.dispatch(new Actions.FlashMessage({message:"For aprecite you mus be sign in", timeout:4000, classType:'dangerFlash'}))
+            this._store.dispatch(new Actions.FlashMessage({message:"For aprecite you must be sign in", timeout:4000, classType:'dangerFlash'}))
         }
     }
     __addProductToCart(_inputValue, _badge){

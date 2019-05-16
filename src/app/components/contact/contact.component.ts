@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as Actions from '../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/app.state'
+import { Observable } from 'rxjs';
 @Component({
     selector: 'app-contact',
     templateUrl: './contact.component.html',
@@ -7,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
     private inputFocus:HTMLInputElement;
-    constructor() { }
+    constructor(
+        private _store: Store<AppState>,
+    ) { }
     protected findElement(parentElement, findElem) {
         let _parent   = parentElement,
             _childArr = [];
@@ -72,4 +77,14 @@ export class ContactComponent implements OnInit {
         }
         return true;
     }
+    sendMail(form, event) {
+        event.preventDefault();
+        return new Observable (observer => {
+            setTimeout(() => {
+                observer.next()
+            }, 1000)
+        }).subscribe(_ => {
+            this._store.dispatch(new Actions.FlashMessage({message:"Yous message sended successfully", timeout:2500, classType:'successFlash'}))
+        })
+    };
 }

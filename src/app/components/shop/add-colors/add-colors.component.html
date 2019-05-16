@@ -1,5 +1,5 @@
 <div class="colorEach" >
-  <i *ngIf="_selectedColors.length == 0">Select min one color</i>
+  <i *ngIf="_selectedColors.length == 0">{{'selectMinColor.title' | translate}}</i>
   <span class="selectedColorWrap" *ngFor="let color of _selectedColors" [ngStyle]="{'background-color':color}">
   </span>
   <span class="selectNotNatural"></span>

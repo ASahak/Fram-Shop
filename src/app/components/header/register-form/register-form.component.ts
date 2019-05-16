@@ -2,6 +2,9 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import * as firebase from "firebase/app";
 import { AuthServiceService } from "../../../services/auth-service.service";
 import { CreateUser } from '../../../models/models';
+import * as Actions from '../../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../../store/app.state'
 
 @Component({
     selector: 'app-register-form',
@@ -22,7 +25,10 @@ export class RegisterFormComponent implements OnInit {
         confirmPass: '',
         publication:null
     }
-    constructor(private authServ:AuthServiceService) { }
+    constructor(
+        private _store: Store<AppState>,
+        private authServ:AuthServiceService
+    ) { }
     @Input('isShowBoolean') isShowBoolean: boolean;
     @Output('showReg') showReg: EventEmitter<boolean> = new EventEmitter<boolean>();
     ngOnInit() {
@@ -35,6 +41,7 @@ export class RegisterFormComponent implements OnInit {
             this.loadingGIF = false;
             this.isShowBoolean = false;
             this.showReg.emit(this.isShowBoolean)
+            this._store.dispatch(new Actions.Login(true))
         }).catch(error=>{
             alert(error)
         });

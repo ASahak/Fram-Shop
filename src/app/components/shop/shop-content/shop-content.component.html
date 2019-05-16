@@ -62,7 +62,7 @@
         <img src="./assets/img/loading.gif" class="img-fluid d-block mx-auto" alt="">
     </div>
     <div *ngIf="noData" class="noDataAvailable">
-        <p> No Product </p>
+        <p> {{ 'relatedSec.noProduct' | translate }} </p>
     </div>
     <div class="row padding_mobile_none" #pageinationWrap [hidden]="noData || loading">
         <div class="col-12 pl-0">

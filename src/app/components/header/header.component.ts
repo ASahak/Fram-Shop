@@ -71,6 +71,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private _router: Router
         ) {
         this._unsubCart = this._store.pipe(select('_methods')).subscribe(res=>{
+            if(res){
+                this.isLogin = res.isLoggined
+            }
             if(res.cartItems){
                 this._cartCount = Object.keys(res.cartItems).length || 0
             }
@@ -175,6 +178,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             })
             
             this.isLogin = (res)?true:false;
+            this._store.dispatch(new Actions.Login(this.isLogin))
         })
     }
     openCart(){

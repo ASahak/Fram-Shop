@@ -16,18 +16,18 @@ import { ProductsComponent } from './components/products/products.component';
 import { ShopComponent } from './components/shop/shop.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: '', pathMatch: 'full', component:HomePageComponent },
-  {path: "home",  component:HomePageComponent},
-  {path: "about-us", component:AboutUsComponent},
-  {path: "contact", component:ContactComponent},
-  {path: "partners", component:PartnersComponent},
-  {path: "gallery", component:GalleryComponent},
-  {path: "cart", canActivate:[AuthGuardGuard], component:CartComponent},
-  {path: "my-account/:id", canActivate:[AuthGuardGuard],  component:MyAccountComponent},
-  {path: "reset-password", component:ResetPasswordComponent},
-  {path: "products/:id", component:ProductsComponent, pathMatch: 'full'},
-  {path: "shop", component:ShopComponent},
-  {path: "**", component:NotFoundPageComponent},
+  {path: "", redirectTo: '', pathMatch: 'full', component:HomePageComponent , data: { title: 'Fram Shop' }},
+  {path: "",  component:HomePageComponent, data: { title: 'Fram Shop' }},
+  {path: "about-us", component:AboutUsComponent, data: { title: 'About Us' }},
+  {path: "contact", component:ContactComponent, data: { title: 'Contact Us' }},
+  {path: "partners", component:PartnersComponent, data: { title: 'Our Partners' }},
+  {path: "gallery", component:GalleryComponent, data: { title: 'Gallery' }},
+  {path: "cart", canActivate:[AuthGuardGuard], component:CartComponent, data: { title: 'My Cart' }},
+  {path: "my-account/:id", canActivate:[AuthGuardGuard],  component:MyAccountComponent, data: { title: 'My Account' }},
+  {path: "reset-password", component:ResetPasswordComponent, data: { title: 'Reset Password' }},
+  {path: "products/:id", component:ProductsComponent, pathMatch: 'full', data: { title: 'Individual Product' }},
+  {path: "shop", component:ShopComponent, data: { title: 'Shop' }},
+  {path: "**", component:NotFoundPageComponent, data: { title: 'Not Fount' }},
 ];
 
 @NgModule({

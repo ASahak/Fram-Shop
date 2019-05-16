@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, Directive } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -141,7 +141,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     providers: [
       AngularFirestore,
-      MethodsEffects
+      MethodsEffects,
+      Title
     ],
     bootstrap: [AppComponent]
 })

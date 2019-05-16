@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthServiceService } from "../../../services/auth-service.service";
 import { SignIn } from '../../../models/models';
-
+import * as Actions from '../../../store/actions/methods.actions'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../../store/app.state'
 @Component({ 
     selector: 'app-login-form',
     templateUrl: './login-form.component.html',
@@ -16,7 +18,10 @@ export class LoginFormComponent implements OnInit {
         username:'',
         password:''
     }
-    constructor(private authServ:AuthServiceService) { }
+    constructor(
+        private _store: Store<AppState>,
+        private authServ:AuthServiceService
+    ) { }
 
     ngOnInit() {
         // this.authServ.__FlashMessage("enter", 2000, 'success')
@@ -27,6 +32,7 @@ export class LoginFormComponent implements OnInit {
             this.loadingGIF = false;
             this.isShowBoolean = false;
             this.showLogin.emit(this.isShowBoolean)
+            this._store.dispatch(new Actions.Login(true))
         }).catch(error=>{
             alert(error)
         });

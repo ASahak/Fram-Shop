@@ -199,7 +199,7 @@ export class ShopContentComponent implements OnInit, OnDestroy {
             this._store.dispatch(new Actions.ProductApreciated({_indexStar, _userID, _indexMyProduct, _currentUserID}))
         }
         else{
-            this._store.dispatch(new Actions.FlashMessage({message:"For aprecite you mus be sign in", timeout:4000, classType:'dangerFlash'}))
+            this._store.dispatch(new Actions.FlashMessage({message:"For aprecite you must be sign in", timeout:4000, classType:'dangerFlash'}))
         }
     }
     __addProductToCart(_inputValue, _badge){

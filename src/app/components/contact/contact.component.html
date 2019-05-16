@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="top-direction">
                     <div class="dicrection-path">
-                        <a routerLink="/home"><span class="lnr lnr-home"></span>{{'header.navBar.button1' | translate}}</a>
+                        <a routerLink="/"><span class="lnr lnr-home"></span>{{'header.navBar.button1' | translate}}</a>
                         <span>{{'header.navBar.button4' | translate}}</span>
                     </div>
                 </div>
@@ -33,14 +33,23 @@
                     </div>
                     <div class="parts-form-bottom">
                         <h3 class="mt-2 mb-2 text-center">{{'header.navBar.button4' | translate}}</h3>
-                        <form action="" id="sendMessageForm">
+                        <form action="" id="sendMessageForm" #sendForm="ngForm" (ngSubmit)="sendMail(sendForm, $event)">
                             <div class="first-row">
                                 <div class="inputs-wrap">
                                     <input type="text" name="nameUser" (focusout)="labelScaleOut()" (focus)="labelScale()"id="name-input" required>
                                     <label (click)="focusInput($event)" for="name-input">{{'contactUs.form.name' | translate}}</label>
                                 </div>
                                 <div class="inputs-wrap">
-                                    <input type="text"  name="emailUser" (focusout)="labelScaleOut()" (focus)="labelScale()" id="email-input" required>
+                                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" 
+                                        name="emailUser" (focusout)="labelScaleOut()" (focus)="labelScale()" id="email-input" required
+                                        ngModel
+                                        #emailref="ngModel" required name="emailTrue" >
+                                    <div [hidden]="!emailref.errors?.pattern" *ngIf="emailref.errors &&(emailref.touched || emailref.dirty)"
+                                        class="wrongEmail">
+                                        <div style="font-size:12px">
+                                            {{'header.regForm.wrongEmailMsg' | translate}}
+                                        </div>
+                                    </div>
                                     <label (click)="focusInput($event)" for="email-input">{{'contactUs.form.email' | translate}}</label>
                                 </div>
                                 <div class="inputs-wrap">
@@ -54,7 +63,7 @@
                                     <label (click)="focusInput($event)" for="message-input">{{'contactUs.form.message' | translate}}</label>
                                 </div>
                             </div>
-                            <input type="submit" class="send-msg-button" value="{{'contactUs.submit' | translate}}">
+                            <input type="submit" class="send-msg-button" [disabled]="!sendForm.valid" value="{{'contactUs.submit' | translate}}">
                         </form>
                     </div>
                 </div>

@@ -181,6 +181,10 @@
                 }
                 .add-to-cart{
                     width: calc(50% - 5px);
+                    height: 31px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     @extend %extend-product-badge-add-button;
                     &:hover{
                         background-color: $greenDark;
@@ -357,6 +361,10 @@
         }
         .add-to-cart{
             width: calc(50% - 5px);
+            height: 31px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             white-space: nowrap;
             display: block;

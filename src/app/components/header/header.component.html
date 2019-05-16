@@ -1,13 +1,3 @@
-<!-- <div *ngIf="userTodo | async as userT">
-    <p>{{userT.name}}
-    <input type="text" [(ngModel)]="user.name"></p>
-    <p>{{userT.age}}
-        <input type="number" [(ngModel)]="user.age"></p>
-    <p>{{userT.birthday}}
-        <input type="text" [(ngModel)]="user.birthday"></p>
-    <button (click)="chenageUser()">Change</button> 
-</div> -->
-
 <header [ngClass]="{'fixedHeader':topHide}">
     <div class="container">
         <div class="row">
@@ -64,7 +54,7 @@
                 </div>
                 <div class="middlePanel d-flex align-items-center justify-content-between">
                     <div class="logoWrap order-0">
-                        <a routerLink="/home">
+                        <a routerLink="/">
                             <span data-green="Shop">Fram</span>
                         </a>
                     </div>
@@ -74,7 +64,7 @@
                     </form>
                     <div class="shoppingCartWrap order-1 order-md-2">
                         <a href="javascript:void(0)" (click)="openCart()" routerLink="/cart">
-                            <span class="cartCount" *ngIf="_cartCount">{{_cartCount}}</span>
+                            <span class="cartCount" *ngIf="_cartCount && isLogin">{{_cartCount}}</span>
                             <span class="lnr lnr-cart"></span>
                             {{ 'header.shopCart' | translate }}
                         </a>
@@ -87,7 +77,7 @@
         <span class="lnr lnr-menu togleNavBar d-inline-block d-md-none" (click)="toggleNav()"></span>
         <ul type="none" #toggleNavBar class="toggleList">
             <li>
-                <a routerLinkActive="activeNavItem" routerLink="/home">{{ 'header.navBar.button1' | translate }}</a>
+                <a routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">{{ 'header.navBar.button1' | translate }}</a>
             </li>
             <li>
                 <a  class="openDropDownList" href="javascript:void(0)" (click)="showListProducts()">{{ 'header.navBar.button2.main' | translate }} <span class="lnr lnr-chevron-down"></span></a>
@@ -113,16 +103,16 @@
                 </ul>
             </li>
             <li>
-                <a routerLinkActive="activeNavItem" routerLink="/about-us">{{ 'header.navBar.button3' | translate }}</a>
+                <a routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{ exact: true }" routerLink="/about-us">{{ 'header.navBar.button3' | translate }}</a>
             </li>
             <li>
-                <a routerLinkActive="activeNavItem" routerLink="/contact">{{ 'header.navBar.button4' | translate }}</a>
+                <a routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{ exact: true }" routerLink="/contact">{{ 'header.navBar.button4' | translate }}</a>
             </li>
             <li>
-                <a routerLinkActive="activeNavItem" routerLink="/partners">{{ 'header.navBar.button5' | translate }}</a>
+                <a routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{ exact: true }" routerLink="/partners">{{ 'header.navBar.button5' | translate }}</a>
             </li>
             <li>
-                <a routerLinkActive="activeNavItem" routerLink="/gallery">{{ 'header.navBar.button6' | translate }}</a>
+                <a routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{ exact: true }" routerLink="/gallery">{{ 'header.navBar.button6' | translate }}</a>
             </li>
         </ul>
     </nav>

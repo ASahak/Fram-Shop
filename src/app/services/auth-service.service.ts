@@ -106,7 +106,7 @@ export class AuthServiceService {
             this._recetDocUsers.delete();
             this._afAuth.auth.currentUser.delete().then(() => {
                 this._store.dispatch(new Actions.FlashMessage({message:"User is deleted", timeout:3000, classType:'successFlash'}))
-                this._router.navigate(['/home']);
+                this._router.navigate(['/']);
             });
         }, (error) => {
             this._store.dispatch(new Actions.FlashMessage({message:error, timeout:3000, classType:'dangerFlash'}))
@@ -114,7 +114,8 @@ export class AuthServiceService {
     }
     __logOut() {
         return this._afAuth.auth.signOut().then(() => {
-            this._router.navigate(['/home']);
+            this._router.navigate(['/']);
+            this._store.dispatch(new Actions.Login(false))
         });
     }
     __addNewUsers(user: CreateUser) {
@@ -131,7 +132,7 @@ export class AuthServiceService {
             .then((result) => {
                 this.__addNewUsers(_userValue);
                 this._store.dispatch(new Actions.FlashMessage({message:"User is registered", timeout:3000, classType:'successFlash'}))
-                this._router.navigate(['/home']);
+                this._router.navigate(['/']);
             }).catch((error) => {
                 this._store.dispatch(new Actions.FlashMessage({message:error.message, timeout:3000, classType:'dangerFlash'}))
             })
@@ -141,7 +142,7 @@ export class AuthServiceService {
         return this._afAuth.auth.signInWithEmailAndPassword(_email, _password)
             .then((result) => {
                 this._store.dispatch(new Actions.FlashMessage({message:"User is signed", timeout:3000, classType:'successFlash'}))
-                this._router.navigate(['/home']);
+                this._router.navigate(['/']);
             }).catch((error) => {
                 this._store.dispatch(new Actions.FlashMessage({message:error.message, timeout:3000, classType:'dangerFlash'}))
             })

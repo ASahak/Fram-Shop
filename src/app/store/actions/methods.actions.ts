@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 export enum MethodsActionTypes {
   __LoadRequested = '[Methods] LoadRequested Methods',
   __FlashMessage = '[Methods] FlashMessage Methods',
+  __Login = '[Methods] isLoggin Methods',
   __allUsersProduct = '[Methods] Get All Products',
   __productSuccesfull = '[Methods] Product get Succesfuly',
   __productAppreciated = '[Methods] Product apreciated',
@@ -100,9 +101,14 @@ export class RemoveProductSuccess implements Action {
   readonly type = MethodsActionTypes.__productSuccessFullRemoved
   constructor(){}
 }
+export class Login implements Action {
+  readonly type = MethodsActionTypes.__Login
+  constructor(public payload :{}){}
+}
 
 
 export type All = 
+  Login |
   LoadRequested |
   FlashMessage |
   AllUsersProduct |

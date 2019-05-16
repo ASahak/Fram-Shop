@@ -95,7 +95,8 @@
     },
     "relatedSec":{
         "title":"Առաջարկվող ապրանքներ",
-        "addButton":"Ավելացնել"
+        "addButton":"Ավելացնել",
+        "noProduct":"Ապրանք չկա"
     },
     "partnersHome":{
         "title":"Մեր գործնկերները"
@@ -150,6 +151,8 @@
         "discount":"Զեղչ:",
         "color":"Գույն:",
         "quantity":"Քանակ:",
+        "used":"Օգտգծ․",
+        "notUsed":"Չոգտագծ․",
         "description":"Նկարագրություն"
 
     },
@@ -196,5 +199,17 @@
             "passWrong":"Սխալ գաղտնաբառ",
             "delete":"Ջնջել"
         }
+    },
+    "selectMinColor":{
+        "title":"Ընտրեք ամենաքիչը․․"
+    },
+    "addProductForm":{
+        "selectTitle":"Ընտրել տեսակը",
+        "nameReq":"Անունը պարտադիր է",
+        "priceReq":"Գինը պարտադիր է",
+        "descReq":"Նկարագրությունը պարտադիր է",
+        "usedReq":"Վիճակը պարտադիր է",
+        "image":"Նկար",
+        "chooseIMG":"Ընտրել նկար..."
     }
 }

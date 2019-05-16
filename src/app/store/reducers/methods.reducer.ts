@@ -8,6 +8,7 @@ export  interface initialStateInterface {
   cartItems:Object,
   showBadges: Object,
   allProducts: [],
+  isLoggined: Boolean,
   shopContentMinAndMax: {
     min: Object,
     max: Object
@@ -19,6 +20,7 @@ export const initialState = {
   cartItems:null,
   showBadges: null,
   allProducts: null,
+  isLoggined: false,
   shopContentMinAndMax: {
     min: null,
     max: null
@@ -27,6 +29,9 @@ export const initialState = {
 };
 
 const __FlashMessage = (payload) => {
+  if(document.querySelector('.falshMessage')){
+    document.querySelector('.falshMessage').remove()
+  }
   var _body = document.querySelector('body'),
       _div = document.createElement("div"),
       _closeX = document.createElement("a"),
@@ -55,6 +60,8 @@ export function methodReducer(state = initialState, action: ActionT) {
       return {...state}
     case Actions.MethodsActionTypes.__productSuccesfull:
       return {...state, products:action.payload}
+    case Actions.MethodsActionTypes.__Login:
+      return {...state, isLoggined:action.payload}
     case Actions.MethodsActionTypes.__getAllCartItems:
       return {...state, cartItems:action.payload}
     case Actions.MethodsActionTypes.__getAllCartItemsSuccess:

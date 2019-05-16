@@ -4,7 +4,7 @@
             <div class="col-12"> 
                 <div class="top-direction">
                     <div class="dicrection-path">
-                        <a routerLink="/home"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
+                        <a routerLink="/"><span class="lnr lnr-home"></span> {{'header.navBar.button1' | translate}}</a>
                         <a routerLink="/shop"> {{'header.navBar.button2.main' | translate}}</a>
                         <span>{{_pathWay}}</span>
                     </div>
@@ -44,19 +44,19 @@
     <div class="plusProduct" (click)="__openAddForm()"><span class="lnr lnr-plus-circle"></span></div>
     <div class="add_prod_form scroll_thumb" [ngStyle]="_isClickedPlus">
         <h4>{{_TitleModal}}</h4>
-        <h6>Select category</h6>
+        <h6>{{'addProductForm.selectTitle' | translate}}</h6>
         <select required name="product_categorie" id="categories" [(ngModel)]="_selectedCateg" (change)="_goSelectForm(_selectedCateg)">
             <option *ngFor="let _item of _categoryArr" value="{{_item}}">{{_item}}</option>
         </select>
         
         <form [formGroup]="_addProdForm" (ngSubmit)="__addProduct(_saveButtonType)" id="add_from_prod" *ngIf="_goSelectForm(_selectedCateg)">
             <input placeholder="Enter name *" formControlName="prodName" type="text" *ngIf="_goSelectForm(_selectedCateg).name">
-            <p class="mb-0 text-danger" *ngIf="_submited &&  __formAddControls['prodName'].errors">The name is required</p>
+            <p class="mb-0 text-danger" *ngIf="_submited &&  __formAddControls['prodName'].errors">{{'addProductForm.nameReq' | translate}}</p>
             <input type="number" placeholder="Enter weight"  formControlName="prodWeight" *ngIf="_goSelectForm(_selectedCateg).weight">
             <input type="number" placeholder="Enter size"  formControlName="prodSize" *ngIf="_goSelectForm(_selectedCateg).size">
             <div (click)="__appearColors()" *ngIf="_goSelectForm(_selectedCateg).color" class="colorEach"  >
                 <input type="hidden" formControlName="prodColors" [value]="_selectedColors" >
-                <i *ngIf="_selectedColors.length == 0">Select min one color</i>
+                <i *ngIf="_selectedColors.length == 0">{{'selectMinColor.title' | translate}}</i>
                 
                 <span class="selectedColorWrap" *ngFor="let color of _selectedColors; let i = index" [ngStyle]="{'background-color':color}">
                 </span>
@@ -67,23 +67,23 @@
             </div>
             
             <input type="number" placeholder="Enter price (USD) *" formControlName="prodPrice" *ngIf="_goSelectForm(_selectedCateg).price">
-            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodPrice'].errors">The price is required</p>
+            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodPrice'].errors">{{'addProductForm.priceReq' | translate}}</p>
             <input type="number" placeholder="Enter sale" formControlName="prodSale" *ngIf="_goSelectForm(_selectedCateg).sale">
             <textarea placeholder="Enter description *" formControlName="prodDesc" *ngIf="_goSelectForm(_selectedCateg).desc"></textarea>
-            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodDesc'].errors">The descrition is required</p>
+            <p class="mb-0 text-danger" *ngIf="_submited && __formAddControls['prodDesc'].errors">{{'addProductForm.descReq' | translate}}</p>
             <div class="d-flex align-items-center" *ngIf="_goSelectForm(_selectedCateg).isUsed">
                 <p class="mb-0 mr-4">
                     <input type="radio" id="used" value="used"  formControlName="prodUsed">
-                    <label for="used">Used</label>
+                    <label for="used">{{'productSingle.used' | translate}}</label>
                 </p>
                 <p class="mb-0">
                     <input type="radio" id="notused" value="notused" formControlName="prodUsed">
-                    <label for="notused">Not Used</label>
+                    <label for="notused">{{'productSingle.notUsed' | translate}}</label>
                 </p>
             </div>
-            <p class="mb-0 text-danger mt-2" *ngIf="_submited && __formAddControls['prodUsed'].errors">The used type is required</p>
+            <p class="mb-0 text-danger mt-2" *ngIf="_submited && __formAddControls['prodUsed'].errors">{{'addProductForm.usedReq' | translate}}</p>
             <div >
-                <label for="imageState">Images</label>
+                <label for="imageState">{{'addProductForm.image' | translate}}</label>
                 <div class="cropper" [hidden]="!_dataCropper.image">
                     <img-cropper [attr.data-count-change]="__countChangeFile" #cropper [image]="_dataCropper" [settings]="_cropperSettings"></img-cropper>
                     <img
@@ -115,7 +115,7 @@
                                 <span class="lnr lnr-upload"></span>
                             </span>
                             <span class="file-label">
-                                choses Images...
+                                    {{'addProductForm.chooseIMG' | translate}}
                             </span>
                         </span>
                     </label>
