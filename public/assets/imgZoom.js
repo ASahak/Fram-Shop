@@ -47,6 +47,7 @@
 
             }
             this.$zoomDiv || (this.$zoomDiv = $('<div/>'));
+            this.$zoomDiv[0].classList.add('zoomWrap')
         /*var zoomDivLeft = offset.left / 1 + this.$el.outerWidth(true) / 1 + this.opts.marginLeft / 1 +15;
         var zoomDivTop = offset.top / 1 -15;*/
         this.$bigImg.css('position', 'absolute');
@@ -66,7 +67,7 @@
             border: '1px solid #222',
             background: '#FFF'
         });
-            $('body').append(this.$zoomDiv);
+        $('body').append(this.$zoomDiv);
     },
     _createMask: function() {
         var boxWidth = this.boxWidth;

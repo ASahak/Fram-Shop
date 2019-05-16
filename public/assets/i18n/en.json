@@ -95,7 +95,8 @@
     },
     "relatedSec":{
         "title":"Related Products",
-        "addButton":"Add Cart"
+        "addButton":"Add Cart",
+        "noProduct":"No Product"
     },
     "partnersHome":{
         "title":"Our Partners"
@@ -139,7 +140,8 @@
             "af":"A-F",
             "fa":"F-A",
             "lfirst":"Lowest first",
-            "hfirst":"Highest first"
+            "hfirst":"Highest first",
+            "onlyMy":"Only My"
         }
     },
     "productSingle":{
@@ -149,6 +151,8 @@
         "discount":"Discount:",
         "color":"Color:",
         "quantity":"Quantity:",
+        "used":"Used",
+        "notUsed":"Not Used",
         "description":"Description"
 
     },
@@ -179,6 +183,8 @@
         "accountSettings":{
             "title":"Account Settings",
             "newPass":"New Password",
+            "chngPass":"If You want to change your password, please sent to you the mail notification and change it!",
+            "sndToEMail":"Send to email",
             "repPass":"Repeat Password",
             "oldPass":"Old Password",
             "passMSG":{
@@ -193,5 +199,17 @@
             "passWrong":"Wrong Password",
             "delete":"Delete"
         }
+    },
+    "selectMinColor":{
+        "title":"Select min one color"
+    },
+    "addProductForm":{
+        "selectTitle":"Select category",
+        "nameReq":"The name is required",
+        "priceReq":"The price is required",
+        "descReq":"The descrition is required",
+        "usedReq":"The used type is required",
+        "image":"Images",
+        "chooseIMG":"choses Images..."
     }
 }
