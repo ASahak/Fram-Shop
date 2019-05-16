@@ -10,6 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class ContactComponent implements OnInit {
     private inputFocus:HTMLInputElement;
+    public formData = {
+        nameUser:'',
+        emailUser:'',
+        phoneUser:'',
+        msgUser:''
+    }
     constructor(
         private _store: Store<AppState>,
     ) { }
@@ -84,6 +90,10 @@ export class ContactComponent implements OnInit {
                 observer.next()
             }, 1000)
         }).subscribe(_ => {
+            form.reset();
+            [].slice.call(document.querySelectorAll('.inputs-wrap')).forEach(element => {
+                element.classList.remove('focus-element')
+            });
             this._store.dispatch(new Actions.FlashMessage({message:"Yous message sended successfully", timeout:2500, classType:'successFlash'}))
         })
     };
