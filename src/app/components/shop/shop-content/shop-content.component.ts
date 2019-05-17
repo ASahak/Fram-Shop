@@ -228,7 +228,9 @@ export class ShopContentComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-        })
+        },
+        err => this._store.dispatch(new Actions.FlashMessage({message:err, timeout:4000, classType:'dangerFlash'})),
+        )
     }
     ngDoCheck(){
         this.transferPositionPageination.emit(this.pageinationWrap.nativeElement.offsetTop)

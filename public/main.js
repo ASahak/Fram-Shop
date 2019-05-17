@@ -1979,7 +1979,7 @@ var ShopBadgesComponent = /** @class */ (function () {
                     }
                 }
             }
-        });
+        }, function (err) { return _this._store.dispatch(new _store_actions_methods_actions__WEBPACK_IMPORTED_MODULE_4__["FlashMessage"]({ message: err, timeout: 4000, classType: 'dangerFlash' })); });
     };
     ShopBadgesComponent.prototype.getParent = function (target, limitParent) {
         limitParent = (limitParent == "") ? document.querySelector("body") : limitParent;
@@ -2774,7 +2774,7 @@ var ProductsComponent = /** @class */ (function () {
                     }
                 }
             }
-        });
+        }, function (err) { return _this._store.dispatch(new _store_actions_methods_actions__WEBPACK_IMPORTED_MODULE_8__["FlashMessage"]({ message: err, timeout: 4000, classType: 'dangerFlash' })); });
     };
     ProductsComponent.prototype.__initSliders = function () {
         var related_slider = new Swiper('.swiper_related_prod', {
@@ -3426,7 +3426,7 @@ var ShopContentComponent = /** @class */ (function () {
                     }
                 }
             }
-        });
+        }, function (err) { return _this._store.dispatch(new _store_actions_methods_actions__WEBPACK_IMPORTED_MODULE_5__["FlashMessage"]({ message: err, timeout: 4000, classType: 'dangerFlash' })); });
     };
     ShopContentComponent.prototype.ngDoCheck = function () {
         this.transferPositionPageination.emit(this.pageinationWrap.nativeElement.offsetTop);
@@ -4555,14 +4555,19 @@ var AuthServiceService = /** @class */ (function () {
     };
     AuthServiceService.prototype.__getCurrentUser = function () {
         var _this = this;
+        var _isLoginUser = false;
         return new rxjs__WEBPACK_IMPORTED_MODULE_6__["Observable"](function (observer) {
             _this.__getUsers().subscribe(function (res) {
                 [].slice.call(res).forEach(function (elem) {
                     if (firebase__WEBPACK_IMPORTED_MODULE_7__["auth"]().currentUser && firebase__WEBPACK_IMPORTED_MODULE_7__["auth"]().currentUser.email == elem.emailTrue) {
+                        _isLoginUser = true;
                         observer.next(elem);
                         observer.complete();
                     }
                 });
+                if (!_isLoginUser) {
+                    observer.error('You must be Log In for product adds');
+                }
             });
         });
         // Nuyn@ Promise ov________________

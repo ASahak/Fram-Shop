@@ -43,14 +43,19 @@ export class AuthServiceService {
         return this._users;
     }
     __getCurrentUser() {
+        let _isLoginUser = false
         return new Observable(observer => {
             this.__getUsers().subscribe(res => {
                 [].slice.call(res).forEach(elem => {
                     if (firebase.auth().currentUser && firebase.auth().currentUser.email == elem.emailTrue) {
+                        _isLoginUser = true
                         observer.next(elem);
                         observer.complete();
-                    }
+                    } 
                 })
+                if(!_isLoginUser){
+                    observer.error('You must be Log In for product adds')
+                }
             })
         })
         // Nuyn@ Promise ov________________

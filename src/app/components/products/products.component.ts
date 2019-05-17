@@ -99,7 +99,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-        })
+        }, 
+        err => this._store.dispatch(new Actions.FlashMessage({message:err, timeout:4000, classType:'dangerFlash'})),
+        )
     }
     protected __initSliders (){
         let related_slider = new Swiper('.swiper_related_prod', {

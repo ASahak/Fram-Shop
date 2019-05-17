@@ -126,7 +126,9 @@ export class ShopBadgesComponent implements OnInit, OnDestroy  {
                     }
                 }
             }
-        })
+        },
+        err => this._store.dispatch(new Actions.FlashMessage({message:err, timeout:4000, classType:'dangerFlash'})),
+        )
     }
     public getParent(target, limitParent){
         limitParent = (limitParent == "") ? document.querySelector("body") : limitParent;
